@@ -1,143 +1,701 @@
-
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>צבע אדום - התרעות בזמן אמת</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>צבע אדום - מפה, היסטוריה והערכת סיכון</title>
 
-<style>
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    crossorigin=""
+  />
 
-body{
-font-family:Arial;
-background:#0b0f1a;
-color:white;
-margin:0;
-padding:20px;
-}
+  <style>
+    :root{
+      --bg:#07101b;
+      --card:#0f1828;
+      --card2:#121f35;
+      --line:rgba(255,255,255,.08);
+      --text:#eef3ff;
+      --muted:#a7b3cf;
+      --green:#39d353;
+      --orange:#ffb020;
+      --red:#ff4d4f;
+      --blue:#67a8ff;
+      --radius:22px;
+      --shadow:0 12px 26px rgba(0,0,0,.28);
+    }
 
-h1{
-text-align:center;
-color:#ff3b30;
-}
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Arial,Helvetica,sans-serif;
+      background:linear-gradient(180deg,#050a13 0%, #081221 100%);
+      color:var(--text);
+    }
 
-#status{
-text-align:center;
-margin-bottom:20px;
-color:#9aa3c7;
-}
+    .wrap{
+      max-width:980px;
+      margin:0 auto;
+      padding:14px 14px 34px;
+    }
 
-.alert{
-background:#2b0b0b;
-border:2px solid #ff3b30;
-padding:20px;
-border-radius:10px;
-margin-bottom:15px;
-}
+    .top-banner{
+      position:sticky;
+      top:0;
+      z-index:999;
+      display:none;
+      background:linear-gradient(180deg, rgba(255,77,79,.96), rgba(192,28,45,.96));
+      color:white;
+      border-bottom:1px solid rgba(255,255,255,.14);
+      box-shadow:0 8px 20px rgba(0,0,0,.28);
+      padding:12px 16px;
+    }
 
-.city{
-font-size:22px;
-font-weight:bold;
-margin-bottom:5px;
-}
+    .top-banner.active{display:block}
 
-.time{
-font-size:14px;
-color:#ccc;
-}
+    .banner-title{
+      font-size:22px;
+      font-weight:900;
+      margin-bottom:6px;
+    }
 
-.safe{
-background:#0f2b13;
-border:2px solid #39d353;
-padding:20px;
-border-radius:10px;
-text-align:center;
-}
+    .banner-sub{
+      font-size:15px;
+      line-height:1.5;
+      opacity:.96;
+    }
 
-</style>
+    .banner-areas{
+      margin-top:8px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+    }
+
+    .pill{
+      background:rgba(255,255,255,.15);
+      border:1px solid rgba(255,255,255,.18);
+      border-radius:999px;
+      padding:7px 11px;
+      font-size:13px;
+      font-weight:700;
+    }
+
+    .hero{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin:8px 0 14px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      font-size:22px;
+      font-weight:900;
+    }
+
+    .logo{
+      width:60px;height:60px;border-radius:50%;
+      display:grid;place-items:center;
+      background:radial-gradient(circle at 30% 30%, #ff7a73, #e53133 65%, #99181d 100%);
+      box-shadow:0 0 0 7px rgba(255,77,79,.12);
+      font-size:28px;
+    }
+
+    .brand .red{color:var(--red)}
+
+    .status{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .dot{
+      width:10px;height:10px;border-radius:50%;
+      background:#666;
+    }
+
+    .dot.ok{background:var(--green)}
+    .dot.warn{background:var(--orange)}
+    .dot.bad{background:var(--red)}
+
+    .grid{
+      display:grid;
+      grid-template-columns:1.25fr .95fr;
+      gap:14px;
+    }
+
+    @media (max-width: 860px){
+      .grid{grid-template-columns:1fr}
+    }
+
+    .card{
+      background:linear-gradient(180deg,var(--card) 0%, #0c1423 100%);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:16px;
+      margin-bottom:14px;
+    }
+
+    .card h2{
+      margin:0 0 12px 0;
+      font-size:22px;
+    }
+
+    .controls{
+      display:grid;
+      grid-template-columns:1fr 1fr auto auto;
+      gap:10px;
+      margin-bottom:12px;
+    }
+
+    @media (max-width: 700px){
+      .controls{grid-template-columns:1fr}
+    }
+
+    .input, .select, .btn{
+      border:1px solid rgba(255,255,255,.12);
+      background:#0a1220;
+      color:#e8eeff;
+      border-radius:16px;
+      padding:12px 14px;
+      font-size:16px;
+    }
+
+    .btn{
+      cursor:pointer;
+      font-weight:700;
+    }
+
+    .btn.primary{
+      background:linear-gradient(180deg,#173255,#112540);
+    }
+
+    #map{
+      width:100%;
+      height:430px;
+      border-radius:18px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.08);
+    }
+
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:10px;
+    }
+
+    .stat{
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:18px;
+      padding:14px;
+    }
+
+    .stat .label{
+      color:var(--muted);
+      font-size:13px;
+      margin-bottom:8px;
+    }
+
+    .stat .value{
+      font-size:28px;
+      font-weight:900;
+    }
+
+    .risk-grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:10px;
+      margin-top:12px;
+    }
+
+    .risk{
+      border-radius:18px;
+      padding:14px;
+      border:1px solid rgba(255,255,255,.08);
+      background:rgba(255,255,255,.03);
+    }
+
+    .risk-title{
+      font-size:15px;
+      color:var(--muted);
+      margin-bottom:8px;
+    }
+
+    .risk-value{
+      font-size:26px;
+      font-weight:900;
+    }
+
+    .risk-note{
+      margin-top:6px;
+      color:#c9d4ef;
+      font-size:13px;
+      line-height:1.45;
+    }
+
+    .risk.low .risk-value{color:var(--green)}
+    .risk.mid .risk-value{color:var(--orange)}
+    .risk.high .risk-value{color:var(--red)}
+
+    .history{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      max-height:420px;
+      overflow:auto;
+    }
+
+    .item{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      padding:12px;
+      border-radius:16px;
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.05);
+    }
+
+    .badge{
+      width:38px;height:38px;border-radius:50%;
+      display:grid;place-items:center;
+      background:rgba(255,77,79,.18);
+      flex:0 0 auto;
+    }
+
+    .item-body{flex:1}
+    .item-title{font-weight:800;font-size:16px;margin-bottom:4px}
+    .item-meta{font-size:13px;color:var(--muted);line-height:1.5}
+    .item-time{font-size:13px;color:#d7def4;white-space:nowrap}
+
+    .legend{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-top:10px;
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    .legend span{
+      display:flex;align-items:center;gap:6px;
+    }
+
+    .legend i{
+      width:12px;height:12px;border-radius:50%;display:inline-block;
+    }
+
+    .foot{
+      margin-top:8px;
+      color:var(--muted);
+      font-size:12px;
+      line-height:1.6;
+    }
+
+    .empty{
+      padding:18px;
+      border-radius:18px;
+      text-align:center;
+      border:1px solid rgba(57,211,83,.35);
+      background:rgba(57,211,83,.12);
+      color:#dff7e4;
+    }
+  </style>
 </head>
-
 <body>
+  <div id="topBanner" class="top-banner">
+    <div class="banner-title">התרעה פעילה באזור נבחר</div>
+    <div id="bannerSub" class="banner-sub">התקבלה התרעה חדשה בזמן אמת</div>
+    <div id="bannerAreas" class="banner-areas"></div>
+  </div>
 
-<h1>🚨 צבע אדום</h1>
+  <div class="wrap">
+    <div class="hero">
+      <div class="brand">
+        <div class="logo">🚨</div>
+        <div><span>צבע</span> <span class="red">אדום</span></div>
+      </div>
+      <div class="status">
+        <span id="connDot" class="dot warn"></span>
+        <span id="connText">מאתחל חיבור</span>
+      </div>
+    </div>
 
-<div id="status">מתחבר לשרת...</div>
+    <div class="grid">
+      <div>
+        <div class="card">
+          <h2>מפה בזמן אמת</h2>
 
-<div id="alerts"></div>
+          <div class="controls">
+            <select id="modeSelect" class="select">
+              <option value="gps">מיקום נוכחי (GPS)</option>
+              <option value="manual">בחירת יישוב ידנית</option>
+            </select>
 
-<script>
+            <select id="settlementSelect" class="select"></select>
 
-const proxyUrl = "https://red.bnaya-av.workers.dev";
+            <button id="gpsBtn" class="btn primary" type="button">רענון GPS</button>
+            <button id="refreshBtn" class="btn" type="button">רענון</button>
+          </div>
 
-let lastId = null;
+          <div id="map"></div>
 
-async function fetchAlerts(){
+          <div class="legend">
+            <span><i style="background:#ff4d4f"></i> אזור עם התרעה פעילה</span>
+            <span><i style="background:#ffb020"></i> אזור שנפגע לאחרונה</span>
+            <span><i style="background:#67a8ff"></i> מיקום נבחר</span>
+          </div>
 
-try{
+          <div class="foot">
+            הבחירה הידנית וה־GPS קובעים את היישוב/האזור שעבורו מוצגים חישובי הסיכון וההיסטוריה המקומית.
+            החישובים הם הערכת נוחות/סיכון בלבד, לא הנחיה מבצעית.
+          </div>
+        </div>
 
-const response = await fetch(proxyUrl + "?t=" + Date.now());
+        <div class="card">
+          <h2>הערכת חלון שקט מקומי</h2>
+          <div class="stats">
+            <div class="stat">
+              <div class="label">יישוב נבחר</div>
+              <div id="statSettlement" class="value" style="font-size:22px">לא נבחר</div>
+            </div>
+            <div class="stat">
+              <div class="label">זמן התגוננות משוער</div>
+              <div id="statDefense" class="value">90</div>
+            </div>
+            <div class="stat">
+              <div class="label">התראות ב־24 שעות</div>
+              <div id="stat24h" class="value">0</div>
+            </div>
+            <div class="stat">
+              <div class="label">התראות ב־7 ימים</div>
+              <div id="stat7d" class="value">0</div>
+            </div>
+          </div>
 
-const data = await response.json();
+          <div class="risk-grid">
+            <div id="riskShower" class="risk low">
+              <div class="risk-title">מקלחת</div>
+              <div class="risk-value">טוב</div>
+              <div class="risk-note">הערכה נוכחית לפי רצף אזעקות אחרון, 24 שעות אחרונות וזמן התגוננות.</div>
+            </div>
 
-document.getElementById("status").innerText = "מחובר לשרת";
+            <div id="riskMeal" class="risk low">
+              <div class="risk-title">אוכל / בישול קצר</div>
+              <div class="risk-value">טוב</div>
+              <div class="risk-note">מתאים לפעולה קצרה עם זמינות מיידית למרחב מוגן.</div>
+            </div>
 
-if(!data.data || data.data.length === 0){
+            <div id="riskSleep" class="risk low">
+              <div class="risk-title">שינה</div>
+              <div class="risk-value">בינוני</div>
+              <div class="risk-note">מחמיר כשיש היסטוריית אזעקות תכופה או זמן התגוננות קצר.</div>
+            </div>
 
-document.getElementById("alerts").innerHTML = `
-<div class="safe">
-אין התרעות כרגע
-</div>
-`;
+            <div id="riskOutside" class="risk mid">
+              <div class="risk-title">יציאה קצרה / חצר</div>
+              <div class="risk-value">בינוני</div>
+              <div class="risk-note">מבוסס על מרווח הזמן מהתרעה אחרונה ועל תדירות מקומית.</div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-return;
-}
+      <div>
+        <div class="card">
+          <h2>היסטוריית התרעות</h2>
+          <div id="historyList" class="history"></div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-const id = JSON.stringify(data);
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <script>
+    const CONFIG = {
+      proxyUrl: 'https://red.bnaya-av.workers.dev',
+      pollMs: 3000,
 
-if(id === lastId){
-return;
-}
+      // גרסת דמו התחלתית. אחר כך נחליף ל-all settlements + full geojson
+      settlements: [
+        { name: 'ירושלים', lat: 31.7683, lng: 35.2137, defense: 90 },
+        { name: 'תל אביב - יפו', lat: 32.0853, lng: 34.7818, defense: 90 },
+        { name: 'חיפה', lat: 32.7940, lng: 34.9896, defense: 90 },
+        { name: 'אשדוד', lat: 31.8014, lng: 34.6435, defense: 45 },
+        { name: 'אשקלון', lat: 31.6688, lng: 34.5743, defense: 30 },
+        { name: 'באר שבע', lat: 31.2520, lng: 34.7915, defense: 60 },
+        { name: 'שדרות', lat: 31.5250, lng: 34.5969, defense: 15 },
+        { name: 'נתיבות', lat: 31.4231, lng: 34.5891, defense: 30 },
+        { name: 'אופקים', lat: 31.3141, lng: 34.6203, defense: 45 },
+        { name: 'אילת', lat: 29.5577, lng: 34.9519, defense: 90 },
+        { name: 'קריית שמונה', lat: 33.2073, lng: 35.5696, defense: 15 },
+        { name: 'נהריה', lat: 33.0059, lng: 35.0941, defense: 30 },
+        { name: 'טבריה', lat: 32.7959, lng: 35.5300, defense: 60 },
+        { name: 'עפולה', lat: 32.6070, lng: 35.2892, defense: 60 },
+        { name: 'נתניה', lat: 32.3215, lng: 34.8532, defense: 90 },
+        { name: 'ראשון לציון', lat: 31.9730, lng: 34.7925, defense: 90 },
+        { name: 'פתח תקווה', lat: 32.0871, lng: 34.8878, defense: 90 },
+        { name: 'מודיעין - מכבים - רעות', lat: 31.8996, lng: 35.0104, defense: 90 }
+      ]
+    };
 
-lastId = id;
+    const state = {
+      mode: 'gps',
+      selectedSettlement: null,
+      userLatLng: null,
+      lastAlertKey: null,
+      history: [],
+      activeAlert: null
+    };
 
-let html = "";
+    const el = {
+      connDot: document.getElementById('connDot'),
+      connText: document.getElementById('connText'),
+      topBanner: document.getElementById('topBanner'),
+      bannerSub: document.getElementById('bannerSub'),
+      bannerAreas: document.getElementById('bannerAreas'),
+      modeSelect: document.getElementById('modeSelect'),
+      settlementSelect: document.getElementById('settlementSelect'),
+      gpsBtn: document.getElementById('gpsBtn'),
+      refreshBtn: document.getElementById('refreshBtn'),
+      historyList: document.getElementById('historyList'),
+      statSettlement: document.getElementById('statSettlement'),
+      statDefense: document.getElementById('statDefense'),
+      stat24h: document.getElementById('stat24h'),
+      stat7d: document.getElementById('stat7d'),
+      riskShower: document.getElementById('riskShower'),
+      riskMeal: document.getElementById('riskMeal'),
+      riskSleep: document.getElementById('riskSleep'),
+      riskOutside: document.getElementById('riskOutside')
+    };
 
-data.data.forEach(city=>{
+    function setConn(status, text) {
+      el.connDot.className = 'dot ' + status;
+      el.connText.textContent = text;
+    }
 
-html += `
-<div class="alert">
-<div class="city">${city}</div>
-<div class="time">התקבלה התרעה</div>
-</div>
-`;
+    function escapeHtml(str) {
+      return String(str ?? '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
+    }
 
-});
+    function nowTs() {
+      return Date.now();
+    }
 
-document.getElementById("alerts").innerHTML = html;
+    function fmtTime(ts) {
+      return new Date(ts).toLocaleString('he-IL', {
+        year:'2-digit', month:'2-digit', day:'2-digit',
+        hour:'2-digit', minute:'2-digit', second:'2-digit'
+      });
+    }
 
-playAlarm();
+    function buildSelect() {
+      el.settlementSelect.innerHTML = CONFIG.settlements
+        .sort((a,b) => a.name.localeCompare(b.name, 'he'))
+        .map(s => `<option value="${escapeHtml(s.name)}">${escapeHtml(s.name)}</option>`)
+        .join('');
 
-}catch(err){
+      if (!state.selectedSettlement) {
+        state.selectedSettlement = CONFIG.settlements[0];
+        el.settlementSelect.value = state.selectedSettlement.name;
+      }
+    }
 
-document.getElementById("status").innerText = "שגיאת חיבור";
+    function getSettlementByName(name) {
+      return CONFIG.settlements.find(s => s.name === name) || null;
+    }
 
-}
+    function findClosestSettlement(lat, lng) {
+      let best = null;
+      let bestD = Infinity;
+      for (const s of CONFIG.settlements) {
+        const d = distanceKm(lat, lng, s.lat, s.lng);
+        if (d < bestD) {
+          bestD = d;
+          best = s;
+        }
+      }
+      return best;
+    }
 
-}
+    function distanceKm(lat1, lon1, lat2, lon2) {
+      const R = 6371;
+      const dLat = (lat2-lat1) * Math.PI/180;
+      const dLon = (lon2-lon1) * Math.PI/180;
+      const a =
+        Math.sin(dLat/2) * Math.sin(dLat/2) +
+        Math.cos(lat1*Math.PI/180) * Math.cos(lat2*Math.PI/180) *
+        Math.sin(dLon/2) * Math.sin(dLon/2);
+      return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    }
 
-function playAlarm(){
+    const map = L.map('map', { zoomControl: true }).setView([31.4, 35.0], 7);
 
-const audio = new Audio("https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg");
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
 
-audio.play();
+    const settlementLayer = L.layerGroup().addTo(map);
+    const activeLayer = L.layerGroup().addTo(map);
+    let selectedMarker = null;
 
-}
+    function renderMap() {
+      settlementLayer.clearLayers();
+      activeLayer.clearLayers();
 
-fetchAlerts();
+      CONFIG.settlements.forEach(s => {
+        const isSelected = state.selectedSettlement && state.selectedSettlement.name === s.name;
 
-setInterval(fetchAlerts,3000);
+        const marker = L.circleMarker([s.lat, s.lng], {
+          radius: isSelected ? 10 : 6,
+          color: isSelected ? '#67a8ff' : '#96a6c8',
+          weight: isSelected ? 3 : 1,
+          fillColor: isSelected ? '#67a8ff' : '#d6dff7',
+          fillOpacity: isSelected ? .95 : .5
+        }).addTo(settlementLayer);
 
-</script>
+        marker.bindPopup(`<b>${escapeHtml(s.name)}</b><br>זמן התגוננות: ${s.defense} שניות`);
+        marker.on('click', () => {
+          state.mode = 'manual';
+          el.modeSelect.value = 'manual';
+          state.selectedSettlement = s;
+          el.settlementSelect.value = s.name;
+          renderAll();
+        });
+      });
 
-</body>
-</html>
+      if (state.selectedSettlement) {
+        if (selectedMarker) selectedMarker.remove();
+        selectedMarker = L.marker([state.selectedSettlement.lat, state.selectedSettlement.lng]).addTo(activeLayer);
+        selectedMarker.bindPopup(`מיקום נבחר: ${escapeHtml(state.selectedSettlement.name)}`).openPopup();
+        map.setView([state.selectedSettlement.lat, state.selectedSettlement.lng], 9);
+      }
+
+      if (state.activeAlert?.data?.length) {
+        for (const areaName of state.activeAlert.data) {
+          const match = getSettlementByName(areaName);
+          if (match) {
+            L.circle([match.lat, match.lng], {
+              radius: 9000,
+              color: '#ff4d4f',
+              fillColor: '#ff4d4f',
+              fillOpacity: .25,
+              weight: 2
+            }).addTo(activeLayer).bindPopup(`התרעה פעילה: ${escapeHtml(areaName)}`);
+          }
+        }
+      }
+    }
+
+    function topBannerShow(alert, relevant) {
+      if (!relevant) {
+        el.topBanner.classList.remove('active');
+        return;
+      }
+
+      el.topBanner.classList.add('active');
+      el.bannerSub.textContent = `התקבלה התרעה חדשה באזור ${state.selectedSettlement?.name || 'הנבחר'}`;
+      el.bannerAreas.innerHTML = (alert.data || [])
+        .map(a => `<span class="pill">${escapeHtml(a)}</span>`)
+        .join('');
+    }
+
+    function topBannerHide() {
+      el.topBanner.classList.remove('active');
+    }
+
+    function normalizeAlert(raw) {
+      if (!raw || raw.error) return null;
+
+      const dataArr =
+        Array.isArray(raw.data) ? raw.data :
+        Array.isArray(raw.cities) ? raw.cities :
+        Array.isArray(raw.areas) ? raw.areas :
+        [];
+
+      return {
+        id: raw.id || raw.alertId || raw.uuid || '',
+        title: raw.title || raw.message || raw.desc || 'התרעה פעילה',
+        alertDate: raw.alertDate || raw.time || raw.timestamp || '',
+        cat: raw.cat || raw.category || '',
+        data: dataArr
+      };
+    }
+
+    function buildAlertKey(alert) {
+      return [
+        alert.id || '',
+        alert.alertDate || '',
+        (alert.data || []).join('|'),
+        alert.cat || ''
+      ].join('||');
+    }
+
+    function isRelevantToSelected(alert) {
+      if (!state.selectedSettlement || !alert?.data?.length) return false;
+      return alert.data.includes(state.selectedSettlement.name);
+    }
+
+    function pushHistory(alert) {
+      const entry = {
+        id: crypto.randomUUID(),
+        ts: nowTs(),
+        areas: alert.data || [],
+        title: alert.title || 'התרעה',
+        relevant: isRelevantToSelected(alert)
+      };
+
+      state.history.unshift(entry);
+      state.history = state.history.slice(0, 300);
+    }
+
+    function renderHistory() {
+      const filtered = state.history.filter(h => {
+        if (!state.selectedSettlement) return true;
+        return h.areas.includes(state.selectedSettlement.name);
+      });
+
+      if (!filtered.length) {
+        el.historyList.innerHTML = `<div class="empty">אין היסטוריית התרעות לאזור הנבחר כרגע</div>`;
+        return;
+      }
+
+      el.historyList.innerHTML = filtered.map(h => `
+        <div class="item">
+          <div class="badge">🚨</div>
+          <div class="item-body">
+            <div class="item-title">${escapeHtml(h.areas.join(', ') || 'התרעה')}</div>
+            <div class="item-meta">${escapeHtml(h.title)}</div>
+          </div>
+          <div class="item-time">${fmtTime(h.ts)}</div>
+        </div>
+      `).join('');
+    }
+
+    function alertsInWindow(hours) {
+      const ms = hours * 3600 * 1000;
+      const cutoff = nowTs() - ms;
+      return state.history.filter(h => {
+        if (h.ts < cutoff) return false;
+        if (!state.selectedSettlement) return true;
+        return h.areas.includes(state.selectedSettlement.name);
+      }).length;
+    }
+
+    function lastRelevantAlertMinutesAgo() {
+      const last = state.history.find(h =>
+        !state.selectedSettlement || h.
