@@ -352,7 +352,7 @@
 
     .bar-row{
       display:grid;
-      grid-template-columns:60px 1fr 48px;
+      grid-template-columns:70px 1fr 48px;
       gap:10px;
       align-items:center;
       font-size:14px;
@@ -490,7 +490,7 @@
       .hero-right .state{font-size:38px}
       .controls{grid-template-columns:1fr}
       .safe-item{flex-direction:column;align-items:stretch}
-      .bar-row{grid-template-columns:52px 1fr 38px}
+      .bar-row{grid-template-columns:58px 1fr 38px}
     }
   </style>
 </head>
@@ -580,13 +580,13 @@
         <div class="stat-card">
           <div id="statWeek" class="stat-num">0</div>
           <div class="stat-label">אזעקות השבוע</div>
-          <div class="delta down">לפי היסטוריה שמורה</div>
+          <div class="delta down">לפי השרת</div>
         </div>
 
         <div class="stat-card">
           <div id="statDay" class="stat-num" style="color:var(--red)">0</div>
           <div class="stat-label">אזעקות היום</div>
-          <div class="delta up">לפי היסטוריה שמורה</div>
+          <div class="delta up">לפי השרת</div>
         </div>
 
         <div class="stat-card">
@@ -598,7 +598,7 @@
         <div class="stat-card">
           <div id="statLast" class="stat-num" style="color:var(--orange)">—</div>
           <div class="stat-label">דקות מהתרעה אחרונה</div>
-          <div class="delta up">לפי היישוב הנבחר</div>
+          <div class="delta up">לפי בחירה נוכחית</div>
         </div>
       </div>
 
@@ -617,15 +617,14 @@
       <div class="card">
         <div class="title">פעילויות ומה הסיכוי לאזעקה תוך כדי</div>
         <div id="safeSummary" class="sub" style="margin-bottom:14px">
-          מחשב לפי ההיסטוריה לשבוע האחרון וזמן ההתגוננות ביישוב הנבחר.
+          מחשב לפי היסטוריית השבוע האחרון וזמן ההתגוננות.
         </div>
-
         <div id="safeList"></div>
       </div>
     </section>
 
     <div class="hint">
-      אם עדיין אין נתונים בשרת לשבוע האחרון, היסטוריה וסטטיסטיקה יוצגו ריקות עד שהמסד יתמלא.
+      בבחירה של "כל הארץ" ההיסטוריה והסטטיסטיקה יוצגו לכלל ההתרעות בארץ, בלי סינון לפי יישוב.
     </div>
   </div>
 
@@ -638,6 +637,7 @@
       historyDays: 7,
       livePollMs: 3000,
       settlements: [
+        { name: 'כל הארץ', lat: 31.4, lng: 35.0, defense: 90, nationwide: true },
         { name: 'ירושלים', lat: 31.7683, lng: 35.2137, defense: 90 },
         { name: 'תל אביב - יפו', lat: 32.0853, lng: 34.7818, defense: 90 },
         { name: 'חיפה', lat: 32.7940, lng: 34.9896, defense: 90 },
@@ -754,7 +754,12 @@
     }
 
     function buildSettlementList() {
-      const sorted = [...CONFIG.settlements].sort((a,b) => a.name.localeCompare(b.name, 'he'));
+      const sorted = [...CONFIG.settlements].sort((a,b) => {
+        if (a.name === 'כל הארץ') return -1;
+        if (b.name === 'כל הארץ') return 1;
+        return a.name.localeCompare(b.name, 'he');
+      });
+
       el.settlementsList.innerHTML = sorted
         .map(s => `<option value="${escapeHtml(s.name)}"></option>`)
         .join('');
@@ -781,7 +786,7 @@
     function findClosestSettlement(lat, lng) {
       let best = null;
       let bestD = Infinity;
-      for (const s of CONFIG.settlements) {
+      for (const s of CONFIG.settlements.filter(x => !x.nationwide)) {
         const d = distanceKm(lat, lng, s.lat, s.lng);
         if (d < bestD) {
           bestD = d;
@@ -822,7 +827,7 @@
 
       clearMapLayers();
 
-      CONFIG.settlements.forEach(s => {
+      CONFIG.settlements.filter(s => !s.nationwide).forEach(s => {
         const isSelected = state.selectedSettlement && state.selectedSettlement.name === s.name;
 
         const marker = L.circleMarker([s.lat, s.lng], {
@@ -846,17 +851,19 @@
         state.baseMarkers.push(marker);
       });
 
-      if (state.selectedSettlement) {
+      if (state.selectedSettlement && !state.selectedSettlement.nationwide) {
         const selected = L.marker([state.selectedSettlement.lat, state.selectedSettlement.lng]).addTo(state.map);
         selected.bindPopup(`האזור שלי: ${escapeHtml(state.selectedSettlement.name)}`);
         state.activeMarkers.push(selected);
         state.map.setView([state.selectedSettlement.lat, state.selectedSettlement.lng], 9);
+      } else {
+        state.map.setView([31.4, 35.0], 7);
       }
 
       const currentAreas = state.liveAlert?.data || [];
       currentAreas.forEach(areaName => {
         const match = getSettlementByName(areaName);
-        if (match) {
+        if (match && !match.nationwide) {
           const circle = L.circle([match.lat, match.lng], {
             radius: 9000,
             color: '#ff4d4f',
@@ -898,7 +905,9 @@
     }
 
     function isRelevantToSelected(alert) {
-      if (!state.selectedSettlement || !alert?.data?.length) return false;
+      if (!alert?.data?.length) return false;
+      if (!state.selectedSettlement) return false;
+      if (state.selectedSettlement.nationwide) return true;
       return alert.data.includes(state.selectedSettlement.name);
     }
 
@@ -934,7 +943,7 @@
           hideTopAlert();
         }
 
-        setConn('ok', isRelevantToSelected(alert) ? 'אזעקה באזור הנבחר' : 'מחובר לשרת');
+        setConn('ok', isRelevantToSelected(alert) ? 'אזעקה פעילה' : 'מחובר לשרת');
         renderMap();
         renderLiveSummary();
       } catch (err) {
@@ -944,17 +953,27 @@
     }
 
     async function fetchHistory(areaName) {
-      const url = API_BASE + '/history?area=' + encodeURIComponent(areaName) + '&days=' + CONFIG.historyDays;
+      let url = API_BASE + '/history?days=' + CONFIG.historyDays;
+      if (areaName && areaName !== 'כל הארץ') {
+        url += '&area=' + encodeURIComponent(areaName);
+      }
+
       const res = await fetch(url, { headers: { Accept: 'application/json' } });
       if (!res.ok) throw new Error('history HTTP ' + res.status);
+
       const json = await res.json();
       state.historyItems = Array.isArray(json.items) ? json.items : [];
     }
 
     async function fetchStats(areaName) {
-      const url = API_BASE + '/stats?area=' + encodeURIComponent(areaName) + '&days=' + CONFIG.historyDays;
+      let url = API_BASE + '/stats?days=' + CONFIG.historyDays;
+      if (areaName && areaName !== 'כל הארץ') {
+        url += '&area=' + encodeURIComponent(areaName);
+      }
+
       const res = await fetch(url, { headers: { Accept: 'application/json' } });
       if (!res.ok) throw new Error('stats HTTP ' + res.status);
+
       const json = await res.json();
       state.stats = {
         total: Number(json.total || 0),
@@ -965,14 +984,14 @@
 
     function renderHistory() {
       if (!state.historyItems.length) {
-        el.historyList.innerHTML = `<div class="empty">אין כרגע היסטוריה שמורה ל־${escapeHtml(state.selectedSettlement?.name || '')}.</div>`;
+        el.historyList.innerHTML = `<div class="empty">אין כרגע היסטוריה שמורה.</div>`;
         return;
       }
 
       el.historyList.innerHTML = state.historyItems.map(item => `
         <div class="history-item">
           <div>
-            <div class="history-title">${escapeHtml(item.area_name || state.selectedSettlement?.name || 'התרעה')}</div>
+            <div class="history-title">${escapeHtml(item.area_name || 'לא ידוע')}</div>
             <div class="history-meta">${escapeHtml(item.title || 'התרעה')}</div>
           </div>
           <div class="history-time">${fmtTime(item.alert_time)}</div>
@@ -981,8 +1000,7 @@
     }
 
     function groupCountTodayFromHistory(items) {
-      const now = new Date();
-      const day = now.toISOString().slice(0,10);
+      const day = new Date().toISOString().slice(0,10);
       return items.filter(i => String(i.alert_time || '').slice(0,10) === day).length;
     }
 
@@ -1074,7 +1092,7 @@
       el.riskText.textContent =
         `השבוע: ${state.stats.total || 0} התרעות · היום: ${groupCountTodayFromHistory(state.historyItems)} · ` +
         `התרעה אחרונה: ${lastMin === null ? 'אין נתון' : lastMin + ' דקות'} · ` +
-        `יישוב: ${state.selectedSettlement?.name || '—'}`;
+        `בחירה: ${state.selectedSettlement?.name || '—'}`;
 
       el.areaInput.value = state.selectedSettlement?.name || '';
     }
@@ -1153,7 +1171,8 @@
         return;
       }
 
-      el.topAlertSub.textContent = `קחו מסלול לממ״ד כעת — ${state.selectedSettlement?.defense || 90} שניות`;
+      const titleArea = state.selectedSettlement?.nationwide ? 'בארץ' : 'באזור הנבחר';
+      el.topAlertSub.textContent = `קחו מסלול לממ״ד כעת — התרעה פעילה ${titleArea}`;
       el.topAlertTags.innerHTML = (alert.data || []).map(a => `<span>${escapeHtml(a)}</span>`).join('');
       el.topAlert.classList.add('active');
     }
@@ -1208,7 +1227,7 @@
           fetchLive()
         ]);
         renderAll();
-        setConn('ok', state.liveAlert && isRelevantToSelected(state.liveAlert) ? 'אזעקה באזור הנבחר' : 'מחובר לשרת');
+        setConn('ok', state.liveAlert && isRelevantToSelected(state.liveAlert) ? 'אזעקה פעילה' : 'מחובר לשרת');
       } catch (err) {
         console.error(err);
         setConn('bad', 'שגיאת טעינת נתונים');
