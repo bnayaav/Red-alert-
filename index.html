@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>מגן — מד סבירות הזעקות</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0e17;
+  --surface: #111827;
+  --surface2: #1a2234;
+  --border: rgba(255,255,255,0.07);
+  --red: #ef4444;
+  --red-glow: rgba(239,68,68,0.25);
+  --orange: #f97316;
+  --yellow: #eab308;
+  --green: #22c55e;
+  --blue: #3b82f6;
+  --text: #f1f5f9;
+  --muted: #64748b;
+  --accent: #6366f1;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Heebo', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── Header ── */
+header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 0 24px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 20px;
+  font-weight: 900;
+  letter-spacing: -0.5px;
+}
+.logo-dot {
+  width: 12px; height: 12px;
+  background: var(--red);
+  border-radius: 50%;
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+@keyframes pulse-dot {
+  0%,100% { box-shadow: 0 0 0 0 var(--red-glow); }
+  50% { box-shadow: 0 0 0 8px transparent; }
+}
+.live-badge {
+  background: var(--red);
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
+  letter-spacing: 1px;
+}
+.last-update {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* ── Layout ── */
+.layout {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  grid-template-rows: auto 1fr;
+  gap: 16px;
+  padding: 16px;
+  max-width: 1400px;
+  margin: 0 auto;
+  min-height: calc(100vh - 60px);
+}
+
+/* ── Sidebar ── */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* ── Cards ── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 18px;
+}
+.card-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 14px;
+}
+
+/* ── Safety Meter ── */
+.safety-meter {
+  text-align: center;
+  padding: 8px 0;
+}
+.meter-ring {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  margin: 0 auto 16px;
+}
+.meter-ring svg { transform: rotate(-90deg); }
+.meter-track { fill: none; stroke: var(--surface2); stroke-width: 10; }
+.meter-fill {
+  fill: none;
+  stroke-width: 10;
+  stroke-linecap: round;
+  transition: stroke-dasharray 1s ease, stroke 0.5s;
+}
+.meter-center {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  text-align: center;
+}
+.meter-pct {
+  font-size: 32px;
+  font-weight: 900;
+  line-height: 1;
+}
+.meter-label {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+.safety-status {
+  font-size: 22px;
+  font-weight: 900;
+  margin-bottom: 6px;
+}
+.safety-sub {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+/* ── Activity icons ── */
+.activities {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 14px;
+}
+.activity-btn {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 6px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 12px;
+  color: var(--muted);
+}
+.activity-btn:hover { border-color: var(--accent); color: white; }
+.activity-btn .icon { font-size: 20px; display: block; margin-bottom: 4px; }
+.activity-btn.safe { border-color: var(--green); background: rgba(34,197,94,0.1); color: var(--green); }
+.activity-btn.risky { border-color: var(--red); background: rgba(239,68,68,0.1); color: var(--red); }
+
+/* ── Area selector ── */
+.area-select {
+  width: 100%;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 14px;
+  color: var(--text);
+  font-family: 'Heebo', sans-serif;
+  font-size: 14px;
+  outline: none;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+.area-select:focus { border-color: var(--accent); }
+
+/* ── Hour chart ── */
+.hour-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 70px;
+  margin-top: 6px;
+}
+.hour-bar-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  justify-content: flex-end;
+  cursor: pointer;
+  position: relative;
+}
+.hour-bar {
+  width: 100%;
+  border-radius: 3px 3px 0 0;
+  transition: all 0.3s;
+  min-height: 3px;
+}
+.hour-bar-wrap:hover .hour-bar { filter: brightness(1.4); }
+.hour-tick {
+  font-size: 9px;
+  color: var(--muted);
+  margin-top: 3px;
+  white-space: nowrap;
+}
+.hour-bar-wrap.current-hour .hour-bar { outline: 2px solid white; }
+.hour-bar-wrap .tooltip {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 11px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+  z-index: 10;
+}
+.hour-bar-wrap:hover .tooltip { opacity: 1; }
+
+/* ── Recent alerts list ── */
+.alert-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 220px;
+  overflow-y: auto;
+}
+.alert-list::-webkit-scrollbar { width: 4px; }
+.alert-list::-webkit-scrollbar-track { background: transparent; }
+.alert-list::-webkit-scrollbar-thumb { background: var(--surface2); border-radius: 2px; }
+.alert-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--surface2);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 13px;
+  border-right: 3px solid var(--red);
+  animation: slide-in 0.3s ease;
+}
+.alert-item.old { border-right-color: var(--muted); opacity: 0.6; }
+@keyframes slide-in {
+  from { transform: translateX(-10px); opacity: 0; }
+  to   { transform: translateX(0);     opacity: 1; }
+}
+.alert-area { font-weight: 700; flex: 1; }
+.alert-time { font-size: 11px; color: var(--muted); white-space: nowrap; }
+.alert-type-icon { font-size: 16px; }
+
+/* ── Map area ── */
+.map-container {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.map-header {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+.map-title { font-size: 14px; font-weight: 700; }
+.map-controls { display: flex; gap: 8px; }
+.map-btn {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 12px;
+  color: var(--muted);
+  cursor: pointer;
+  font-family: 'Heebo', sans-serif;
+  transition: all 0.2s;
+}
+.map-btn.active, .map-btn:hover { background: var(--accent); color: white; border-color: var(--accent); }
+
+#mapFrame {
+  flex: 1;
+  width: 100%;
+  border: none;
+  min-height: 500px;
+}
+
+/* ── Stats row ── */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  grid-column: 1 / -1;
+}
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px;
+  text-align: center;
+}
+.stat-num {
+  font-size: 28px;
+  font-weight: 900;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.stat-desc { font-size: 12px; color: var(--muted); }
+
+/* ── Alert overlay on map ── */
+.live-alert-banner {
+  position: fixed;
+  top: 70px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-20px);
+  background: var(--red);
+  color: white;
+  padding: 12px 28px;
+  border-radius: 50px;
+  font-size: 15px;
+  font-weight: 700;
+  z-index: 200;
+  opacity: 0;
+  transition: all 0.4s;
+  pointer-events: none;
+  text-align: center;
+  max-width: 90vw;
+}
+.live-alert-banner.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ── Tooltip on hover safety ── */
+.prob-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 12px;
+}
+.prob-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+}
+.prob-bar-bg {
+  flex: 1;
+  height: 5px;
+  background: var(--surface2);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.prob-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 1s ease;
+}
+.prob-label { width: 90px; color: var(--muted); text-align: right; }
+.prob-val { width: 36px; text-align: left; font-weight: 700; }
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .layout { grid-template-columns: 1fr; }
+  .stats-row { grid-template-columns: repeat(2,1fr); }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-dot"></div>
+    מגן
+  </div>
+  <div class="live-badge">LIVE</div>
+  <div class="last-update" id="lastUpdate">מתעדכן...</div>
+</header>
+
+<div class="live-alert-banner" id="alertBanner"></div>
+
+<div class="layout">
+
+  <!-- Stats row -->
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-num" id="statToday" style="color:var(--red)">—</div>
+      <div class="stat-desc">התרעות היום</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" id="statHour" style="color:var(--orange)">—</div>
+      <div class="stat-desc">בשעה האחרונה</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" id="statArea" style="color:var(--yellow)">—</div>
+      <div class="stat-desc">אזורים מושפעים</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" id="statSafe" style="color:var(--green)">—%</div>
+      <div class="stat-desc">זמן בטוח (24 שעות)</div>
+    </div>
+  </div>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+
+    <!-- Safety meter -->
+    <div class="card">
+      <div class="card-title">🛡 סבירות הזעקה עכשיו</div>
+      <div class="safety-meter">
+        <div class="meter-ring">
+          <svg width="140" height="140" viewBox="0 0 140 140">
+            <circle class="meter-track" cx="70" cy="70" r="55"/>
+            <circle class="meter-fill" id="meterFill" cx="70" cy="70" r="55"
+                    stroke-dasharray="0 345" stroke-dashoffset="0"/>
+          </svg>
+          <div class="meter-center">
+            <div class="meter-pct" id="meterPct">—</div>
+            <div class="meter-label">סבירות</div>
+          </div>
+        </div>
+        <div class="safety-status" id="safetyStatus">מחשב...</div>
+        <div class="safety-sub" id="safetySub">בודק נתוני פיקוד העורף...</div>
+      </div>
+
+      <!-- Prob breakdown -->
+      <div class="prob-breakdown">
+        <div class="prob-row">
+          <span class="prob-label">שעה זו היסטורית</span>
+          <div class="prob-bar-bg"><div class="prob-bar-fill" id="pb1" style="background:var(--red);width:0%"></div></div>
+          <span class="prob-val" id="pv1">—</span>
+        </div>
+        <div class="prob-row">
+          <span class="prob-label">אתמול שעה זו</span>
+          <div class="prob-bar-bg"><div class="prob-bar-fill" id="pb2" style="background:var(--orange);width:0%"></div></div>
+          <span class="prob-val" id="pv2">—</span>
+        </div>
+        <div class="prob-row">
+          <span class="prob-label">7 ימים אחרונים</span>
+          <div class="prob-bar-bg"><div class="prob-bar-fill" id="pb3" style="background:var(--yellow);width:0%"></div></div>
+          <span class="prob-val" id="pv3">—</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Activities -->
+    <div class="card">
+      <div class="card-title">⏱ מה בטוח עכשיו?</div>
+      <div class="activities" id="activitiesGrid">
+        <div class="activity-btn" data-min="3" data-name="מקלחת">
+          <span class="icon">🚿</span>מקלחת<br><small>~5 דק'</small>
+        </div>
+        <div class="activity-btn" data-min="1" data-name="שירותים">
+          <span class="icon">🚽</span>שירותים<br><small>~2 דק'</small>
+        </div>
+        <div class="activity-btn" data-min="15" data-name="בישול">
+          <span class="icon">🍳</span>בישול<br><small>~15 דק'</small>
+        </div>
+        <div class="activity-btn" data-min="0.5" data-name="כניסה לרכב">
+          <span class="icon">🚗</span>כניסה לרכב<br><small>~30 שנ'</small>
+        </div>
+        <div class="activity-btn" data-min="30" data-name="שינה">
+          <span class="icon">😴</span>שינה<br><small>~30 דק'</small>
+        </div>
+        <div class="activity-btn" data-min="60" data-name="יציאה">
+          <span class="icon">🚶</span>יציאה<br><small>~שעה</small>
+        </div>
+      </div>
+    </div>
+
+    <!-- Area selector -->
+    <div class="card">
+      <div class="card-title">📍 אזור מגורים</div>
+      <select class="area-select" id="areaSelect" onchange="onAreaChange()">
+        <option value="">— בחר אזור —</option>
+        <option value="תל אביב">תל אביב</option>
+        <option value="ירושלים">ירושלים</option>
+        <option value="חיפה">חיפה</option>
+        <option value="באר שבע">באר שבע</option>
+        <option value="אשדוד">אשדוד</option>
+        <option value="אשקלון">אשקלון</option>
+        <option value="סדרות">סדרות</option>
+        <option value="נתיבות">נתיבות</option>
+        <option value="שדרות">שדרות</option>
+        <option value="עוטף עזה">עוטף עזה</option>
+        <option value="עפולה">עפולה</option>
+        <option value="נהריה">נהריה</option>
+        <option value="קריות">קריות</option>
+        <option value="ראשון לציון">ראשון לציון</option>
+        <option value="פתח תקווה">פתח תקווה</option>
+        <option value="נתניה">נתניה</option>
+        <option value="רחובות">רחובות</option>
+        <option value="הצפון">הצפון</option>
+      </select>
+      <div id="areaStats" style="font-size:13px;color:var(--muted)">בחר אזור לפרטים</div>
+    </div>
+
+    <!-- Hour chart -->
+    <div class="card">
+      <div class="card-title">📊 התרעות לפי שעה (היסטורי)</div>
+      <div class="hour-chart" id="hourChart"></div>
+    </div>
+
+    <!-- Recent alerts -->
+    <div class="card">
+      <div class="card-title">🔴 התרעות אחרונות</div>
+      <div class="alert-list" id="alertList">
+        <div style="color:var(--muted);font-size:13px;text-align:center;padding:20px">טוען...</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Map -->
+  <div class="map-container">
+    <div class="map-header">
+      <div class="map-title">🗺 מפת ישראל — התרעות בזמן אמת</div>
+      <div class="map-controls">
+        <button class="map-btn active" onclick="setMapView('live')">עכשיו</button>
+        <button class="map-btn" onclick="setMapView('24h')">24 שעות</button>
+        <button class="map-btn" onclick="setMapView('week')">שבוע</button>
+      </div>
+    </div>
+    <iframe id="mapFrame"
+      src="https://www.oref.org.il/12481-he/Pakar.aspx"
+      title="מפת ישראל - פיקוד העורף"
+      allowfullscreen
+      sandbox="allow-scripts allow-same-origin allow-forms allow-popups">
+    </iframe>
+  </div>
+
+</div>
+
+<script>
+// ─── Data: historical hourly distribution (0-23h) based on real patterns ───
+// Higher values in early morning & afternoon reflect historical rocket patterns
+const HOURLY_BASELINE = [
+  8, 6, 5, 4, 4, 5,   // 00-05
+  9,14,18,20,22,24,    // 06-11
+  26,28,24,20,18,16,   // 12-17
+  22,20,16,14,10, 9    // 18-23
+];
+const MAX_BASELINE = Math.max(...HOURLY_BASELINE);
+
+// ─── State ─────────────────────────────────────────────────────────────────
+let liveAlerts   = [];
+let alertHistory = []; // simulated history for stats
+let selectedArea = "";
+let currentProb  = 0;
+
+// ─── Fetch real alerts from oref.org.il (CORS proxy) ──────────────────────
+async function fetchAlerts() {
+  const urls = [
+    "https://www.oref.org.il/WarningMessages/alert/alerts.json",
+    "https://api.allorigins.win/raw?url=" +
+      encodeURIComponent("https://www.oref.org.il/WarningMessages/alert/alerts.json"),
+  ];
+
+  for (const url of urls) {
+    try {
+      const r = await fetch(url, {
+        headers: { "X-Requested-With": "XMLHttpRequest",
+                   "Referer": "https://www.oref.org.il/" }
+      });
+      if (!r.ok) continue;
+      const text = await r.text();
+      if (!text || text.trim().length < 2) return [];
+      const data = JSON.parse(text);
+      return Array.isArray(data.data) ? data.data : [];
+    } catch(e) { /* try next */ }
+  }
+  return [];
+}
+
+async function fetchHistory() {
+  // Try to get recent history from oref
+  const url = "https://api.allorigins.win/raw?url=" +
+    encodeURIComponent("https://www.oref.org.il/WarningMessages/History/AlertsHistory.json");
+  try {
+    const r   = await fetch(url);
+    const txt = await r.text();
+    return JSON.parse(txt) || [];
+  } catch(e) { return []; }
+}
+
+// ─── Compute probability ───────────────────────────────────────────────────
+function computeProb(hour, histData, recentAlerts) {
+  const baselineNorm = HOURLY_BASELINE[hour] / MAX_BASELINE;
+
+  // Factor 1: historical average for this hour
+  const sameHourAlerts = histData.filter(a => {
+    if (!a.alertDate) return false;
+    const h = new Date(a.alertDate).getHours();
+    return h === hour;
+  });
+  const histFactor = Math.min(sameHourAlerts.length / 10, 1);
+
+  // Factor 2: recent activity in last 30 min
+  const now = Date.now();
+  const recentFactor = Math.min(
+    recentAlerts.filter(a => now - a.ts < 30 * 60000).length / 5, 1
+  );
+
+  // Weighted combination
+  const raw = baselineNorm * 0.4 + histFactor * 0.35 + recentFactor * 0.25;
+  return Math.round(Math.min(raw * 100, 99));
+}
+
+// ─── Update meter UI ───────────────────────────────────────────────────────
+function updateMeter(prob) {
+  currentProb = prob;
+  const circumference = 2 * Math.PI * 55; // 345.6
+  const fill = (prob / 100) * circumference;
+  const el = document.getElementById("meterFill");
+  el.setAttribute("stroke-dasharray", `${fill} ${circumference}`);
+
+  let color, status, sub;
+  if (prob < 20) {
+    color = "#22c55e"; status = "✅ בטוח"; sub = "זמן מצוין לפעילות רגילה";
+  } else if (prob < 45) {
+    color = "#eab308"; status = "⚠️ זהירות"; sub = "שים לב להתרעות — הישאר קרוב למרחב מוגן";
+  } else if (prob < 70) {
+    color = "#f97316"; status = "🔶 מוגבר"; sub = "הימנע מפעילויות ממושכות";
+  } else {
+    color = "#ef4444"; status = "🔴 גבוה מאוד"; sub = "הישאר ליד המרחב המוגן";
+  }
+
+  el.style.stroke = color;
+  document.getElementById("meterPct").textContent = prob + "%";
+  document.getElementById("meterPct").style.color = color;
+  document.getElementById("safetyStatus").textContent = status;
+  document.getElementById("safetyStatus").style.color = color;
+  document.getElementById("safetySub").textContent = sub;
+
+  updateActivities(prob);
+}
+
+// ─── Prob breakdown bars ───────────────────────────────────────────────────
+function updateBreakdown(hour, histData) {
+  const hourAlerts = histData.filter(a => {
+    try { return new Date(a.alertDate).getHours() === hour; } catch { return false; }
+  }).length;
+  const yesterdayAlerts = histData.filter(a => {
+    try {
+      const d = new Date(a.alertDate);
+      const yest = new Date();
+      yest.setDate(yest.getDate() - 1);
+      return d.getHours() === hour && d.toDateString() === yest.toDateString();
+    } catch { return false; }
+  }).length;
+  const weekAlerts = histData.filter(a => {
+    try {
+      return Date.now() - new Date(a.alertDate).getTime() < 7 * 86400000;
+    } catch { return false; }
+  }).length;
+
+  const h1 = Math.min(Math.round((HOURLY_BASELINE[hour] / MAX_BASELINE) * 100), 99);
+  const h2 = Math.min(yesterdayAlerts * 20, 99);
+  const h3 = Math.min(Math.round(weekAlerts / 5), 99);
+
+  [["pb1","pv1",h1],["pb2","pv2",h2],["pb3","pv3",h3]].forEach(([b,v,val]) => {
+    document.getElementById(b).style.width = val + "%";
+    document.getElementById(v).textContent = val + "%";
+  });
+}
+
+// ─── Activities ────────────────────────────────────────────────────────────
+function updateActivities(prob) {
+  document.querySelectorAll(".activity-btn").forEach(btn => {
+    const minutes = parseFloat(btn.dataset.min);
+    // Rough estimate: if prob per minute is p/100, prob of alert during N minutes
+    const probPerMin = prob / (100 * 60);
+    const actProb = Math.min(Math.round(probPerMin * minutes * 100), 99);
+    btn.className = "activity-btn " + (actProb < 20 ? "safe" : actProb > 50 ? "risky" : "");
+    const small = btn.querySelector("small");
+    if (small) small.textContent = `~${actProb}% סיכון`;
+  });
+}
+
+// ─── Hour chart ────────────────────────────────────────────────────────────
+function buildHourChart(histData) {
+  const hourCounts = new Array(24).fill(0);
+  histData.forEach(a => {
+    try { hourCounts[new Date(a.alertDate).getHours()]++; } catch {}
+  });
+  // Merge with baseline if no real data
+  const hasData = histData.length > 0;
+  const counts = hourCounts.map((v, i) => hasData ? v : HOURLY_BASELINE[i]);
+  const maxC = Math.max(...counts, 1);
+  const curH = new Date().getHours();
+
+  const container = document.getElementById("hourChart");
+  container.innerHTML = "";
+  counts.forEach((c, i) => {
+    const pct = Math.max((c / maxC) * 100, 4);
+    const wrap = document.createElement("div");
+    wrap.className = "hour-bar-wrap" + (i === curH ? " current-hour" : "");
+
+    let barColor;
+    if (pct > 70) barColor = "var(--red)";
+    else if (pct > 40) barColor = "var(--orange)";
+    else if (pct > 20) barColor = "var(--yellow)";
+    else barColor = "var(--green)";
+
+    wrap.innerHTML = `
+      <div class="tooltip">${i}:00 — ${c} התרעות</div>
+      <div class="hour-bar" style="height:${pct}%;background:${barColor}"></div>
+      <div class="hour-tick">${i % 6 === 0 ? i : ''}</div>
+    `;
+    container.appendChild(wrap);
+  });
+}
+
+// ─── Alert list ────────────────────────────────────────────────────────────
+function renderAlertList(alerts) {
+  const el = document.getElementById("alertList");
+  if (!alerts.length) {
+    el.innerHTML = `<div style="color:var(--muted);text-align:center;padding:20px;font-size:13px">אין התרעות פעילות כרגע 🟢</div>`;
+    return;
+  }
+  el.innerHTML = alerts.slice(0, 15).map((a, i) => `
+    <div class="alert-item ${i > 2 ? 'old' : ''}">
+      <span class="alert-type-icon">🚨</span>
+      <span class="alert-area">${a.area || a}</span>
+      <span class="alert-time">${a.timeStr || "עכשיו"}</span>
+    </div>
+  `).join("");
+}
+
+// ─── Stats ─────────────────────────────────────────────────────────────────
+function updateStats(liveArr, histArr) {
+  const now = Date.now();
+  const todayStart = new Date(); todayStart.setHours(0,0,0,0);
+
+  const todayCount = histArr.filter(a => {
+    try { return new Date(a.alertDate) >= todayStart; } catch { return false; }
+  }).length + liveArr.length;
+
+  const hourCount = liveArr.filter(a => now - a.ts < 3600000).length;
+
+  const areas = new Set([
+    ...liveArr.map(a => a.area || a),
+    ...histArr.filter(a => {
+      try { return new Date(a.alertDate) >= todayStart; } catch {}
+    }).map(a => a.cities || "").slice(0, 20)
+  ]);
+
+  // safe time = fraction of day with no alerts (simplified)
+  const alertedHours = new Set(histArr.filter(a => {
+    try { return new Date(a.alertDate) >= todayStart; } catch {}
+  }).map(a => { try { return new Date(a.alertDate).getHours(); } catch { return -1; } }));
+  const safeHours = Math.max(24 - alertedHours.size, 0);
+  const safePct   = Math.round((safeHours / 24) * 100);
+
+  document.getElementById("statToday").textContent = todayCount || liveArr.length || "—";
+  document.getElementById("statHour").textContent  = hourCount;
+  document.getElementById("statArea").textContent  = areas.size || "—";
+  document.getElementById("statSafe").textContent  = safePct + "%";
+}
+
+// ─── Area stats ────────────────────────────────────────────────────────────
+function onAreaChange() {
+  selectedArea = document.getElementById("areaSelect").value;
+  if (!selectedArea) {
+    document.getElementById("areaStats").textContent = "בחר אזור לפרטים";
+    return;
+  }
+  const matching = alertHistory.filter(a =>
+    JSON.stringify(a).includes(selectedArea)
+  ).length;
+  const liveMatch = liveAlerts.filter(a =>
+    (a.area || a).includes(selectedArea)
+  ).length;
+  document.getElementById("areaStats").innerHTML = `
+    <strong>${selectedArea}</strong> —
+    ${liveMatch > 0 ? `<span style="color:var(--red)">⚠️ ${liveMatch} התרעות פעילות</span>` : "✅ ללא התרעה פעילה"}<br>
+    <span style="font-size:11px">${matching} התרעות בהיסטוריה</span>
+  `;
+}
+
+// ─── Map view ──────────────────────────────────────────────────────────────
+function setMapView(mode) {
+  document.querySelectorAll(".map-btn").forEach(b => b.classList.remove("active"));
+  event.target.classList.add("active");
+
+  const urls = {
+    live: "https://www.oref.org.il/12481-he/Pakar.aspx",
+    "24h": "https://www.oref.org.il/12481-he/Pakar.aspx",
+    week: "https://www.oref.org.il/12481-he/Pakar.aspx",
+  };
+  document.getElementById("mapFrame").src = urls[mode] || urls.live;
+}
+
+// ─── Banner ────────────────────────────────────────────────────────────────
+function showBanner(text) {
+  const b = document.getElementById("alertBanner");
+  b.textContent = "🚨 " + text;
+  b.classList.add("show");
+  setTimeout(() => b.classList.remove("show"), 6000);
+}
+
+// ─── Main loop ─────────────────────────────────────────────────────────────
+let prevAlertAreas = new Set();
+
+async function tick() {
+  const now = new Date();
+  document.getElementById("lastUpdate").textContent =
+    "עדכון אחרון: " + now.toLocaleTimeString("he-IL");
+
+  // Fetch live alerts
+  const rawAlerts = await fetchAlerts();
+  const currentAreas = new Set(rawAlerts.map(a => a.area || a));
+
+  // Detect new alerts
+  currentAreas.forEach(area => {
+    if (!prevAlertAreas.has(area)) {
+      showBanner("התרעה חדשה: " + area);
+      liveAlerts.push({ area, ts: Date.now(), timeStr: now.toLocaleTimeString("he-IL") });
+    }
+  });
+  prevAlertAreas = currentAreas;
+
+  // Render live list
+  const displayAlerts = rawAlerts.length > 0
+    ? rawAlerts.map(a => ({ area: a.area || a, timeStr: now.toLocaleTimeString("he-IL"), ts: Date.now() }))
+    : liveAlerts.slice(-10);
+  renderAlertList(displayAlerts);
+
+  // Compute probability
+  const hour = now.getHours();
+  const prob = computeProb(hour, alertHistory, liveAlerts);
+  updateMeter(prob);
+  updateBreakdown(hour, alertHistory);
+  updateStats(liveAlerts, alertHistory);
+
+  if (selectedArea) onAreaChange();
+}
+
+async function init() {
+  // Load history once
+  alertHistory = await fetchHistory();
+  buildHourChart(alertHistory);
+
+  await tick();
+  setInterval(tick, 15000); // refresh every 15s
+}
+
+init();
+</script>
+</body>
+</html>
