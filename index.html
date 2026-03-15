@@ -1,90 +1,712 @@
 <!DOCTYPE html>
-<h1>בדיקה</h1>
 <html lang="he" dir="rtl">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>צבע אדום - לייב</title>
   <style>
-    :root{
-      --bg:#070b16;
-      --card:#0f1424;
-      --card2:#141a2d;
-      --text:#eef2ff;
-      --muted:#a7b0c8;
-      --red:#ff3b30;
-      --green:#39d353;
-      --orange:#d28a1e;
-      --line:rgba(255,255,255,.06);
-      --shadow:0 12px 30px rgba(0,0,0,.30);
-      --radius:22px;
+    :root {
+      --bg: #070b16;
+      --card: #0f1424;
+      --text: #eef2ff;
+      --muted: #a7b0c8;
+      --red: #ff3b30;
+      --green: #39d353;
+      --orange: #d28a1e;
+      --line: rgba(255, 255, 255, 0.06);
+      --shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+      --radius: 22px;
     }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family:Arial,Helvetica,sans-serif;
-      background:linear-gradient(180deg,#05070e 0%, #09101f 100%);
-      color:var(--text);
+
+    * {
+      box-sizing: border-box;
     }
-    .wrap{
-      max-width:720px;
-      margin:0 auto;
-      padding:18px 14px 36px;
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(180deg, #05070e 0%, #09101f 100%);
+      color: var(--text);
     }
-    .topbar{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      margin-bottom:14px;
+
+    .wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 18px 14px 36px;
     }
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      font-size:22px;
-      font-weight:800;
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
     }
-    .brand .logo{
-      width:58px;height:58px;border-radius:50%;
-      display:grid;place-items:center;
-      background:radial-gradient(circle at 30% 30%, #ff7770, #cb1f19 65%, #871010 100%);
-      box-shadow:0 0 0 6px rgba(255,59,48,.12);
-      font-size:28px;
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 22px;
+      font-weight: 800;
     }
-    .brand .red{color:var(--red)}
-    .conn{
-      font-size:14px;
-      color:var(--muted);
-      display:flex;
-      align-items:center;
-      gap:8px;
+
+    .brand .logo {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: radial-gradient(circle at 30% 30%, #ff7770, #cb1f19 65%, #871010 100%);
+      box-shadow: 0 0 0 6px rgba(255, 59, 48, 0.12);
+      font-size: 28px;
     }
-    .dot{
-      width:10px;height:10px;border-radius:50%;
-      background:#666;
-      display:inline-block;
+
+    .brand .red {
+      color: var(--red);
     }
-    .dot.ok{background:var(--green)}
-    .dot.warn{background:var(--orange)}
-    .dot.bad{background:var(--red)}
-    .card{
-      background:linear-gradient(180deg,var(--card) 0%, #0b1120 100%);
-      border:1px solid var(--line);
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
-      padding:18px;
-      margin-bottom:16px;
+
+    .conn {
+      font-size: 14px;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
-    .hero{
-      display:grid;
-      grid-template-columns:1fr auto;
-      gap:14px;
-      align-items:center;
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #666;
+      display: inline-block;
     }
-    .hero .right{
-      text-align:left;
-      min-width:120px;
+
+    .dot.ok {
+      background: var(--green);
     }
-    .hero .safe{
-      font-size:
+
+    .dot.warn {
+      background: var(--orange);
+    }
+
+    .dot.bad {
+      background: var(--red);
+    }
+
+    .card {
+      background: linear-gradient(180deg, var(--card) 0%, #0b1120 100%);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 18px;
+      margin-bottom: 16px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .hero .right {
+      text-align: left;
+      min-width: 120px;
+    }
+
+    .hero .safe {
+      font-size: 54px;
+      font-weight: 900;
+      color: var(--green);
+      line-height: 1;
+    }
+
+    .seconds {
+      font-size: 20px;
+      color: var(--red);
+      font-weight: 900;
+      margin-bottom: 6px;
+    }
+
+    .progress {
+      margin-top: 14px;
+      height: 14px;
+      border-radius: 999px;
+      background: #1b2135;
+      overflow: hidden;
+    }
+
+    .bar {
+      height: 100%;
+      width: 100%;
+      background: linear-gradient(90deg, #1f9b3f, #67db64);
+      transition: width 0.4s ease;
+    }
+
+    .sub {
+      color: var(--muted);
+      margin-top: 12px;
+      font-size: 14px;
+    }
+
+    .row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 20px;
+      color: #d8dcf3;
+    }
+
+    .mini-btn {
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: #0b1020;
+      color: #e7ecff;
+      padding: 10px 16px;
+      border-radius: 16px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .mini-btn:active {
+      transform: scale(0.98);
+    }
+
+    .live-banner {
+      display: none;
+      background: linear-gradient(180deg, rgba(255, 59, 48, 0.15), rgba(255, 59, 48, 0.06));
+      border: 1px solid rgba(255, 59, 48, 0.35);
+    }
+
+    .live-banner.active {
+      display: block;
+    }
+
+    .live-title {
+      font-size: 24px;
+      font-weight: 900;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+
+    .areas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .tag {
+      background: rgba(255, 59, 48, 0.18);
+      border: 1px solid rgba(255, 59, 48, 0.35);
+      color: #fff;
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .status-box {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 18px;
+    }
+
+    .icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 20px;
+      flex: 0 0 auto;
+    }
+
+    .icon.red {
+      background: rgba(255, 59, 48, 0.18);
+    }
+
+    .icon.green {
+      background: rgba(57, 211, 83, 0.18);
+    }
+
+    .icon.orange {
+      background: rgba(210, 138, 30, 0.18);
+    }
+
+    .body {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .title {
+      font-weight: 800;
+      font-size: 18px;
+      margin-bottom: 4px;
+    }
+
+    .meta {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .time {
+      color: #cdd4eb;
+      font-size: 15px;
+      white-space: nowrap;
+    }
+
+    .gps-line {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .gps-text {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .footer {
+      text-align: center;
+      color: #7e879f;
+      margin-top: 22px;
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .danger-btn {
+      width: 100%;
+      border: none;
+      background: linear-gradient(180deg, #b01116, #8f0c11);
+      color: #fff;
+      padding: 18px 16px;
+      border-radius: 22px;
+      font-size: 22px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .small {
+      font-size: 13px;
+      color: #96a0ba;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="conn">
+        <span id="connDot" class="dot warn"></span>
+        <span id="connText">מאתחל חיבור</span>
+      </div>
+
+      <div class="brand">
+        <div><span>צבע</span> <span class="red">אדום</span></div>
+        <div class="logo">🚨</div>
+      </div>
+    </div>
+
+    <div id="liveBanner" class="card live-banner">
+      <div class="live-title">התרעה פעילה</div>
+      <div id="liveDesc" class="status-box">התקבלה התרעה חדשה בזמן אמת</div>
+      <div id="liveAreas" class="areas"></div>
+    </div>
+
+    <div class="card">
+      <div class="hero">
+        <div>
+          <div class="seconds" id="secondsText">90 שניות</div>
+          <div class="progress">
+            <div id="progressBar" class="bar"></div>
+          </div>
+          <div class="sub" id="heroSub">תזוזת אזעקות נמוכה — ניתן לפעול בשגרה</div>
+        </div>
+
+        <div class="right">
+          <div id="heroState" class="safe">נמוכה</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="row">
+        <h2>מיקום וזיהוי אזור</h2>
+        <button class="mini-btn" id="gpsBtn" type="button">GPS</button>
+      </div>
+
+      <div class="gps-line">
+        <div class="gps-text" id="gpsText">
+          לא אותר מיקום עדיין. לחץ על GPS כדי לזהות את המיקום שלך.
+        </div>
+      </div>
+
+      <div class="small" style="margin-top:10px">
+        אם הקובץ נפתח מתוך downloads כ־content:// או file://, ייתכן שהדפדפן לא יבקש הרשאת מיקום.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="row">
+        <h2>אזעקות אחרונות</h2>
+        <button class="mini-btn" id="refreshBtn" type="button">רענון</button>
+      </div>
+
+      <div id="recentList" class="list">
+        <div class="item">
+          <div class="icon green">✅</div>
+          <div class="body">
+            <div class="title">אין התרעות פעילות</div>
+            <div class="meta">ממתין לחיבור למקור הנתונים</div>
+          </div>
+          <div class="time">עכשיו</div>
+        </div>
+      </div>
+    </div>
+
+    <button class="danger-btn" type="button">חירום? מד״א 101 | אמבולנס 104 | משטרה 100</button>
+
+    <div class="footer">
+      נתונים חיים מפיקוד העורף / פרוקסי מותאם<br>
+      רענון אוטומטי כל 3 שניות · גרסה 1.0
+    </div>
+  </div>
+
+  <script>
+    const LIVE_CONFIG = {
+      pollMs: 3000,
+      historyLimit: 30,
+
+      // כאן מכניסים כתובת Proxy
+      // דוגמה:
+      // proxyUrl: 'https://your-domain.com/api/redalert'
+      proxyUrl: ''
+    };
+
+    const state = {
+      lastAlertKey: null,
+      history: [],
+      currentAlert: null
+    };
+
+    const el = {
+      connDot: document.getElementById('connDot'),
+      connText: document.getElementById('connText'),
+      liveBanner: document.getElementById('liveBanner'),
+      liveDesc: document.getElementById('liveDesc'),
+      liveAreas: document.getElementById('liveAreas'),
+      recentList: document.getElementById('recentList'),
+      refreshBtn: document.getElementById('refreshBtn'),
+      gpsBtn: document.getElementById('gpsBtn'),
+      gpsText: document.getElementById('gpsText'),
+      heroState: document.getElementById('heroState'),
+      heroSub: document.getElementById('heroSub'),
+      progressBar: document.getElementById('progressBar'),
+      secondsText: document.getElementById('secondsText')
+    };
+
+    function setConn(status, text) {
+      el.connDot.className = 'dot ' + status;
+      el.connText.textContent = text;
+    }
+
+    function nowTime() {
+      return new Date().toLocaleTimeString('he-IL', {
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+    }
+
+    function escapeHtml(str) {
+      return String(str ?? '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
+    }
+
+    function renderHeroLow() {
+      el.heroState.textContent = 'נמוכה';
+      el.heroState.style.color = '#39d353';
+      el.heroSub.textContent = 'תזוזת אזעקות נמוכה — ניתן לפעול בשגרה';
+      el.progressBar.style.width = '100%';
+      el.progressBar.style.background = 'linear-gradient(90deg,#1f9b3f,#67db64)';
+      el.secondsText.textContent = '90 שניות';
+    }
+
+    function renderHeroActive(seconds = 90) {
+      const safeSeconds = Math.max(0, Math.min(90, Number(seconds) || 90));
+      const percent = Math.max(0, (safeSeconds / 90) * 100);
+
+      el.heroState.textContent = 'פעילה';
+      el.heroState.style.color = '#ff3b30';
+      el.heroSub.textContent = 'התקבלה התרעה חדשה — יש להיכנס למרחב מוגן';
+      el.progressBar.style.width = percent + '%';
+      el.progressBar.style.background = 'linear-gradient(90deg,#ff6633,#ff2d2d)';
+      el.secondsText.textContent = safeSeconds + ' שניות';
+    }
+
+    function showNoActiveAlert(message = 'אין התרעות פעילות') {
+      el.liveBanner.classList.remove('active');
+      el.liveDesc.textContent = '';
+      el.liveAreas.innerHTML = '';
+
+      el.recentList.innerHTML = `
+        <div class="item">
+          <div class="icon green">✅</div>
+          <div class="body">
+            <div class="title">${escapeHtml(message)}</div>
+            <div class="meta">המערכת מחוברת וממתינה לאירוע חדש</div>
+          </div>
+          <div class="time">${nowTime()}</div>
+        </div>
+      `;
+
+      renderHeroLow();
+    }
+
+    function renderHistory() {
+      if (!state.history.length) {
+        showNoActiveAlert();
+        return;
+      }
+
+      el.recentList.innerHTML = state.history.map(item => `
+        <div class="item">
+          <div class="icon ${item.type === 'alert' ? 'red' : item.type === 'warn' ? 'orange' : 'green'}">
+            ${item.type === 'alert' ? '🚨' : item.type === 'warn' ? '🟠' : '✅'}
+          </div>
+          <div class="body">
+            <div class="title">${escapeHtml(item.title)}</div>
+            <div class="meta">${escapeHtml(item.meta)}</div>
+          </div>
+          <div class="time">${escapeHtml(item.time)}</div>
+        </div>
+      `).join('');
+    }
+
+    function addToHistory(item) {
+      state.history.unshift(item);
+      if (state.history.length > LIVE_CONFIG.historyLimit) {
+        state.history.length = LIVE_CONFIG.historyLimit;
+      }
+      renderHistory();
+    }
+
+    function renderLiveAlert(alert) {
+      el.liveBanner.classList.add('active');
+      el.liveDesc.textContent = alert.title || 'התקבלה התרעה חדשה בזמן אמת';
+
+      const areas = Array.isArray(alert.data) ? alert.data : [];
+      el.liveAreas.innerHTML = areas.map(area => `<div class="tag">${escapeHtml(area)}</div>`).join('');
+
+      renderHeroActive(alert.countdown || 90);
+
+      addToHistory({
+        type: 'alert',
+        title: areas.length ? areas.join(', ') : 'התרעה פעילה',
+        meta: alert.alertDate || alert.title || 'התקבלה התרעה',
+        time: nowTime()
+      });
+    }
+
+    function normalizeAlert(raw) {
+      if (!raw) return null;
+
+      const dataArr =
+        Array.isArray(raw.data) ? raw.data :
+        Array.isArray(raw.cities) ? raw.cities :
+        Array.isArray(raw.areas) ? raw.areas :
+        [];
+
+      return {
+        id: raw.id || raw.alertId || raw.uuid || '',
+        title: raw.title || raw.message || raw.desc || 'התרעה פעילה',
+        alertDate: raw.alertDate || raw.time || raw.timestamp || '',
+        cat: raw.cat || raw.category || '',
+        data: dataArr,
+        countdown: raw.countdown || 90
+      };
+    }
+
+    function buildAlertKey(alert) {
+      return [
+        alert.id || '',
+        alert.alertDate || '',
+        (alert.data || []).join('|'),
+        alert.cat || ''
+      ].join('||');
+    }
+
+    function addProxyWarningOnce() {
+      const exists = state.history.some(item => item.type === 'warn' && item.title === 'לא הוגדר פרוקסי');
+      if (exists) return;
+
+      addToHistory({
+        type: 'warn',
+        title: 'לא הוגדר פרוקסי',
+        meta: 'כדי לקבל התרעות חיות צריך להכניס כתובת ב-LIVE_CONFIG.proxyUrl',
+        time: nowTime()
+      });
+    }
+
+    function addErrorToHistory(title, meta) {
+      if (state.history[0] && state.history[0].type === 'warn' && state.history[0].title === title) {
+        return;
+      }
+
+      addToHistory({
+        type: 'warn',
+        title,
+        meta,
+        time: nowTime()
+      });
+    }
+
+    async function fetchLiveAlerts() {
+      if (!LIVE_CONFIG.proxyUrl) {
+        setConn('warn', 'אין proxyUrl מוגדר');
+        addProxyWarningOnce();
+        return;
+      }
+
+      try {
+        setConn('warn', 'מתחבר לשרת...');
+
+        const url =
+          LIVE_CONFIG.proxyUrl +
+          (LIVE_CONFIG.proxyUrl.includes('?') ? '&' : '?') +
+          't=' + Date.now();
+
+        const res = await fetch(url, {
+          method: 'GET',
+          cache: 'no-store',
+          headers: {
+            Accept: 'application/json'
+          }
+        });
+
+        if (!res.ok) {
+          throw new Error('HTTP ' + res.status);
+        }
+
+        const raw = await res.json();
+        const alert = normalizeAlert(raw);
+
+        if (!alert || !Array.isArray(alert.data) || alert.data.length === 0) {
+          state.currentAlert = null;
+          state.lastAlertKey = null;
+          setConn('ok', 'מחובר · אין התרעות כרגע');
+          showNoActiveAlert();
+          return;
+        }
+
+        const key = buildAlertKey(alert);
+
+        if (key === state.lastAlertKey) {
+          state.currentAlert = alert;
+          setConn('ok', 'מחובר · אין אירוע חדש');
+          return;
+        }
+
+        state.lastAlertKey = key;
+        state.currentAlert = alert;
+
+        setConn('ok', 'מחובר · התקבלה התרעה');
+        renderLiveAlert(alert);
+
+      } catch (err) {
+        console.error(err);
+        setConn('bad', 'שגיאת חיבור');
+        addErrorToHistory('לא ניתן להתחבר לשרת ההתראות', String(err.message || err));
+      }
+    }
+
+    function requestGPS() {
+      if (!('geolocation' in navigator)) {
+        el.gpsText.textContent = 'המכשיר או הדפדפן לא תומכים ב-GPS.';
+        return;
+      }
+
+      const proto = location.protocol;
+      const isSecureLike = proto === 'https:' || location.hostname === 'localhost';
+
+      if (!isSecureLike) {
+        el.gpsText.textContent =
+          'העמוד נפתח מ-' + proto + ' ולכן ייתכן שהדפדפן לא יבקש הרשאת מיקום. פתח דרך HTTPS או localhost.';
+        return;
+      }
+
+      el.gpsText.textContent = 'מבקש הרשאת מיקום...';
+
+      navigator.geolocation.getCurrentPosition(
+        function (pos) {
+          const lat = pos.coords.latitude.toFixed(6);
+          const lon = pos.coords.longitude.toFixed(6);
+          const acc = Math.round(pos.coords.accuracy || 0);
+
+          el.gpsText.textContent =
+            'המיקום זוהה בהצלחה · קו רוחב ' + lat +
+            ' · קו אורך ' + lon +
+            ' · דיוק ' + acc + ' מטר';
+        },
+        function (err) {
+          let msg = 'שגיאת מיקום';
+
+          if (err.code === 1) msg = 'הרשאת מיקום נדחתה.';
+          if (err.code === 2) msg = 'לא ניתן לקבוע מיקום כרגע.';
+          if (err.code === 3) msg = 'פג זמן בקשת המיקום.';
+
+          el.gpsText.textContent = msg;
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 12000,
+          maximumAge: 0
+        }
+      );
+    }
+
+    function handleRefresh() {
+      fetchLiveAlerts();
+    }
+
+    function startAutoPoll() {
+      fetchLiveAlerts();
+      setInterval(fetchLiveAlerts, LIVE_CONFIG.pollMs);
+    }
+
+    el.refreshBtn.addEventListener('click', handleRefresh);
+    el.gpsBtn.addEventListener('click', requestGPS);
+
+    renderHeroLow();
+    startAutoPoll();
+  </script>
+</body>
+</html>
