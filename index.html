@@ -3,19 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>צבע אדום - מפה, היסטוריה והערכת סיכון</title>
+  <title>צבע אדום - מפה חיה</title>
 
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    crossorigin=""
-  />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 
   <style>
     :root{
       --bg:#07101b;
       --card:#0f1828;
-      --card2:#121f35;
       --line:rgba(255,255,255,.08);
       --text:#eef3ff;
       --muted:#a7b3cf;
@@ -24,7 +19,6 @@
       --red:#ff4d4f;
       --blue:#67a8ff;
       --radius:22px;
-      --shadow:0 12px 26px rgba(0,0,0,.28);
     }
 
     *{box-sizing:border-box}
@@ -35,22 +29,14 @@
       color:var(--text);
     }
 
-    .wrap{
-      max-width:980px;
-      margin:0 auto;
-      padding:14px 14px 34px;
-    }
-
     .top-banner{
       position:sticky;
       top:0;
-      z-index:999;
+      z-index:9999;
       display:none;
-      background:linear-gradient(180deg, rgba(255,77,79,.96), rgba(192,28,45,.96));
-      color:white;
-      border-bottom:1px solid rgba(255,255,255,.14);
-      box-shadow:0 8px 20px rgba(0,0,0,.28);
+      background:linear-gradient(180deg, rgba(255,77,79,.96), rgba(180,24,40,.96));
       padding:12px 16px;
+      border-bottom:1px solid rgba(255,255,255,.15);
     }
 
     .top-banner.active{display:block}
@@ -62,25 +48,30 @@
     }
 
     .banner-sub{
-      font-size:15px;
+      font-size:14px;
       line-height:1.5;
-      opacity:.96;
     }
 
     .banner-areas{
-      margin-top:8px;
       display:flex;
       flex-wrap:wrap;
       gap:8px;
+      margin-top:8px;
     }
 
     .pill{
+      border-radius:999px;
       background:rgba(255,255,255,.15);
       border:1px solid rgba(255,255,255,.18);
-      border-radius:999px;
       padding:7px 11px;
       font-size:13px;
       font-weight:700;
+    }
+
+    .wrap{
+      max-width:1000px;
+      margin:0 auto;
+      padding:14px;
     }
 
     .hero{
@@ -89,6 +80,7 @@
       justify-content:space-between;
       gap:12px;
       margin:8px 0 14px;
+      flex-wrap:wrap;
     }
 
     .brand{
@@ -118,10 +110,8 @@
     }
 
     .dot{
-      width:10px;height:10px;border-radius:50%;
-      background:#666;
+      width:10px;height:10px;border-radius:50%;background:#666;
     }
-
     .dot.ok{background:var(--green)}
     .dot.warn{background:var(--orange)}
     .dot.bad{background:var(--red)}
@@ -132,7 +122,7 @@
       gap:14px;
     }
 
-    @media (max-width: 860px){
+    @media (max-width: 900px){
       .grid{grid-template-columns:1fr}
     }
 
@@ -140,7 +130,6 @@
       background:linear-gradient(180deg,var(--card) 0%, #0c1423 100%);
       border:1px solid var(--line);
       border-radius:var(--radius);
-      box-shadow:var(--shadow);
       padding:16px;
       margin-bottom:14px;
     }
@@ -152,22 +141,23 @@
 
     .controls{
       display:grid;
-      grid-template-columns:1fr 1fr auto auto;
+      grid-template-columns:1fr 1.3fr auto auto;
       gap:10px;
       margin-bottom:12px;
     }
 
-    @media (max-width: 700px){
+    @media (max-width:700px){
       .controls{grid-template-columns:1fr}
     }
 
-    .input, .select, .btn{
+    .input,.select,.btn{
       border:1px solid rgba(255,255,255,.12);
-      background:#0a1220;
+      background:#091221;
       color:#e8eeff;
       border-radius:16px;
       padding:12px 14px;
       font-size:16px;
+      width:100%;
     }
 
     .btn{
@@ -185,6 +175,19 @@
       border-radius:18px;
       overflow:hidden;
       border:1px solid rgba(255,255,255,.08);
+      background:#0b1628;
+    }
+
+    .map-error{
+      display:none;
+      margin-top:10px;
+      padding:12px;
+      border-radius:14px;
+      background:rgba(255,77,79,.12);
+      border:1px solid rgba(255,77,79,.35);
+      color:#ffe4e4;
+      font-size:14px;
+      line-height:1.5;
     }
 
     .stats{
@@ -200,14 +203,14 @@
       padding:14px;
     }
 
-    .stat .label{
+    .label{
       color:var(--muted);
       font-size:13px;
       margin-bottom:8px;
     }
 
-    .stat .value{
-      font-size:28px;
+    .value{
+      font-size:26px;
       font-weight:900;
     }
 
@@ -216,6 +219,10 @@
       grid-template-columns:repeat(2,1fr);
       gap:10px;
       margin-top:12px;
+    }
+
+    @media (max-width:700px){
+      .risk-grid{grid-template-columns:1fr}
     }
 
     .risk{
@@ -251,7 +258,7 @@
       display:flex;
       flex-direction:column;
       gap:10px;
-      max-height:420px;
+      max-height:500px;
       overflow:auto;
     }
 
@@ -277,30 +284,6 @@
     .item-meta{font-size:13px;color:var(--muted);line-height:1.5}
     .item-time{font-size:13px;color:#d7def4;white-space:nowrap}
 
-    .legend{
-      display:flex;
-      gap:12px;
-      flex-wrap:wrap;
-      margin-top:10px;
-      color:var(--muted);
-      font-size:13px;
-    }
-
-    .legend span{
-      display:flex;align-items:center;gap:6px;
-    }
-
-    .legend i{
-      width:12px;height:12px;border-radius:50%;display:inline-block;
-    }
-
-    .foot{
-      margin-top:8px;
-      color:var(--muted);
-      font-size:12px;
-      line-height:1.6;
-    }
-
     .empty{
       padding:18px;
       border-radius:18px;
@@ -309,12 +292,19 @@
       background:rgba(57,211,83,.12);
       color:#dff7e4;
     }
+
+    .hint{
+      color:var(--muted);
+      font-size:12px;
+      line-height:1.6;
+      margin-top:10px;
+    }
   </style>
 </head>
 <body>
   <div id="topBanner" class="top-banner">
-    <div class="banner-title">התרעה פעילה באזור נבחר</div>
-    <div id="bannerSub" class="banner-sub">התקבלה התרעה חדשה בזמן אמת</div>
+    <div class="banner-title">התרעה פעילה באזור הנבחר</div>
+    <div id="bannerSub" class="banner-sub">התקבלה התרעה חדשה</div>
     <div id="bannerAreas" class="banner-areas"></div>
   </div>
 
@@ -341,23 +331,19 @@
               <option value="manual">בחירת יישוב ידנית</option>
             </select>
 
-            <select id="settlementSelect" class="select"></select>
+            <input id="settlementInput" class="input" list="settlementsList" placeholder="חפש יישוב או עיר">
+            <datalist id="settlementsList"></datalist>
 
             <button id="gpsBtn" class="btn primary" type="button">רענון GPS</button>
             <button id="refreshBtn" class="btn" type="button">רענון</button>
           </div>
 
           <div id="map"></div>
+          <div id="mapError" class="map-error"></div>
 
-          <div class="legend">
-            <span><i style="background:#ff4d4f"></i> אזור עם התרעה פעילה</span>
-            <span><i style="background:#ffb020"></i> אזור שנפגע לאחרונה</span>
-            <span><i style="background:#67a8ff"></i> מיקום נבחר</span>
-          </div>
-
-          <div class="foot">
-            הבחירה הידנית וה־GPS קובעים את היישוב/האזור שעבורו מוצגים חישובי הסיכון וההיסטוריה המקומית.
-            החישובים הם הערכת נוחות/סיכון בלבד, לא הנחיה מבצעית.
+          <div class="hint">
+            ההיסטוריה כאן נשמרת מקומית בדפדפן ומתחילה להצטבר מהרגע שהעמוד רץ.
+            ה־API של ההתראות מספק בעיקר את המצב הנוכחי, לכן היסטוריה מלאה נבנית מקומית.
           </div>
         </div>
 
@@ -386,25 +372,25 @@
             <div id="riskShower" class="risk low">
               <div class="risk-title">מקלחת</div>
               <div class="risk-value">טוב</div>
-              <div class="risk-note">הערכה נוכחית לפי רצף אזעקות אחרון, 24 שעות אחרונות וזמן התגוננות.</div>
+              <div class="risk-note">הערכה בלבד, לא הנחיה בטיחותית.</div>
             </div>
 
             <div id="riskMeal" class="risk low">
               <div class="risk-title">אוכל / בישול קצר</div>
               <div class="risk-value">טוב</div>
-              <div class="risk-note">מתאים לפעולה קצרה עם זמינות מיידית למרחב מוגן.</div>
+              <div class="risk-note">מבוסס על תדירות התרעות וזמן התגוננות.</div>
             </div>
 
-            <div id="riskSleep" class="risk low">
+            <div id="riskSleep" class="risk mid">
               <div class="risk-title">שינה</div>
               <div class="risk-value">בינוני</div>
-              <div class="risk-note">מחמיר כשיש היסטוריית אזעקות תכופה או זמן התגוננות קצר.</div>
+              <div class="risk-note">מחמיר כשיש רצף התרעות או זמן התגוננות קצר.</div>
             </div>
 
             <div id="riskOutside" class="risk mid">
-              <div class="risk-title">יציאה קצרה / חצר</div>
+              <div class="risk-title">יציאה קצרה</div>
               <div class="risk-value">בינוני</div>
-              <div class="risk-note">מבוסס על מרווח הזמן מהתרעה אחרונה ועל תדירות מקומית.</div>
+              <div class="risk-note">מושפע מהתרעה אחרונה ומהיסטוריית היישוב.</div>
             </div>
           </div>
         </div>
@@ -419,13 +405,12 @@
     </div>
   </div>
 
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script>
     const CONFIG = {
       proxyUrl: 'https://red.bnaya-av.workers.dev',
       pollMs: 3000,
-
-      // גרסת דמו התחלתית. אחר כך נחליף ל-all settlements + full geojson
+      storageKey: 'red_alert_history_v2',
       settlements: [
         { name: 'ירושלים', lat: 31.7683, lng: 35.2137, defense: 90 },
         { name: 'תל אביב - יפו', lat: 32.0853, lng: 34.7818, defense: 90 },
@@ -444,7 +429,14 @@
         { name: 'נתניה', lat: 32.3215, lng: 34.8532, defense: 90 },
         { name: 'ראשון לציון', lat: 31.9730, lng: 34.7925, defense: 90 },
         { name: 'פתח תקווה', lat: 32.0871, lng: 34.8878, defense: 90 },
-        { name: 'מודיעין - מכבים - רעות', lat: 31.8996, lng: 35.0104, defense: 90 }
+        { name: 'מודיעין - מכבים - רעות', lat: 31.8996, lng: 35.0104, defense: 90 },
+        { name: 'רעננה', lat: 32.1848, lng: 34.8708, defense: 90 },
+        { name: 'כפר סבא', lat: 32.1750, lng: 34.9060, defense: 90 },
+        { name: 'הרצליה', lat: 32.1663, lng: 34.8436, defense: 90 },
+        { name: 'חולון', lat: 32.0158, lng: 34.7874, defense: 90 },
+        { name: 'בת ים', lat: 32.0236, lng: 34.7519, defense: 90 },
+        { name: 'לוד', lat: 31.9510, lng: 34.8881, defense: 90 },
+        { name: 'רמלה', lat: 31.9316, lng: 34.8729, defense: 90 }
       ]
     };
 
@@ -453,8 +445,11 @@
       selectedSettlement: null,
       userLatLng: null,
       lastAlertKey: null,
-      history: [],
-      activeAlert: null
+      history: loadHistory(),
+      activeAlert: null,
+      map: null,
+      settlementMarkers: [],
+      activeMarkers: []
     };
 
     const el = {
@@ -464,7 +459,8 @@
       bannerSub: document.getElementById('bannerSub'),
       bannerAreas: document.getElementById('bannerAreas'),
       modeSelect: document.getElementById('modeSelect'),
-      settlementSelect: document.getElementById('settlementSelect'),
+      settlementInput: document.getElementById('settlementInput'),
+      settlementsList: document.getElementById('settlementsList'),
       gpsBtn: document.getElementById('gpsBtn'),
       refreshBtn: document.getElementById('refreshBtn'),
       historyList: document.getElementById('historyList'),
@@ -475,7 +471,8 @@
       riskShower: document.getElementById('riskShower'),
       riskMeal: document.getElementById('riskMeal'),
       riskSleep: document.getElementById('riskSleep'),
-      riskOutside: document.getElementById('riskOutside')
+      riskOutside: document.getElementById('riskOutside'),
+      mapError: document.getElementById('mapError')
     };
 
     function setConn(status, text) {
@@ -492,31 +489,56 @@
         .replaceAll("'", '&#039;');
     }
 
-    function nowTs() {
-      return Date.now();
-    }
+    function nowTs() { return Date.now(); }
 
     function fmtTime(ts) {
       return new Date(ts).toLocaleString('he-IL', {
         year:'2-digit', month:'2-digit', day:'2-digit',
-        hour:'2-digit', minute:'2-digit', second:'2-digit'
+        hour:'2-digit', minute:'2-digit'
       });
     }
 
-    function buildSelect() {
-      el.settlementSelect.innerHTML = CONFIG.settlements
-        .sort((a,b) => a.name.localeCompare(b.name, 'he'))
-        .map(s => `<option value="${escapeHtml(s.name)}">${escapeHtml(s.name)}</option>`)
+    function loadHistory() {
+      try {
+        const raw = localStorage.getItem(CONFIG.storageKey);
+        if (!raw) return [];
+        const parsed = JSON.parse(raw);
+        return Array.isArray(parsed) ? parsed : [];
+      } catch {
+        return [];
+      }
+    }
+
+    function saveHistory() {
+      localStorage.setItem(CONFIG.storageKey, JSON.stringify(state.history.slice(0, 500)));
+    }
+
+    function buildSettlementList() {
+      const sorted = [...CONFIG.settlements].sort((a,b) => a.name.localeCompare(b.name, 'he'));
+      el.settlementsList.innerHTML = sorted
+        .map(s => `<option value="${escapeHtml(s.name)}"></option>`)
         .join('');
 
       if (!state.selectedSettlement) {
-        state.selectedSettlement = CONFIG.settlements[0];
-        el.settlementSelect.value = state.selectedSettlement.name;
+        state.selectedSettlement = sorted[0];
       }
+
+      el.settlementInput.value = state.selectedSettlement.name;
     }
 
     function getSettlementByName(name) {
       return CONFIG.settlements.find(s => s.name === name) || null;
+    }
+
+    function distanceKm(lat1, lon1, lat2, lon2) {
+      const R = 6371;
+      const dLat = (lat2-lat1) * Math.PI/180;
+      const dLon = (lon2-lon1) * Math.PI/180;
+      const a =
+        Math.sin(dLat/2) * Math.sin(dLat/2) +
+        Math.cos(lat1*Math.PI/180) * Math.cos(lat2*Math.PI/180) *
+        Math.sin(dLon/2) * Math.sin(dLon/2);
+      return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
     }
 
     function findClosestSettlement(lat, lng) {
@@ -532,90 +554,88 @@
       return best;
     }
 
-    function distanceKm(lat1, lon1, lat2, lon2) {
-      const R = 6371;
-      const dLat = (lat2-lat1) * Math.PI/180;
-      const dLon = (lon2-lon1) * Math.PI/180;
-      const a =
-        Math.sin(dLat/2) * Math.sin(dLat/2) +
-        Math.cos(lat1*Math.PI/180) * Math.cos(lat2*Math.PI/180) *
-        Math.sin(dLon/2) * Math.sin(dLon/2);
-      return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    function initMap() {
+      if (!window.L) {
+        el.mapError.style.display = 'block';
+        el.mapError.textContent = 'ספריית המפה לא נטענה. נסה לרענן את העמוד.';
+        return;
+      }
+
+      try {
+        state.map = L.map('map', { zoomControl: true }).setView([31.4, 35.0], 7);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(state.map);
+
+        setTimeout(() => state.map.invalidateSize(), 400);
+      } catch (err) {
+        el.mapError.style.display = 'block';
+        el.mapError.textContent = 'המפה לא עלתה: ' + err.message;
+      }
     }
 
-    const map = L.map('map', { zoomControl: true }).setView([31.4, 35.0], 7);
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; OpenStreetMap contributors'
-    }).addTo(map);
-
-    const settlementLayer = L.layerGroup().addTo(map);
-    const activeLayer = L.layerGroup().addTo(map);
-    let selectedMarker = null;
+    function clearMarkers() {
+      state.settlementMarkers.forEach(m => m.remove());
+      state.activeMarkers.forEach(m => m.remove());
+      state.settlementMarkers = [];
+      state.activeMarkers = [];
+    }
 
     function renderMap() {
-      settlementLayer.clearLayers();
-      activeLayer.clearLayers();
+      if (!state.map) return;
+
+      clearMarkers();
 
       CONFIG.settlements.forEach(s => {
-        const isSelected = state.selectedSettlement && state.selectedSettlement.name === s.name;
+        const selected = state.selectedSettlement && state.selectedSettlement.name === s.name;
 
         const marker = L.circleMarker([s.lat, s.lng], {
-          radius: isSelected ? 10 : 6,
-          color: isSelected ? '#67a8ff' : '#96a6c8',
-          weight: isSelected ? 3 : 1,
-          fillColor: isSelected ? '#67a8ff' : '#d6dff7',
-          fillOpacity: isSelected ? .95 : .5
-        }).addTo(settlementLayer);
+          radius: selected ? 10 : 6,
+          color: selected ? '#67a8ff' : '#96a6c8',
+          weight: selected ? 3 : 1,
+          fillColor: selected ? '#67a8ff' : '#d6dff7',
+          fillOpacity: selected ? .95 : .5
+        }).addTo(state.map);
 
         marker.bindPopup(`<b>${escapeHtml(s.name)}</b><br>זמן התגוננות: ${s.defense} שניות`);
         marker.on('click', () => {
           state.mode = 'manual';
           el.modeSelect.value = 'manual';
           state.selectedSettlement = s;
-          el.settlementSelect.value = s.name;
+          el.settlementInput.value = s.name;
           renderAll();
         });
+
+        state.settlementMarkers.push(marker);
       });
 
       if (state.selectedSettlement) {
-        if (selectedMarker) selectedMarker.remove();
-        selectedMarker = L.marker([state.selectedSettlement.lat, state.selectedSettlement.lng]).addTo(activeLayer);
-        selectedMarker.bindPopup(`מיקום נבחר: ${escapeHtml(state.selectedSettlement.name)}`).openPopup();
-        map.setView([state.selectedSettlement.lat, state.selectedSettlement.lng], 9);
+        const main = L.marker([state.selectedSettlement.lat, state.selectedSettlement.lng]).addTo(state.map);
+        main.bindPopup(`מיקום נבחר: ${escapeHtml(state.selectedSettlement.name)}`);
+        state.activeMarkers.push(main);
+        state.map.setView([state.selectedSettlement.lat, state.selectedSettlement.lng], 9);
       }
 
       if (state.activeAlert?.data?.length) {
         for (const areaName of state.activeAlert.data) {
           const match = getSettlementByName(areaName);
           if (match) {
-            L.circle([match.lat, match.lng], {
+            const circle = L.circle([match.lat, match.lng], {
               radius: 9000,
               color: '#ff4d4f',
               fillColor: '#ff4d4f',
               fillOpacity: .25,
               weight: 2
-            }).addTo(activeLayer).bindPopup(`התרעה פעילה: ${escapeHtml(areaName)}`);
+            }).addTo(state.map);
+
+            circle.bindPopup(`התרעה פעילה: ${escapeHtml(areaName)}`);
+            state.activeMarkers.push(circle);
           }
         }
       }
-    }
 
-    function topBannerShow(alert, relevant) {
-      if (!relevant) {
-        el.topBanner.classList.remove('active');
-        return;
-      }
-
-      el.topBanner.classList.add('active');
-      el.bannerSub.textContent = `התקבלה התרעה חדשה באזור ${state.selectedSettlement?.name || 'הנבחר'}`;
-      el.bannerAreas.innerHTML = (alert.data || [])
-        .map(a => `<span class="pill">${escapeHtml(a)}</span>`)
-        .join('');
-    }
-
-    function topBannerHide() {
-      el.topBanner.classList.remove('active');
+      setTimeout(() => state.map.invalidateSize(), 200);
     }
 
     function normalizeAlert(raw) {
@@ -651,16 +671,21 @@
     }
 
     function pushHistory(alert) {
-      const entry = {
-        id: crypto.randomUUID(),
+      const same = state.history[0] &&
+        JSON.stringify(state.history[0].areas) === JSON.stringify(alert.data) &&
+        Math.abs(nowTs() - state.history[0].ts) < 60000;
+
+      if (same) return;
+
+      state.history.unshift({
         ts: nowTs(),
         areas: alert.data || [],
         title: alert.title || 'התרעה',
         relevant: isRelevantToSelected(alert)
-      };
+      });
 
-      state.history.unshift(entry);
-      state.history = state.history.slice(0, 300);
+      state.history = state.history.slice(0, 500);
+      saveHistory();
     }
 
     function renderHistory() {
@@ -670,7 +695,7 @@
       });
 
       if (!filtered.length) {
-        el.historyList.innerHTML = `<div class="empty">אין היסטוריית התרעות לאזור הנבחר כרגע</div>`;
+        el.historyList.innerHTML = `<div class="empty">אין היסטוריה ליישוב הזה עדיין. היא תתחיל להצטבר מהרגע שהעמוד פעיל.</div>`;
         return;
       }
 
@@ -687,8 +712,7 @@
     }
 
     function alertsInWindow(hours) {
-      const ms = hours * 3600 * 1000;
-      const cutoff = nowTs() - ms;
+      const cutoff = nowTs() - hours * 3600 * 1000;
       return state.history.filter(h => {
         if (h.ts < cutoff) return false;
         if (!state.selectedSettlement) return true;
@@ -698,4 +722,203 @@
 
     function lastRelevantAlertMinutesAgo() {
       const last = state.history.find(h =>
-        !state.selectedSettlement || h.
+        !state.selectedSettlement || h.areas.includes(state.selectedSettlement.name)
+      );
+      if (!last) return 9999;
+      return Math.floor((nowTs() - last.ts) / 60000);
+    }
+
+    function scoreToText(score) {
+      if (score < 25) return 'טוב';
+      if (score < 50) return 'בינוני';
+      if (score < 75) return 'זהיר';
+      return 'לא מומלץ';
+    }
+
+    function riskClass(score) {
+      if (score < 25) return 'low';
+      if (score < 60) return 'mid';
+      return 'high';
+    }
+
+    function setRisk(node, text, klass, note) {
+      node.className = `risk ${klass}`;
+      node.querySelector('.risk-value').textContent = text;
+      node.querySelector('.risk-note').textContent = note;
+    }
+
+    function evaluateRisk() {
+      if (!state.selectedSettlement) return;
+
+      const settlement = state.selectedSettlement;
+      const count24 = alertsInWindow(24);
+      const count7d = alertsInWindow(24 * 7);
+      const lastMin = lastRelevantAlertMinutesAgo();
+      const defense = settlement.defense || 90;
+
+      el.statSettlement.textContent = settlement.name;
+      el.statDefense.textContent = defense;
+      el.stat24h.textContent = count24;
+      el.stat7d.textContent = count7d;
+
+      let base = 0;
+      base += Math.min(count24 * 18, 55);
+      base += Math.min(count7d * 2, 20);
+      if (lastMin < 15) base += 30;
+      else if (lastMin < 60) base += 18;
+      else if (lastMin < 180) base += 8;
+
+      if (defense <= 15) base += 18;
+      else if (defense <= 30) base += 10;
+      else if (defense <= 45) base += 6;
+
+      const shower = Math.min(100, base + 10);
+      const meal = Math.min(100, base);
+      const sleep = Math.min(100, base + 20);
+      const outside = Math.min(100, base + 15);
+
+      setRisk(el.riskShower, scoreToText(shower), riskClass(shower),
+        `24ש׳: ${count24}, 7 ימים: ${count7d}, התרעה אחרונה לפני ${lastMin} דק׳`);
+
+      setRisk(el.riskMeal, scoreToText(meal), riskClass(meal),
+        `מבוסס על תדירות מקומית וזמן התגוננות של ${defense} שנ׳`);
+
+      setRisk(el.riskSleep, scoreToText(sleep), riskClass(sleep),
+        `שינה פחות מומלצת כשיש רצף התרעות ביישוב`);
+
+      setRisk(el.riskOutside, scoreToText(outside), riskClass(outside),
+        `פעולה קצרה בלבד ובהתאם למרחב מוגן זמין`);
+    }
+
+    function topBannerShow(alert, relevant) {
+      if (!relevant) {
+        el.topBanner.classList.remove('active');
+        return;
+      }
+
+      el.topBanner.classList.add('active');
+      el.bannerSub.textContent = `התקבלה התרעה חדשה באזור ${state.selectedSettlement?.name || 'הנבחר'}`;
+      el.bannerAreas.innerHTML = (alert.data || [])
+        .map(a => `<span class="pill">${escapeHtml(a)}</span>`)
+        .join('');
+    }
+
+    function topBannerHide() {
+      el.topBanner.classList.remove('active');
+    }
+
+    async function fetchLiveAlerts() {
+      try {
+        setConn('warn', 'מתחבר לשרת...');
+
+        const res = await fetch(CONFIG.proxyUrl + '?t=' + Date.now(), {
+          cache: 'no-store',
+          headers: { Accept: 'application/json' }
+        });
+
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+
+        const raw = await res.json();
+        const alert = normalizeAlert(raw);
+
+        if (!alert || !alert.data || !alert.data.length) {
+          state.activeAlert = null;
+          setConn('ok', 'מחובר · אין התרעות כרגע');
+          topBannerHide();
+          renderMap();
+          evaluateRisk();
+          return;
+        }
+
+        const key = buildAlertKey(alert);
+
+        if (key === state.lastAlertKey) {
+          state.activeAlert = alert;
+          setConn('ok', isRelevantToSelected(alert) ? 'מחובר · התרעה באזור הנבחר' : 'מחובר · אין אירוע חדש');
+          renderMap();
+          evaluateRisk();
+          return;
+        }
+
+        state.lastAlertKey = key;
+        state.activeAlert = alert;
+        pushHistory(alert);
+
+        const relevant = isRelevantToSelected(alert);
+        topBannerShow(alert, relevant);
+        setConn('ok', relevant ? 'מחובר · התרעה באזור הנבחר' : 'מחובר · התרעה באזור אחר');
+
+        renderAll();
+
+      } catch (err) {
+        console.error(err);
+        setConn('bad', 'שגיאת חיבור');
+      }
+    }
+
+    function requestGPS() {
+      if (!('geolocation' in navigator)) {
+        alert('המכשיר או הדפדפן לא תומכים ב-GPS');
+        return;
+      }
+
+      setConn('warn', 'מבקש מיקום...');
+
+      navigator.geolocation.getCurrentPosition(
+        pos => {
+          state.userLatLng = [pos.coords.latitude, pos.coords.longitude];
+          const nearest = findClosestSettlement(pos.coords.latitude, pos.coords.longitude);
+
+          if (nearest) {
+            state.selectedSettlement = nearest;
+            el.settlementInput.value = nearest.name;
+            setConn('ok', 'מיקום זוהה: ' + nearest.name);
+            renderAll();
+          } else {
+            setConn('warn', 'מיקום זוהה אך לא נמצא יישוב קרוב');
+          }
+        },
+        err => {
+          let msg = 'שגיאת GPS';
+          if (err.code === 1) msg = 'הרשאת מיקום נדחתה';
+          if (err.code === 2) msg = 'לא ניתן לזהות מיקום';
+          if (err.code === 3) msg = 'בקשת המיקום פגה';
+          setConn('bad', msg);
+          alert(msg + '. בדוק שהרשאת מיקום מאופשרת לדפדפן.');
+        },
+        { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
+      );
+    }
+
+    function renderAll() {
+      renderMap();
+      renderHistory();
+      evaluateRisk();
+    }
+
+    el.modeSelect.addEventListener('change', () => {
+      state.mode = el.modeSelect.value;
+      if (state.mode === 'gps') requestGPS();
+    });
+
+    el.settlementInput.addEventListener('change', () => {
+      const settlement = getSettlementByName(el.settlementInput.value.trim());
+      if (settlement) {
+        state.mode = 'manual';
+        el.modeSelect.value = 'manual';
+        state.selectedSettlement = settlement;
+        renderAll();
+      }
+    });
+
+    el.gpsBtn.addEventListener('click', requestGPS);
+    el.refreshBtn.addEventListener('click', fetchLiveAlerts);
+
+    buildSettlementList();
+    initMap();
+    renderAll();
+    fetchLiveAlerts();
+    setInterval(fetchLiveAlerts, CONFIG.pollMs);
+  </script>
+</body>
+</html>
