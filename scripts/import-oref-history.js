@@ -78,7 +78,14 @@ function rowsFromParsed(parsed) {
 
 (async () => {
   const browser = await chromium.launch({ headless: true });
-  const page = await browser.newPage();
+  const context = await browser.newContext({
+    locale: "he-IL",
+    userAgent:
+      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+    viewport: { width: 1440, height: 2200 }
+  });
+
+  const page = await context.newPage();
 
   const capturedUrls = [];
   let items = [];
@@ -89,7 +96,6 @@ function rowsFromParsed(parsed) {
       const ct = response.headers()["content-type"] || "";
 
       if (!url.includes("oref")) return;
-
       capturedUrls.push(url);
 
       if (!ct.includes("json") && !url.toLowerCase().includes("history")) return;
@@ -105,63 +111,95 @@ function rowsFromParsed(parsed) {
   });
 
   await page.goto("https://www.oref.org.il/heb/alerts-history", {
-    waitUntil: "networkidle",
+    waitUntil: "domcontentloaded",
     timeout: 90000
   });
 
-  await page.waitForTimeout(10000);
+  await page.waitForTimeout(12000);
 
-  // fallback: scrape from DOM if network parsing found nothing
-  if (items.length === 0) {
-    const domItems = await page.evaluate(() => {
-      const text = document.body.innerText || "";
-      const lines = text
-        .split("\n")
-        .map(s => s.trim())
-        .filter(Boolean);
+  // נסיון לשלוף טקסט מתוך הדף
+  const bodyText = await page.evaluate(() => (document.body?.innerText || "").trim());
+  console.log("BODY_TEXT_START");
+  console.log(bodyText.slice(0, 4000));
+  console.log("BODY_TEXT_END");
 
-      const results = [];
-      const timeRegex = /(\d{1,2}[\/.\-]\d{1,2}[\/.\-]\d{2,4}(?:\s+\d{1,2}:\d{2}(?::\d{2})?)?)/;
+  // נסיון לשלוף JSON מתוך תגיות script
+  const scriptTexts = await page.evaluate(() =>
+    Array.from(document.scripts)
+      .map(s => s.textContent || "")
+      .filter(Boolean)
+      .slice(0, 50)
+  );
 
-      for (let i = 0; i < lines.length; i++) {
-        const line = lines[i];
+  for (const txt of scriptTexts) {
+    const cleaned = txt.trim();
+    if (!cleaned) continue;
 
-        if (!timeRegex.test(line)) continue;
+    // אם כל הסקריפט עצמו JSON
+    if (cleaned.startsWith("{") || cleaned.startsWith("[")) {
+      try {
+        const parsed = JSON.parse(cleaned);
+        items.push(...rowsFromParsed(parsed));
+      } catch (_) {}
+    }
 
-        const alertTimeMatch = line.match(timeRegex);
-        const alert_time = alertTimeMatch ? alertTimeMatch[1] : "";
+    // אם יש בו מערך JSON גדול
+    const arrMatch = cleaned.match(/\[\s*\{[\s\S]{50,}\}\s*\]/);
+    if (arrMatch) {
+      try {
+        const parsed = JSON.parse(arrMatch[0]);
+        items.push(...rowsFromParsed(parsed));
+      } catch (_) {}
+    }
 
-        const title = lines[i + 1] || "אירוע";
+    // אם יש אובייקט JSON גדול
+    const objMatch = cleaned.match(/\{\s*"[A-Za-z0-9_]+":[\s\S]{50,}\}/);
+    if (objMatch) {
+      try {
+        const parsed = JSON.parse(objMatch[0]);
+        items.push(...rowsFromParsed(parsed));
+      } catch (_) {}
+    }
+  }
 
-        const areas = [];
-        for (let j = i + 2; j < Math.min(i + 12, lines.length); j++) {
-          const val = lines[j];
+  // fallback: חיפוש טקסטואלי ב-body
+  if (items.length === 0 && bodyText) {
+    const lines = bodyText
+      .split("\n")
+      .map(s => s.trim())
+      .filter(Boolean);
 
-          if (!val) continue;
-          if (timeRegex.test(val)) break;
-          if (val.length < 2) continue;
-          if (/היסטוריית התרעות|פיקוד העורף|תאריך|שעה/.test(val)) continue;
+    const results = [];
+    const timeRegex = /(\d{1,2}[\/.\-]\d{1,2}[\/.\-]\d{2,4}(?:\s+\d{1,2}:\d{2}(?::\d{2})?)?)/;
 
-          areas.push(val);
-        }
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+      if (!timeRegex.test(line)) continue;
 
-        if (areas.length) {
-          results.push({
-            alert_time,
-            title,
-            areas
-          });
-        }
+      const alertTimeMatch = line.match(timeRegex);
+      const alert_time = alertTimeMatch ? alertTimeMatch[1] : "";
+      const title = lines[i + 1] || "אירוע";
+
+      const areas = [];
+      for (let j = i + 2; j < Math.min(i + 12, lines.length); j++) {
+        const val = lines[j];
+        if (!val) continue;
+        if (timeRegex.test(val)) break;
+        if (/היסטוריית התרעות|פיקוד העורף|תאריך|שעה|עמוד/.test(val)) continue;
+        if (val.length < 2) continue;
+        areas.push(val);
       }
 
-      return results;
-    });
+      if (areas.length) {
+        results.push({
+          alert_time: normalizeTime(alert_time),
+          title,
+          areas
+        });
+      }
+    }
 
-    items.push(...domItems.map(item => ({
-      alert_time: normalizeTime(item.alert_time),
-      title: item.title || "אירוע",
-      areas: Array.isArray(item.areas) ? item.areas : []
-    })));
+    items.push(...results);
   }
 
   items = uniqueItems(
@@ -173,8 +211,14 @@ function rowsFromParsed(parsed) {
     )
   );
 
-  console.log("Captured URLs:", JSON.stringify(capturedUrls.slice(0, 50), null, 2));
-  console.log("Imported alerts:", items.length);
+  console.log("CAPTURED_URLS_START");
+  console.log(JSON.stringify(capturedUrls.slice(0, 100), null, 2));
+  console.log("CAPTURED_URLS_END");
+
+  console.log("IMPORTED_ALERTS_COUNT", items.length);
+  console.log("IMPORTED_ALERTS_SAMPLE_START");
+  console.log(JSON.stringify(items.slice(0, 10), null, 2));
+  console.log("IMPORTED_ALERTS_SAMPLE_END");
 
   const res = await fetch(
     process.env.IMPORT_URL + "?token=" + process.env.IMPORT_TOKEN,
@@ -186,7 +230,7 @@ function rowsFromParsed(parsed) {
   );
 
   const text = await res.text();
-  console.log("Server response:", text);
+  console.log("SERVER_RESPONSE", text);
 
   await browser.close();
 })();
