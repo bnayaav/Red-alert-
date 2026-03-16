@@ -645,6 +645,12 @@ header {
         </div>
       </div>
 
+      <!-- Map controls -->
+      <div style="display:flex;gap:8px;margin-bottom:8px;align-items:center;">
+        <button class="map-toggle-btn active" id="btn-markers" onclick="toggleLayer('markers')">📍 נקודות</button>
+        <button class="map-toggle-btn" id="btn-polygons" onclick="toggleLayer('polygons')">🗺️ אזורים</button>
+        <button class="map-toggle-btn" id="btn-heatmap" onclick="toggleLayer('heatmap')">🔥 חום</button>
+      </div>
       <!-- Map -->
       <div id="map"></div>
 
@@ -733,7 +739,7 @@ const state = {
   lastAlertId: null,
   pollTimer: null,
   map: null,
-  markers: { selected: null, alerts: [] },
+  markers: { selected: null, alerts: [], history: [], polygons: [], heatmap: [] },
 };
 
 // ════════════════════════════════════════════════
@@ -770,6 +776,48 @@ function initTabs() {
 // ════════════════════════════════════════════════
 async function loadSettlements() {
   try {
+    // Try to load full list from OREF via worker
+    const res = await fetch(`${WORKER}/cities`, { cache: 'no-store' });
+    if (res.ok) {
+      const data = await res.json();
+      if (data.cities && data.cities.length > 100) {
+        // OREF returns: [{label:"שם", value:"שם", id:..., areaid:..., areaname:..., label_en:...}]
+        // We merge with our coords from settlements.json
+        const staticRes = await fetch('settlements.json');
+        const staticList = staticRes.ok ? await staticRes.json() : [];
+        const coordMap = {};
+        staticList.forEach(s => { coordMap[s.name] = s; });
+
+        state.settlements = data.cities.map(c => {
+          const name = c.label || c.value || c.name || '';
+          const known = coordMap[name];
+          return {
+            name,
+            lat: known?.lat || null,
+            lng: known?.lng || null,
+            time: known?.time || 90,
+            areaname: c.areaname || ''
+          };
+        }).filter(s => s.name);
+
+        // For cities without coords, try fuzzy match
+        state.settlements.forEach(s => {
+          if (!s.lat) {
+            const fuzzy = staticList.find(k =>
+              k.name.includes(s.name.split(' ')[0]) || s.name.includes(k.name.split(' ')[0])
+            );
+            if (fuzzy) { s.lat = fuzzy.lat; s.lng = fuzzy.lng; }
+          }
+        });
+
+        console.log(`Loaded ${state.settlements.length} settlements from OREF`);
+        populateCityList();
+        return;
+      }
+    }
+  } catch {}
+  // Fallback to static file
+  try {
     const res = await fetch('settlements.json');
     if (res.ok) state.settlements = await res.json();
   } catch {
@@ -796,6 +844,10 @@ async function loadSettlements() {
     dl.appendChild(opt);
   });
 
+  populateCityList();
+}
+
+function populateCityList() {
   // Wire city input
   const input = document.getElementById('city-input');
   input.setAttribute('list', 'city-list');
@@ -895,6 +947,12 @@ function initMap() {
   });
 }
 
+// ════════════════════════════════════════════════
+//  MAP LAYERS STATE
+// ════════════════════════════════════════════════
+const mapLayers = { markers: true, polygons: false, heatmap: false };
+let historyCache = []; // cache for polygons/heatmap
+
 function findSettlement(areaName) {
   if (!areaName) return null;
   return state.settlements.find(s =>
@@ -918,18 +976,110 @@ function makeHistIcon() {
   });
 }
 
-async function updateMapMarkers() {
-  if (state.markers.selected) { state.markers.selected.remove(); state.markers.selected = null; }
-  state.markers.alerts.forEach(m => m.remove());
-  state.markers.alerts = [];
-  if (state.markers.history) state.markers.history.forEach(m => m.remove());
-  state.markers.history = [];
+function toggleLayer(layer) {
+  mapLayers[layer] = !mapLayers[layer];
+  const btn = document.getElementById('btn-' + layer);
+  if (btn) btn.classList.toggle('active', mapLayers[layer]);
+  updateMapMarkers();
+}
 
+// Build heatmap circles from area count data
+function buildHeatmap(areaCounts) {
+  if (state.markers.heatmap) { state.markers.heatmap.forEach(m => m.remove()); state.markers.heatmap = []; }
+  if (!mapLayers.heatmap) return;
+  const maxCount = Math.max(...Object.values(areaCounts), 1);
+  Object.entries(areaCounts).forEach(([areaName, count]) => {
+    const s = findSettlement(areaName);
+    if (!s) return;
+    const intensity = count / maxCount;
+    // color from yellow→orange→red based on intensity
+    const r = 255;
+    const g = Math.round(200 * (1 - intensity));
+    const b = 0;
+    const radius = 20 + intensity * 40;
+    const m = L.circleMarker([s.lat, s.lng], {
+      radius,
+      color: 'transparent',
+      fillColor: `rgb(${r},${g},${b})`,
+      fillOpacity: 0.15 + intensity * 0.35,
+      weight: 0,
+    }).bindTooltip(`🔥 ${areaName}: ${count} התרעות`, { direction: 'top', className: 'lf-tooltip' })
+      .addTo(state.map);
+    state.markers.heatmap.push(m);
+  });
+}
+
+// Build polygons (circles around settlements) colored by recency/frequency
+function buildPolygons(items, liveAreas) {
+  if (state.markers.polygons) { state.markers.polygons.forEach(m => m.remove()); state.markers.polygons = []; }
+  if (!mapLayers.polygons) return;
+
+  // Build area→count and area→lastTime maps
+  const areaCounts = {};
+  const areaLastTime = {};
+  items.forEach(item => {
+    const areas = Array.isArray(item.areas) ? item.areas : (item.areas || '').split(',');
+    areas.forEach(a => {
+      a = a.trim();
+      if (!a) return;
+      areaCounts[a] = (areaCounts[a] || 0) + 1;
+      if (!areaLastTime[a] || item.alert_time > areaLastTime[a]) areaLastTime[a] = item.alert_time;
+    });
+  });
+
+  const maxCount = Math.max(...Object.values(areaCounts), 1);
+
+  Object.entries(areaCounts).forEach(([areaName, count]) => {
+    const s = findSettlement(areaName);
+    if (!s) return;
+    const isLive = liveAreas.includes(areaName);
+    const intensity = count / maxCount;
+    const hoursAgo = (Date.now() - new Date(areaLastTime[areaName]).getTime()) / 3600000;
+    const recency = Math.max(0, 1 - hoursAgo / 168); // fade over 7 days
+
+    const fillColor = isLive ? '#ff2d2d' : `rgba(255,${Math.round(60 + 80*(1-intensity))},${Math.round(60*(1-intensity))})`;
+    const fillOpacity = isLive ? 0.45 : 0.12 + recency * 0.25;
+    const radius = isLive ? 18 : 10 + intensity * 16;
+
+    const m = L.circleMarker([s.lat, s.lng], {
+      radius,
+      color: isLive ? '#ff2d2d' : 'rgba(255,80,80,0.6)',
+      fillColor,
+      fillOpacity,
+      weight: isLive ? 2 : 1,
+    }).bindTooltip(
+      `${isLive ? '🚨' : '📍'} ${areaName}<br><span style="font-size:10px;color:#aaa">${count} התרעות · ${formatTime(areaLastTime[areaName])}</span>`,
+      { direction: 'top', className: 'lf-tooltip' }
+    ).addTo(state.map);
+    state.markers.polygons.push(m);
+  });
+
+  return areaCounts;
+}
+
+async function updateMapMarkers() {
+  // Clear all layers
+  if (state.markers.selected) { state.markers.selected.remove(); state.markers.selected = null; }
+  state.markers.alerts.forEach(m => m.remove()); state.markers.alerts = [];
+  if (state.markers.history) { state.markers.history.forEach(m => m.remove()); state.markers.history = []; }
+  if (state.markers.polygons) { state.markers.polygons.forEach(m => m.remove()); state.markers.polygons = []; }
+  if (state.markers.heatmap) { state.markers.heatmap.forEach(m => m.remove()); state.markers.heatmap = []; }
+
+  // Fetch history (use cache if available)
+  let items = historyCache;
   try {
     const res = await fetch(`${WORKER}/history?days=7`, { cache: 'no-store' });
     const data = await res.json();
+    items = data.items || [];
+    historyCache = items;
+  } catch {}
+
+  const liveAreas = state.liveAlert ? (state.liveAlert.areas || []) : [];
+
+  // ── LAYER: Markers ──
+  if (mapLayers.markers) {
     const seen = new Set();
-    (data.items || []).forEach(item => {
+    items.forEach(item => {
       const areas = Array.isArray(item.areas) ? item.areas : (item.areas || '').split(',');
       areas.forEach(areaName => {
         areaName = (areaName || '').trim();
@@ -944,10 +1094,8 @@ async function updateMapMarkers() {
         }
       });
     });
-  } catch {}
-
-  if (state.liveAlert) {
-    state.liveAlert.areas.forEach(areaName => {
+    // Live pulse markers
+    liveAreas.forEach(areaName => {
       const s = findSettlement(areaName);
       if (s) {
         const m = L.marker([s.lat, s.lng], { icon: makePulseIcon(), zIndexOffset: 1000 })
@@ -957,11 +1105,29 @@ async function updateMapMarkers() {
       }
     });
     if (state.markers.alerts.length > 0) {
-      const group = L.featureGroup(state.markers.alerts);
-      state.map.fitBounds(group.getBounds().pad(0.5));
+      state.map.fitBounds(L.featureGroup(state.markers.alerts).getBounds().pad(0.5));
     }
   }
 
+  // ── LAYER: Polygons ──
+  let areaCounts = {};
+  if (mapLayers.polygons) {
+    areaCounts = buildPolygons(items, liveAreas) || {};
+  }
+
+  // ── LAYER: Heatmap ──
+  if (mapLayers.heatmap) {
+    // Build counts if not already done
+    if (!Object.keys(areaCounts).length) {
+      items.forEach(item => {
+        const areas = Array.isArray(item.areas) ? item.areas : (item.areas || '').split(',');
+        areas.forEach(a => { a = a.trim(); if (a) areaCounts[a] = (areaCounts[a] || 0) + 1; });
+      });
+    }
+    buildHeatmap(areaCounts);
+  }
+
+  // ── Selected city ──
   if (state.selectedCity) {
     state.markers.selected = L.circleMarker(
       [state.selectedCity.lat, state.selectedCity.lng],
@@ -970,15 +1136,20 @@ async function updateMapMarkers() {
      .addTo(state.map);
   }
 
+  // ── Legend ──
   document.querySelectorAll('.map-legend').forEach(e => e.remove());
   const mapEl = document.getElementById('map');
   const legend = document.createElement('div');
   legend.className = 'map-legend';
   const histCount = state.markers.history?.length || 0;
   const liveCount = state.markers.alerts?.length || 0;
+  const polyCount = state.markers.polygons?.length || 0;
+  const heatCount = state.markers.heatmap?.length || 0;
   legend.innerHTML = `
     ${liveCount > 0 ? `<div class="legend-row"><div class="legend-circle" style="background:#ff2d2d;box-shadow:0 0 6px #ff2d2d"></div> פעיל עכשיו (${liveCount})</div>` : ''}
-    ${histCount > 0 ? `<div class="legend-row"><div class="legend-circle" style="background:rgba(255,80,80,0.6)"></div> היסטוריה 7 ימים (${histCount})</div>` : ''}
+    ${histCount > 0 ? `<div class="legend-row"><div class="legend-circle" style="background:rgba(255,80,80,0.6)"></div> היסטוריה (${histCount})</div>` : ''}
+    ${polyCount > 0 ? `<div class="legend-row"><div class="legend-circle" style="background:rgba(255,100,60,0.5);border:1px solid rgba(255,80,80,0.8)"></div> אזורים (${polyCount})</div>` : ''}
+    ${heatCount > 0 ? `<div class="legend-row"><div class="legend-circle" style="background:linear-gradient(135deg,#ff0,#f80,#f00)"></div> גרף חום (${heatCount})</div>` : ''}
     <div class="legend-row"><div class="legend-circle" style="background:#448aff"></div> מיקום נבחר</div>
   `;
   mapEl.appendChild(legend);
@@ -1411,6 +1582,26 @@ function showToast(msg, dur = 2500) {
   border-radius: 50%;
   border: 1px solid rgba(255,45,45,0.9);
   box-shadow: 0 0 4px rgba(255,45,45,0.5);
+}
+
+/* map layer toggle buttons */
+.map-toggle-btn {
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 100px;
+  color: var(--text2);
+  font-family: var(--font);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.map-toggle-btn.active {
+  background: var(--red-soft);
+  border-color: var(--red);
+  color: var(--red);
 }
 
 /* map legend */
