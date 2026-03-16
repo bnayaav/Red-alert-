@@ -11,7 +11,22 @@ function normalizeTime(text) {
   if (m) {
     let [, day, month, year, hh, mm, ss] = m;
     if (year.length === 2) year = "20" + year;
-    return new Date(`${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}T${hh.padStart(2, "0")}:${mm.padStart(2, "0")}:${(ss || "00").padStart(2, "0")}Z`).toISOString();
+
+    const iso =
+      year +
+      "-" +
+      month.padStart(2, "0") +
+      "-" +
+      day.padStart(2, "0") +
+      "T" +
+      hh.padStart(2, "0") +
+      ":" +
+      mm.padStart(2, "0") +
+      ":" +
+      (ss || "00").padStart(2, "0") +
+      "Z";
+
+    return new Date(iso).toISOString();
   }
 
   return new Date().toISOString();
@@ -26,19 +41,19 @@ function normalizeTime(text) {
   page.on("response", async (response) => {
     try {
       const url = response.url();
-      if (!url.includes("oref.org.il")) return;
+      if (!url.includes("oref")) return;
 
       const ct = response.headers()["content-type"] || "";
-      if (!ct.includes("json") && !url.toLowerCase().includes("history")) return;
+      if (!ct.includes("json")) return;
 
       const text = await response.text();
-      if (!text || text.length < 5) return;
+      if (!text || text.length < 10) return;
 
       try {
         const parsed = JSON.parse(text.replace(/^\uFEFF/, ""));
-        captured.push({ url, parsed });
-      } catch {}
-    } catch {}
+        captured.push(parsed);
+      } catch (_) {}
+    } catch (_) {}
   });
 
   await page.goto("https://www.oref.org.il/heb/alerts-history", {
@@ -50,10 +65,9 @@ function normalizeTime(text) {
 
   let items = [];
 
-  for (const entry of captured) {
-    const parsed = entry.parsed;
-
+  for (const parsed of captured) {
     let rows = [];
+
     if (Array.isArray(parsed)) rows = parsed;
     else if (Array.isArray(parsed.data)) rows = parsed.data;
     else if (Array.isArray(parsed.items)) rows = parsed.items;
@@ -86,14 +100,19 @@ function normalizeTime(text) {
   const unique = new Map();
 
   for (const item of items) {
-    const key = `${item.alert_time}|${item.title}|${[...item.areas].sort().join(",")}`;
+    const key =
+      item.alert_time +
+      "|" +
+      item.title +
+      "|" +
+      [...item.areas].sort().join(",");
     unique.set(key, item);
   }
 
   items = [...unique.values()];
 
   const res = await fetch(
-    `${process.env.IMPORT_URL}?token=${process.env.IMPORT_TOKEN}`,
+    process.env.IMPORT_URL + "?token=" + process.env.IMPORT_TOKEN,
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -102,7 +121,9 @@ function normalizeTime(text) {
   );
 
   const text = await res.text();
-  console.log("Import response:", text);
+
+  console.log("Imported alerts:", items.length);
+  console.log("Server response:", text);
 
   await browser.close();
 })();
