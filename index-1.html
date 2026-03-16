@@ -1,0 +1,1318 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#0a0a0f">
+<title>צבע אדום</title>
+
+<!-- Leaflet -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+/* ─────────────────────────────────────────────────
+   Design tokens & reset
+───────────────────────────────────────────────── */
+:root {
+  --bg:         #080810;
+  --surface:    #0f0f1a;
+  --surface2:   #161626;
+  --surface3:   #1e1e30;
+  --border:     rgba(255,255,255,0.07);
+  --border2:    rgba(255,255,255,0.12);
+  --red:        #ff2d2d;
+  --red-soft:   rgba(255,45,45,0.15);
+  --red-glow:   rgba(255,45,45,0.35);
+  --orange:     #ff8c00;
+  --orange-soft:rgba(255,140,0,0.15);
+  --green:      #00e676;
+  --green-soft: rgba(0,230,118,0.12);
+  --blue:       #448aff;
+  --blue-soft:  rgba(68,138,255,0.12);
+  --text:       #f0f0f8;
+  --text2:      #9090b0;
+  --text3:      #50507a;
+  --accent:     #ff2d2d;
+  --radius:     12px;
+  --radius-sm:  8px;
+  --tab-h:      56px;
+  --banner-h:   0px;
+  --font:       'Heebo', sans-serif;
+  --mono:       'JetBrains Mono', monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─────────────────────────────────────────────────
+   Alert banner
+───────────────────────────────────────────────── */
+#alert-banner {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 9999;
+  background: linear-gradient(135deg, #ff0000, #cc0000);
+  color: #fff;
+  padding: 0 20px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(.4,0,.2,1);
+  box-shadow: 0 4px 30px rgba(255,0,0,0.6);
+}
+#alert-banner.visible {
+  max-height: 80px;
+  --banner-h: 64px;
+}
+.banner-inner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 64px;
+}
+.banner-icon { font-size: 24px; flex-shrink: 0; animation: pulse-icon 0.8s ease infinite alternate; }
+.banner-title { font-weight: 800; font-size: 16px; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.banner-areas { font-size: 13px; opacity: .85; }
+@keyframes pulse-icon { from { transform: scale(1); } to { transform: scale(1.2); } }
+
+/* ─────────────────────────────────────────────────
+   Layout
+───────────────────────────────────────────────── */
+#app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  padding-top: var(--banner-h, 0px);
+  transition: padding-top 0.4s;
+}
+
+header {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px 10px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.logo-icon {
+  width: 36px; height: 36px;
+  background: var(--red);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  box-shadow: 0 0 16px var(--red-glow);
+}
+.logo-text {
+  font-size: 20px;
+  font-weight: 900;
+  letter-spacing: -0.5px;
+}
+.logo-text span { color: var(--red); }
+
+.status-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--text3);
+  flex-shrink: 0;
+  transition: background 0.3s;
+}
+.status-dot.live { background: var(--green); box-shadow: 0 0 8px var(--green); animation: blink 2s ease infinite; }
+.status-dot.alert { background: var(--red); box-shadow: 0 0 8px var(--red); animation: blink 0.5s ease infinite; }
+@keyframes blink { 0%,100%{ opacity:1 } 50%{ opacity:0.3 } }
+
+/* tab bar */
+.tabs {
+  flex-shrink: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  height: var(--tab-h);
+}
+.tab-btn {
+  background: none;
+  border: none;
+  color: var(--text3);
+  font-family: var(--font);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding: 6px 4px;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+  position: relative;
+}
+.tab-btn .tab-icon { font-size: 18px; line-height: 1; }
+.tab-btn.active { color: var(--red); border-bottom-color: var(--red); }
+.tab-btn.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px; left: 20%; right: 20%;
+  height: 2px;
+  background: var(--red);
+  border-radius: 2px;
+  box-shadow: 0 0 8px var(--red);
+}
+
+/* content area */
+.content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+.content::-webkit-scrollbar { width: 4px; }
+.content::-webkit-scrollbar-track { background: transparent; }
+.content::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 4px; }
+
+.screen { display: none; padding: 16px; }
+.screen.active { display: block; }
+
+/* ─────────────────────────────────────────────────
+   Cards / common components
+───────────────────────────────────────────────── */
+.card {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-bottom: 12px;
+}
+.card-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-bottom: 10px;
+}
+
+.row { display: flex; gap: 10px; margin-bottom: 12px; }
+.row .card { flex: 1; margin-bottom: 0; }
+
+/* ─────────────────────────────────────────────────
+   SCREEN: LIVE
+───────────────────────────────────────────────── */
+.location-bar {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.search-wrap {
+  flex: 1;
+  position: relative;
+}
+.search-wrap input {
+  width: 100%;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 14px;
+  padding: 10px 14px;
+  outline: none;
+  transition: border-color 0.2s;
+  list-style: none;
+}
+.search-wrap input:focus { border-color: var(--red); }
+.search-wrap datalist { display: none; }
+
+.icon-btn {
+  width: 42px; height: 42px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border2);
+  background: var(--surface2);
+  color: var(--text2);
+  font-size: 18px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  flex-shrink: 0;
+}
+.icon-btn:hover { background: var(--surface3); color: var(--text); }
+.icon-btn.active { background: var(--blue-soft); border-color: var(--blue); color: var(--blue); }
+.icon-btn.danger { background: var(--red-soft); border-color: var(--red); color: var(--red); }
+
+/* status grid */
+.status-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.stat-card {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.stat-label { font-size: 10px; font-weight: 700; letter-spacing: 0.7px; text-transform: uppercase; color: var(--text3); }
+.stat-value { font-size: 26px; font-weight: 800; line-height: 1; }
+.stat-sub { font-size: 12px; color: var(--text2); }
+
+.risk-low    { color: var(--green); }
+.risk-mid    { color: var(--orange); }
+.risk-high   { color: var(--red); }
+
+/* map */
+#map {
+  height: 280px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+/* leaflet dark overrides */
+.leaflet-tile-pane { filter: brightness(0.6) saturate(0.8); }
+.leaflet-control-attribution { display: none !important; }
+.leaflet-control-zoom a {
+  background: var(--surface2) !important;
+  color: var(--text2) !important;
+  border-color: var(--border2) !important;
+}
+
+.alert-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--red-soft);
+  border: 1px solid var(--red);
+  border-radius: 100px;
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--red);
+  margin: 4px 4px 4px 0;
+}
+
+.no-alert-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--green-soft);
+  border: 1px solid var(--green);
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  color: var(--green);
+  font-weight: 700;
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+/* ─────────────────────────────────────────────────
+   SCREEN: HISTORY
+───────────────────────────────────────────────── */
+.filter-bar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  align-items: center;
+}
+.filter-bar input, .filter-bar select {
+  flex: 1;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 14px;
+  padding: 9px 12px;
+  outline: none;
+}
+.filter-bar input:focus, .filter-bar select:focus { border-color: var(--red); }
+.filter-bar select option { background: var(--surface2); }
+
+.history-item {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  margin-bottom: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  animation: fadeIn 0.3s ease;
+  cursor: default;
+}
+.history-item:hover { border-color: var(--border2); }
+.history-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+.history-title { font-weight: 700; font-size: 14px; color: var(--text); }
+.history-time { font-size: 12px; color: var(--text3); font-family: var(--mono); white-space: nowrap; }
+.history-areas { display: flex; flex-wrap: wrap; gap: 4px; }
+.area-tag {
+  background: var(--surface3);
+  border: 1px solid var(--border2);
+  border-radius: 100px;
+  padding: 2px 10px;
+  font-size: 11px;
+  color: var(--text2);
+}
+.area-tag.highlight {
+  background: var(--red-soft);
+  border-color: var(--red);
+  color: var(--red);
+}
+@keyframes fadeIn { from { opacity:0; transform: translateY(4px); } to { opacity:1; transform: none; } }
+
+.empty-state {
+  text-align: center;
+  color: var(--text3);
+  padding: 48px 0;
+  font-size: 14px;
+}
+.empty-state .empty-icon { font-size: 48px; margin-bottom: 12px; }
+
+/* ─────────────────────────────────────────────────
+   SCREEN: STATS
+───────────────────────────────────────────────── */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.stat-box {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 10px;
+  text-align: center;
+}
+.stat-box .val { font-size: 28px; font-weight: 800; line-height: 1.1; }
+.stat-box .lbl { font-size: 10px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: var(--text3); margin-top: 4px; }
+
+/* bar chart */
+.chart-wrap {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-bottom: 12px;
+}
+.chart-title { font-size: 11px; font-weight: 700; letter-spacing: 0.7px; text-transform: uppercase; color: var(--text3); margin-bottom: 14px; }
+.bar-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 80px;
+}
+.bar-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  height: 100%;
+  justify-content: flex-end;
+}
+.bar {
+  width: 100%;
+  min-height: 2px;
+  border-radius: 3px 3px 0 0;
+  background: var(--red-soft);
+  border: 1px solid var(--red);
+  border-bottom: none;
+  transition: height 0.5s cubic-bezier(.4,0,.2,1);
+}
+.bar.has-data { background: var(--red); border-color: var(--red); }
+.bar-label { font-size: 8px; color: var(--text3); font-family: var(--mono); }
+
+.day-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.day-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.day-name { font-size: 12px; color: var(--text2); width: 64px; flex-shrink: 0; text-align: left; direction: ltr; }
+.day-bar-wrap { flex: 1; background: var(--surface3); border-radius: 4px; height: 20px; overflow: hidden; }
+.day-bar { height: 100%; background: var(--red); border-radius: 4px; transition: width 0.6s cubic-bezier(.4,0,.2,1); min-width: 2px; }
+.day-count { font-size: 12px; color: var(--text2); font-family: var(--mono); width: 24px; text-align: right; flex-shrink: 0; }
+
+/* ─────────────────────────────────────────────────
+   SCREEN: SAFE
+───────────────────────────────────────────────── */
+.activity-card {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-bottom: 10px;
+  transition: border-color 0.2s;
+}
+.activity-card.safe   { border-color: rgba(0,230,118,0.3); }
+.activity-card.caution{ border-color: rgba(255,140,0,0.3); }
+.activity-card.danger { border-color: rgba(255,45,45,0.3); }
+
+.activity-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.activity-emoji { font-size: 32px; line-height: 1; flex-shrink: 0; }
+.activity-info { flex: 1; }
+.activity-name { font-weight: 800; font-size: 16px; }
+.activity-duration { font-size: 12px; color: var(--text2); }
+.activity-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 100px;
+  flex-shrink: 0;
+}
+.badge-safe    { background: var(--green-soft);  color: var(--green);  border: 1px solid var(--green); }
+.badge-caution { background: var(--orange-soft); color: var(--orange); border: 1px solid var(--orange); }
+.badge-danger  { background: var(--red-soft);    color: var(--red);    border: 1px solid var(--red); }
+
+.activity-stats {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 10px;
+}
+.act-stat { text-align: center; }
+.act-stat .av { font-size: 18px; font-weight: 700; }
+.act-stat .al { font-size: 10px; color: var(--text3); font-weight: 600; text-transform: uppercase; }
+
+.risk-bar-wrap {
+  height: 6px;
+  background: var(--surface3);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.risk-bar { height: 100%; border-radius: 3px; transition: width 0.7s cubic-bezier(.4,0,.2,1); }
+.risk-bar.green  { background: var(--green); }
+.risk-bar.orange { background: var(--orange); }
+.risk-bar.red    { background: var(--red); }
+
+/* ─────────────────────────────────────────────────
+   Loader / spinner
+───────────────────────────────────────────────── */
+.spinner {
+  width: 32px; height: 32px;
+  border: 3px solid var(--border2);
+  border-top-color: var(--red);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  margin: 24px auto;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.loading-card {
+  display: flex;
+  justify-content: center;
+  padding: 32px;
+}
+
+/* ─────────────────────────────────────────────────
+   Toast
+───────────────────────────────────────────────── */
+#toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  background: var(--surface3);
+  border: 1px solid var(--border2);
+  border-radius: 100px;
+  padding: 10px 20px;
+  font-size: 13px;
+  color: var(--text);
+  z-index: 9000;
+  white-space: nowrap;
+  transition: transform 0.3s cubic-bezier(.4,0,.2,1);
+  pointer-events: none;
+}
+#toast.show { transform: translateX(-50%) translateY(0); }
+
+/* Responsive */
+@media (max-width: 400px) {
+  .stats-grid { grid-template-columns: repeat(3,1fr); gap: 6px; }
+  .stat-box .val { font-size: 22px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── ALERT BANNER ── -->
+<div id="alert-banner">
+  <div class="banner-inner">
+    <span class="banner-icon">🚨</span>
+    <div>
+      <div class="banner-title" id="banner-title">התרעה פעילה</div>
+      <div class="banner-areas" id="banner-areas"></div>
+    </div>
+  </div>
+</div>
+
+<div id="app">
+
+  <!-- ── HEADER ── -->
+  <header>
+    <div class="logo">
+      <div class="logo-icon">🚨</div>
+      <div class="logo-text"><span>צבע</span> אדום</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <span id="header-status" style="font-size:12px;color:var(--text3)">מחבר...</span>
+      <div class="status-dot" id="status-dot"></div>
+    </div>
+  </header>
+
+  <!-- ── TABS ── -->
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="live">
+      <span class="tab-icon">📡</span>חי
+    </button>
+    <button class="tab-btn" data-tab="history">
+      <span class="tab-icon">📋</span>היסטוריה
+    </button>
+    <button class="tab-btn" data-tab="stats">
+      <span class="tab-icon">📊</span>סטטיסטיקה
+    </button>
+    <button class="tab-btn" data-tab="safe">
+      <span class="tab-icon">🛡️</span>מה בטוח
+    </button>
+  </div>
+
+  <!-- ── CONTENT ── -->
+  <div class="content">
+
+    <!-- ████ LIVE ████ -->
+    <div class="screen active" id="screen-live">
+
+      <!-- Location bar -->
+      <div class="location-bar">
+        <div class="search-wrap">
+          <input type="text" id="city-input" placeholder="🔍 חיפוש יישוב..." autocomplete="off">
+          <datalist id="city-list"></datalist>
+        </div>
+        <button class="icon-btn" id="gps-btn" title="GPS" onclick="requestGPS()">📍</button>
+        <button class="icon-btn" id="refresh-btn" title="רענן" onclick="refreshLive()">🔄</button>
+      </div>
+
+      <!-- Selected location chip -->
+      <div id="selected-location-bar" style="margin-bottom:10px;min-height:24px;"></div>
+
+      <!-- Alert status -->
+      <div id="live-status-area"></div>
+
+      <!-- Stats row -->
+      <div class="status-grid">
+        <div class="stat-card">
+          <div class="stat-label">זמן התגוננות</div>
+          <div class="stat-value" id="stat-defense-time">—</div>
+          <div class="stat-sub">שניות</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">רמת סיכון</div>
+          <div class="stat-value" id="stat-risk-level">—</div>
+          <div class="stat-sub" id="stat-risk-sub">בחר יישוב</div>
+        </div>
+      </div>
+
+      <!-- Map -->
+      <div id="map"></div>
+
+      <!-- Active areas -->
+      <div class="card" id="active-areas-card" style="display:none">
+        <div class="card-title">🔴 אזורים מותרעים כעת</div>
+        <div id="active-areas-list"></div>
+      </div>
+
+    </div>
+
+    <!-- ████ HISTORY ████ -->
+    <div class="screen" id="screen-history">
+      <div class="filter-bar">
+        <input type="text" id="hist-filter" placeholder="🔍 סנן לפי יישוב..." oninput="filterHistory()">
+        <select id="hist-days" onchange="loadHistory()">
+          <option value="1">יום</option>
+          <option value="3">3 ימים</option>
+          <option value="7" selected>שבוע</option>
+          <option value="30">חודש</option>
+        </select>
+      </div>
+      <div id="history-list"><div class="loading-card"><div class="spinner"></div></div></div>
+    </div>
+
+    <!-- ████ STATS ████ -->
+    <div class="screen" id="screen-stats">
+      <div class="stats-grid">
+        <div class="stat-box">
+          <div class="val" id="stat-today">—</div>
+          <div class="lbl">היום</div>
+        </div>
+        <div class="stat-box">
+          <div class="val" id="stat-week">—</div>
+          <div class="lbl">שבוע</div>
+        </div>
+        <div class="stat-box">
+          <div class="val" id="stat-minutes">—</div>
+          <div class="lbl">דק' מאז</div>
+        </div>
+      </div>
+
+      <div class="chart-wrap">
+        <div class="chart-title">📈 התרעות לפי שעה (7 ימים)</div>
+        <div class="bar-chart" id="hour-chart"></div>
+      </div>
+
+      <div class="chart-wrap">
+        <div class="chart-title">📅 התרעות לפי יום</div>
+        <div class="day-chart" id="day-chart"></div>
+      </div>
+    </div>
+
+    <!-- ████ SAFE ████ -->
+    <div class="screen" id="screen-safe">
+      <div class="card" style="margin-bottom:14px;background:var(--surface3);border-color:var(--border2)">
+        <div style="font-size:12px;color:var(--text2);line-height:1.6">
+          החישוב מבוסס על התרעות 7 ימים אחורה ב<strong id="safe-location-name" style="color:var(--text)">האזור שנבחר</strong>.
+          <br>ההערכה סטטיסטית ואינה תחליף לשיפוט עצמי.
+        </div>
+      </div>
+      <div id="activities-container"></div>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /app -->
+
+<div id="toast"></div>
+
+<script>
+// ════════════════════════════════════════════════
+//  CONFIG
+// ════════════════════════════════════════════════
+const WORKER = 'https://red.bnaya-av.workers.dev';
+const POLL_INTERVAL = 15_000; // 15s live poll
+
+// ════════════════════════════════════════════════
+//  STATE
+// ════════════════════════════════════════════════
+const state = {
+  selectedCity: null,        // { name, lat, lng, time }
+  settlements: [],
+  liveAlert: null,
+  historyData: [],
+  statsData: null,
+  lastAlertId: null,
+  pollTimer: null,
+  map: null,
+  markers: { selected: null, alerts: [] },
+};
+
+// ════════════════════════════════════════════════
+//  BOOT
+// ════════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', async () => {
+  initTabs();
+  await loadSettlements();
+  initMap();
+  startPolling();
+  loadHistory();
+  loadStats();
+});
+
+// ════════════════════════════════════════════════
+//  TABS
+// ════════════════════════════════════════════════
+function initTabs() {
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('screen-' + btn.dataset.tab).classList.add('active');
+      if (btn.dataset.tab === 'history') loadHistory();
+      if (btn.dataset.tab === 'stats')   loadStats();
+      if (btn.dataset.tab === 'safe')    renderSafe();
+    });
+  });
+}
+
+// ════════════════════════════════════════════════
+//  SETTLEMENTS
+// ════════════════════════════════════════════════
+async function loadSettlements() {
+  try {
+    const res = await fetch('settlements.json');
+    if (res.ok) state.settlements = await res.json();
+  } catch {
+    // fallback inline list
+    state.settlements = [
+      { name:'תל אביב-יפו', lat:32.0853, lng:34.7818, time:90 },
+      { name:'ירושלים',     lat:31.7683, lng:35.2137, time:90 },
+      { name:'חיפה',        lat:32.7940, lng:34.9896, time:60 },
+      { name:'ראשון לציון', lat:31.9730, lng:34.7925, time:90 },
+      { name:'אשדוד',       lat:31.8040, lng:34.6550, time:60 },
+      { name:'באר שבע',     lat:31.2521, lng:34.7913, time:60 },
+      { name:'שדרות',       lat:31.5237, lng:34.5964, time:15 },
+      { name:'נתיבות',      lat:31.4202, lng:34.5898, time:15 },
+      { name:'קריית שמונה', lat:33.2074, lng:35.5693, time:15 },
+      { name:'אשקלון',      lat:31.6688, lng:34.5743, time:45 },
+    ];
+  }
+
+  // Populate datalist
+  const dl = document.getElementById('city-list');
+  state.settlements.forEach(s => {
+    const opt = document.createElement('option');
+    opt.value = s.name;
+    dl.appendChild(opt);
+  });
+
+  // Wire city input
+  const input = document.getElementById('city-input');
+  input.setAttribute('list', 'city-list');
+  input.addEventListener('change', () => {
+    const match = state.settlements.find(s => s.name === input.value.trim());
+    if (match) selectCity(match);
+  });
+}
+
+function selectCity(city) {
+  state.selectedCity = city;
+  document.getElementById('city-input').value = city.name;
+  updateSelectedBar();
+  updateDefenseTime();
+  updateRiskLevel();
+  if (state.map) {
+    state.map.setView([city.lat, city.lng], 13);
+    updateMapMarkers();
+  }
+  renderSafe();
+  loadStats();
+  showToast(`📍 ${city.name} נבחרה`);
+}
+
+function updateSelectedBar() {
+  const bar = document.getElementById('selected-location-bar');
+  if (!state.selectedCity) { bar.innerHTML = ''; return; }
+  bar.innerHTML = `
+    <span style="font-size:13px;color:var(--text2)">
+      📍 <strong style="color:var(--text)">${state.selectedCity.name}</strong>
+      · זמן התגוננות: <strong style="color:var(--orange)">${state.selectedCity.time}שנ'</strong>
+    </span>`;
+}
+
+function updateDefenseTime() {
+  const el = document.getElementById('stat-defense-time');
+  if (state.selectedCity) {
+    el.textContent = state.selectedCity.time;
+    el.className = 'stat-value ' + (state.selectedCity.time <= 30 ? 'risk-high' : state.selectedCity.time <= 60 ? 'risk-mid' : 'risk-low');
+  } else {
+    el.textContent = '—';
+    el.className = 'stat-value';
+  }
+}
+
+// ════════════════════════════════════════════════
+//  GPS
+// ════════════════════════════════════════════════
+function requestGPS() {
+  const btn = document.getElementById('gps-btn');
+  btn.classList.add('active');
+  if (!navigator.geolocation) {
+    showToast('❌ GPS אינו נתמך בדפדפן זה');
+    btn.classList.remove('active');
+    return;
+  }
+  navigator.geolocation.getCurrentPosition(
+    pos => {
+      btn.classList.remove('active');
+      const { latitude: lat, longitude: lng } = pos.coords;
+      const nearest = findNearest(lat, lng);
+      if (nearest) selectCity(nearest);
+      else showToast('לא נמצא יישוב קרוב');
+    },
+    err => {
+      btn.classList.remove('active');
+      const msgs = ['', 'אין הרשאת GPS', 'מיקום לא זמין', 'פסק זמן'];
+      showToast('❌ ' + (msgs[err.code] || 'שגיאת GPS'));
+    },
+    { timeout: 8000 }
+  );
+}
+
+function findNearest(lat, lng) {
+  if (!state.settlements.length) return null;
+  return state.settlements.reduce((best, s) => {
+    const d = Math.hypot(s.lat - lat, s.lng - lng);
+    return d < Math.hypot(best.lat - lat, best.lng - lng) ? s : best;
+  });
+}
+
+// ════════════════════════════════════════════════
+//  MAP
+// ════════════════════════════════════════════════
+function initMap() {
+  state.map = L.map('map', { zoomControl: true, attributionControl: false });
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(state.map);
+
+  // Default view: center of Israel
+  state.map.setView([31.5, 34.8], 7);
+
+  // Plot all settlements as tiny dots
+  state.settlements.forEach(s => {
+    L.circleMarker([s.lat, s.lng], {
+      radius: 4, color: 'transparent', fillColor: '#ffffff22', fillOpacity: 0.6, weight: 0
+    }).addTo(state.map);
+  });
+}
+
+function updateMapMarkers() {
+  // Remove old selected marker
+  if (state.markers.selected) {
+    state.markers.selected.remove();
+    state.markers.selected = null;
+  }
+
+  if (state.selectedCity) {
+    state.markers.selected = L.circleMarker(
+      [state.selectedCity.lat, state.selectedCity.lng],
+      { radius: 10, color: '#ffffff', fillColor: '#448aff', fillOpacity: 0.9, weight: 2 }
+    ).bindTooltip(state.selectedCity.name, { permanent: true, direction: 'top', className: 'lf-tooltip' })
+     .addTo(state.map);
+  }
+
+  // Remove old alert markers
+  state.markers.alerts.forEach(m => m.remove());
+  state.markers.alerts = [];
+
+  if (state.liveAlert) {
+    state.liveAlert.areas.forEach(areaName => {
+      const s = state.settlements.find(s => s.name === areaName || areaName.includes(s.name));
+      if (s) {
+        const m = L.circleMarker([s.lat, s.lng], {
+          radius: 12, color: '#ff2d2d', fillColor: '#ff2d2d', fillOpacity: 0.5, weight: 2
+        }).bindTooltip('🚨 ' + areaName, { direction: 'top' })
+          .addTo(state.map);
+        state.markers.alerts.push(m);
+      }
+    });
+  }
+}
+
+// ════════════════════════════════════════════════
+//  LIVE POLLING
+// ════════════════════════════════════════════════
+function startPolling() {
+  refreshLive();
+  state.pollTimer = setInterval(refreshLive, POLL_INTERVAL);
+}
+
+async function refreshLive() {
+  const dot = document.getElementById('status-dot');
+  const headerStatus = document.getElementById('header-status');
+  try {
+    const res = await fetch(`${WORKER}/live`, { cache: 'no-store' });
+    const data = await res.json();
+
+    dot.className = 'status-dot live';
+    headerStatus.textContent = 'מחובר';
+
+    if (data.active && data.alert) {
+      dot.className = 'status-dot alert';
+      state.liveAlert = data.alert;
+
+      // New alert notification via banner
+      if (data.alert.id !== state.lastAlertId) {
+        state.lastAlertId = data.alert.id;
+        showBanner(data.alert);
+        // add to local cache
+        cacheHistoryItem(data.alert);
+      }
+    } else {
+      hideBanner();
+      state.liveAlert = null;
+    }
+
+    renderLiveStatus(data);
+    updateMapMarkers();
+    updateRiskLevel();
+  } catch {
+    dot.className = 'status-dot';
+    headerStatus.textContent = 'לא מחובר';
+  }
+}
+
+function renderLiveStatus(data) {
+  const el = document.getElementById('live-status-area');
+  const areasCard = document.getElementById('active-areas-card');
+
+  if (data.active && data.alert) {
+    const a = data.alert;
+    el.innerHTML = `
+      <div style="background:var(--red-soft);border:1px solid var(--red);border-radius:var(--radius);padding:14px;margin-bottom:12px">
+        <div style="font-weight:800;font-size:16px;color:var(--red);margin-bottom:6px">🚨 ${a.title || 'ירי רקטות'}</div>
+        <div style="font-size:12px;color:var(--text2);">${formatTime(a.alert_time)}</div>
+      </div>`;
+
+    areasCard.style.display = 'block';
+    const list = document.getElementById('active-areas-list');
+    list.innerHTML = a.areas.map(area =>
+      `<span class="alert-pill">🔴 ${area}</span>`
+    ).join('');
+  } else {
+    el.innerHTML = `
+      <div class="no-alert-badge">
+        <span style="font-size:22px">✅</span>
+        <div>
+          <div style="font-weight:700">אין התרעות פעילות</div>
+          <div style="font-size:12px;font-weight:400;color:var(--green);opacity:0.8">עודכן ${formatTime(data.ts)}</div>
+        </div>
+      </div>`;
+    areasCard.style.display = 'none';
+  }
+}
+
+// ════════════════════════════════════════════════
+//  BANNER
+// ════════════════════════════════════════════════
+function showBanner(alert) {
+  document.getElementById('banner-title').textContent = alert.title || 'ירי רקטות ופגזים';
+  document.getElementById('banner-areas').textContent = (alert.areas || []).slice(0, 5).join(' · ');
+  document.getElementById('alert-banner').classList.add('visible');
+  document.getElementById('app').style.paddingTop = '64px';
+  setTimeout(hideBanner, 15000);
+}
+function hideBanner() {
+  document.getElementById('alert-banner').classList.remove('visible');
+  document.getElementById('app').style.paddingTop = '0';
+}
+
+// ════════════════════════════════════════════════
+//  RISK LEVEL
+// ════════════════════════════════════════════════
+function updateRiskLevel() {
+  const el = document.getElementById('stat-risk-level');
+  const sub = document.getElementById('stat-risk-sub');
+  if (!state.selectedCity) { el.textContent = '—'; sub.textContent = 'בחר יישוב'; return; }
+  const risk = calcRisk();
+  if (risk.level === 'low')  { el.textContent = 'נמוכה'; el.className = 'stat-value risk-low'; }
+  if (risk.level === 'mid')  { el.textContent = 'בינונית'; el.className = 'stat-value risk-mid'; }
+  if (risk.level === 'high') { el.textContent = 'גבוהה'; el.className = 'stat-value risk-high'; }
+  sub.textContent = risk.reason;
+}
+
+function calcRisk() {
+  const s = state.statsData;
+  if (!s) return { level: 'low', reason: 'טוען נתונים...' };
+  const { today = 0, minutesSinceLast } = s;
+  const t = state.selectedCity?.time || 90;
+
+  let score = 0;
+  if (today >= 10) score += 3;
+  else if (today >= 3) score += 2;
+  else if (today >= 1) score += 1;
+
+  if (minutesSinceLast !== null && minutesSinceLast < 30) score += 3;
+  else if (minutesSinceLast !== null && minutesSinceLast < 120) score += 1;
+
+  if (t <= 30) score += 2;
+  else if (t <= 60) score += 1;
+
+  if (score >= 5) return { level: 'high', reason: `${today} אזעקות היום` };
+  if (score >= 2) return { level: 'mid',  reason: `${today} אזעקות היום` };
+  return { level: 'low', reason: 'פעילות נמוכה' };
+}
+
+// ════════════════════════════════════════════════
+//  HISTORY
+// ════════════════════════════════════════════════
+let historyRaw = [];
+
+async function loadHistory() {
+  const container = document.getElementById('history-list');
+  const area = document.getElementById('hist-filter')?.value || '';
+  const days = document.getElementById('hist-days')?.value || 7;
+
+  container.innerHTML = '<div class="loading-card"><div class="spinner"></div></div>';
+
+  try {
+    const url = `${WORKER}/history?area=${encodeURIComponent(area)}&days=${days}`;
+    const res = await fetch(url);
+    const data = await res.json();
+    historyRaw = data.items || [];
+
+    // Merge with local cache
+    const cached = getLocalHistory();
+    const merged = mergeHistory(historyRaw, cached);
+    renderHistory(merged, area);
+  } catch {
+    // Fallback to local cache
+    const cached = getLocalHistory();
+    if (cached.length) {
+      renderHistory(cached, area);
+    } else {
+      container.innerHTML = `
+        <div class="empty-state">
+          <div class="empty-icon">📋</div>
+          <div>לא ניתן לטעון היסטוריה</div>
+          <div style="margin-top:6px;font-size:12px">בדוק חיבור לאינטרנט</div>
+        </div>`;
+    }
+  }
+}
+
+function renderHistory(items, filterArea = '') {
+  const container = document.getElementById('history-list');
+  if (!items.length) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">📋</div>
+        <div>אין התרעות בתקופה הנבחרת</div>
+      </div>`;
+    return;
+  }
+
+  container.innerHTML = items.map(item => {
+    const areas = Array.isArray(item.areas) ? item.areas : (item.areas || '').split(',').filter(Boolean);
+    return `
+    <div class="history-item">
+      <div class="history-header">
+        <div class="history-title">${item.title || 'ירי רקטות ופגזים'}</div>
+        <div class="history-time">${formatTime(item.alert_time)}</div>
+      </div>
+      <div class="history-areas">
+        ${areas.map(a => `<span class="area-tag ${filterArea && a.includes(filterArea) ? 'highlight' : ''}">${a}</span>`).join('')}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function filterHistory() {
+  const area = document.getElementById('hist-filter').value;
+  const cached = getLocalHistory();
+  const merged = mergeHistory(historyRaw, cached);
+  renderHistory(merged.filter(i => {
+    if (!area) return true;
+    const areas = Array.isArray(i.areas) ? i.areas : (i.areas || '').split(',');
+    return areas.some(a => a.includes(area)) || (i.title || '').includes(area);
+  }), area);
+}
+
+// Local history cache
+function cacheHistoryItem(alert) {
+  const key = 'red_history';
+  let arr = [];
+  try { arr = JSON.parse(localStorage.getItem(key) || '[]'); } catch {}
+  if (!arr.find(x => x.id === alert.id)) {
+    arr.unshift(alert);
+    arr = arr.slice(0, 200);
+    try { localStorage.setItem(key, JSON.stringify(arr)); } catch {}
+  }
+}
+
+function getLocalHistory() {
+  try { return JSON.parse(localStorage.getItem('red_history') || '[]'); } catch { return []; }
+}
+
+function mergeHistory(remote, local) {
+  const seen = new Set();
+  return [...remote, ...local].filter(item => {
+    if (seen.has(item.id)) return false;
+    seen.add(item.id);
+    return true;
+  }).sort((a, b) => new Date(b.alert_time) - new Date(a.alert_time));
+}
+
+// ════════════════════════════════════════════════
+//  STATS
+// ════════════════════════════════════════════════
+async function loadStats() {
+  const area = state.selectedCity?.name || '';
+  try {
+    const url = `${WORKER}/stats?area=${encodeURIComponent(area)}&days=7`;
+    const res = await fetch(url);
+    const data = await res.json();
+    state.statsData = data.stats;
+    renderStats(data.stats);
+    updateRiskLevel();
+  } catch {
+    renderStats(null);
+  }
+}
+
+function renderStats(s) {
+  if (!s) {
+    ['stat-today','stat-week','stat-minutes'].forEach(id => {
+      document.getElementById(id).textContent = '—';
+    });
+    return;
+  }
+
+  document.getElementById('stat-today').textContent = s.today ?? 0;
+  document.getElementById('stat-week').textContent  = s.total ?? 0;
+  document.getElementById('stat-minutes').textContent = s.minutesSinceLast ?? '—';
+
+  // Hour chart
+  const hourChart = document.getElementById('hour-chart');
+  const maxH = Math.max(...(s.byHour || []), 1);
+  hourChart.innerHTML = (s.byHour || Array(24).fill(0)).map((v, i) => `
+    <div class="bar-col">
+      <div class="bar ${v > 0 ? 'has-data' : ''}" style="height:${Math.max(4, (v / maxH) * 72)}px" title="${i}:00 – ${v} התרעות"></div>
+      <div class="bar-label">${i % 3 === 0 ? i : ''}</div>
+    </div>
+  `).join('');
+
+  // Day chart
+  const dayChart = document.getElementById('day-chart');
+  const days = s.byDay || {};
+  const dayKeys = Object.keys(days).sort().slice(-7);
+  const maxD = Math.max(...dayKeys.map(k => days[k]), 1);
+  dayChart.innerHTML = dayKeys.length ? dayKeys.map(d => `
+    <div class="day-row">
+      <div class="day-name">${formatDate(d)}</div>
+      <div class="day-bar-wrap">
+        <div class="day-bar" style="width:${Math.max(2, (days[d] / maxD) * 100)}%"></div>
+      </div>
+      <div class="day-count">${days[d]}</div>
+    </div>
+  `).join('') : '<div style="color:var(--text3);font-size:13px;text-align:center;padding:16px">אין נתונים לתקופה זו</div>';
+}
+
+// ════════════════════════════════════════════════
+//  SAFE / ACTIVITIES
+// ════════════════════════════════════════════════
+const ACTIVITIES = [
+  { id: 'shower',  emoji: '🚿', name: 'מקלחת',  duration: '5–8 דקות', baseChance: 0.08 },
+  { id: 'sleep',   emoji: '😴', name: 'שינה',    duration: '7–8 שעות', baseChance: 1.20 },
+  { id: 'meal',    emoji: '🍽️', name: 'ארוחה',   duration: '20–30 דק', baseChance: 0.35 },
+  { id: 'drive',   emoji: '🚗', name: 'נסיעה',   duration: '15–45 דק', baseChance: 0.50 },
+];
+
+function renderSafe() {
+  const container = document.getElementById('activities-container');
+  const nameEl = document.getElementById('safe-location-name');
+
+  if (state.selectedCity) nameEl.textContent = state.selectedCity.name;
+  else nameEl.textContent = 'כל הארץ';
+
+  const s = state.statsData;
+  const alertsPerDay = s ? (s.total / 7) : 0;
+  const t = state.selectedCity?.time || 90;
+
+  // risk multiplier
+  const multi = t <= 15 ? 4 : t <= 30 ? 2.5 : t <= 60 ? 1.5 : 1;
+
+  container.innerHTML = ACTIVITIES.map(act => {
+    const chance = Math.min(99, act.baseChance * alertsPerDay * multi * 100);
+    const level = chance < 5 ? 'safe' : chance < 25 ? 'caution' : 'danger';
+    const badge = { safe: 'בטוח יחסית', caution: 'זהיר', danger: 'מסוכן' }[level];
+    const badgeCls = `badge-${level}`;
+    const barColor = { safe: 'green', caution: 'orange', danger: 'red' }[level];
+    const barW = Math.max(2, Math.min(100, chance * 2));
+    const alertsWeek = s ? s.total : 0;
+
+    return `
+    <div class="activity-card ${level}">
+      <div class="activity-header">
+        <div class="activity-emoji">${act.emoji}</div>
+        <div class="activity-info">
+          <div class="activity-name">${act.name}</div>
+          <div class="activity-duration">⏱ ${act.duration}</div>
+        </div>
+        <div class="activity-badge ${badgeCls}">${badge}</div>
+      </div>
+      <div class="activity-stats">
+        <div class="act-stat">
+          <div class="av">${chance.toFixed(1)}%</div>
+          <div class="al">סיכוי</div>
+        </div>
+        <div class="act-stat">
+          <div class="av">${alertsWeek}</div>
+          <div class="al">אזעקות/שבוע</div>
+        </div>
+        <div class="act-stat">
+          <div class="av">${t}שנ'</div>
+          <div class="al">זמן התגוננות</div>
+        </div>
+      </div>
+      <div class="risk-bar-wrap">
+        <div class="risk-bar ${barColor}" style="width:${barW}%"></div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ════════════════════════════════════════════════
+//  UTILS
+// ════════════════════════════════════════════════
+function formatTime(iso) {
+  if (!iso) return '';
+  try {
+    const d = new Date(iso);
+    return d.toLocaleString('he-IL', { day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit' });
+  } catch { return iso; }
+}
+
+function formatDate(dateStr) {
+  if (!dateStr) return '';
+  const days = ['א','ב','ג','ד','ה','ו','ש'];
+  try {
+    const d = new Date(dateStr);
+    return `${days[d.getDay()]} ${d.getDate()}/${d.getMonth()+1}`;
+  } catch { return dateStr; }
+}
+
+function showToast(msg, dur = 2500) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), dur);
+}
+</script>
+
+<!-- Leaflet tooltip fix -->
+<style>
+.lf-tooltip {
+  background: var(--surface3) !important;
+  border: 1px solid var(--border2) !important;
+  color: var(--text) !important;
+  font-family: var(--font) !important;
+  font-size: 12px !important;
+  border-radius: 6px !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5) !important;
+  white-space: nowrap;
+}
+.leaflet-tooltip-top::before { border-top-color: var(--border2) !important; }
+</style>
+
+</body>
+</html>
