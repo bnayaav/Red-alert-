@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="theme-color" content="#0a0a0f">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
 <title>צבע אדום</title>
 
 <!-- Leaflet -->
@@ -1530,15 +1532,33 @@ let swRegistration = null;
 let pushSubscribed = false;
 
 async function initPush() {
-  if (!('serviceWorker' in navigator) || !('PushManager' in window)) return;
+  if (!('serviceWorker' in navigator)) {
+    console.warn('SW not supported');
+    return;
+  }
+  if (!('PushManager' in window)) {
+    console.warn('Push not supported');
+    return;
+  }
   try {
-    swRegistration = await navigator.serviceWorker.register('./sw.js');
+    swRegistration = await navigator.serviceWorker.register('./sw.js', { scope: './' });
+    console.log('SW registered:', swRegistration.scope);
+    // Wait for SW to be ready
+    await navigator.serviceWorker.ready;
     const sub = await swRegistration.pushManager.getSubscription();
     if (sub) {
       pushSubscribed = true;
       updatePushBtn(true);
+      console.log('Already subscribed to push');
     }
-  } catch (e) { console.warn('SW:', e); }
+    // If permission already denied, update button
+    if (Notification.permission === 'denied') {
+      const btn = document.getElementById('push-btn');
+      if (btn) btn.title = 'התרעות חסומות — שנה בהגדרות Chrome';
+    }
+  } catch (e) {
+    console.warn('SW registration failed:', e);
+  }
 }
 
 async function togglePush() {
@@ -1555,7 +1575,23 @@ async function togglePush() {
 
 async function subscribePush() {
   try {
-    const perm = await Notification.requestPermission();
+    // Must be called from user gesture
+    let perm = Notification.permission;
+    if (perm === 'default') {
+      perm = await new Promise(resolve => {
+        // Small delay to ensure user gesture context
+        setTimeout(async () => {
+          const result = await Notification.requestPermission();
+          resolve(result);
+        }, 100);
+      });
+    }
+    if (perm === 'denied') {
+      showToast('❌ התרעות חסומות — שנה בהגדרות Chrome');
+      // Open Chrome settings directly
+      window.open('chrome://settings/content/notifications');
+      return;
+    }
     if (perm !== 'granted') { showToast('❌ לא אושרה הרשאת התרעות'); return; }
 
     const sub = await swRegistration.pushManager.subscribe({
