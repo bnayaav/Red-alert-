@@ -588,6 +588,9 @@ header {
       <div class="logo-text"><span>צבע</span> אדום</div>
     </div>
     <div style="display:flex;align-items:center;gap:8px;">
+      <button id="push-btn" onclick="togglePush()" title="התרעות Push" style="background:none;border:1px solid var(--border2);border-radius:8px;padding:4px 10px;color:var(--text3);font-size:13px;cursor:pointer;display:flex;align-items:center;gap:4px;transition:all 0.2s">
+        <span id="push-icon">🔔</span><span id="push-label" style="font-size:11px">הפעל</span>
+      </button>
       <span id="header-status" style="font-size:12px;color:var(--text3)">מחבר...</span>
       <div class="status-dot" id="status-dot"></div>
     </div>
@@ -725,6 +728,7 @@ header {
 //  CONFIG
 // ════════════════════════════════════════════════
 const WORKER = 'https://red.bnaya-av.workers.dev';
+const VAPID_PUBLIC = 'BCB6Md8JXH5EyEJrOXWcB8ZAT4RnrmmJ0jKnXt4WH7lTNwp8czToZ5mro0DI7wGeDAUdNpCRG8-zdt52C5vExX0';
 const POLL_INTERVAL = 15_000; // 15s live poll
 
 // ════════════════════════════════════════════════
@@ -750,6 +754,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   await loadSettlements();
   initMap();
   startPolling();
+  initPush();
   loadHistory();
   loadStats();
 });
@@ -1516,6 +1521,102 @@ function formatDate(dateStr) {
     const d = new Date(dateStr);
     return `${days[d.getDay()]} ${d.getDate()}/${d.getMonth()+1}`;
   } catch { return dateStr; }
+}
+
+// ════════════════════════════════════════════════
+//  PUSH NOTIFICATIONS
+// ════════════════════════════════════════════════
+let swRegistration = null;
+let pushSubscribed = false;
+
+async function initPush() {
+  if (!('serviceWorker' in navigator) || !('PushManager' in window)) return;
+  try {
+    swRegistration = await navigator.serviceWorker.register('/sw.js');
+    const sub = await swRegistration.pushManager.getSubscription();
+    if (sub) {
+      pushSubscribed = true;
+      updatePushBtn(true);
+    }
+  } catch (e) { console.warn('SW:', e); }
+}
+
+async function togglePush() {
+  if (!swRegistration) {
+    showToast('❌ Push לא נתמך בדפדפן זה');
+    return;
+  }
+  if (pushSubscribed) {
+    await unsubscribePush();
+  } else {
+    await subscribePush();
+  }
+}
+
+async function subscribePush() {
+  try {
+    const perm = await Notification.requestPermission();
+    if (perm !== 'granted') { showToast('❌ לא אושרה הרשאת התרעות'); return; }
+
+    const sub = await swRegistration.pushManager.subscribe({
+      userVisibleOnly: true,
+      applicationServerKey: urlB64ToUint8Array(VAPID_PUBLIC),
+    });
+
+    await fetch(`${WORKER}/subscribe`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ subscription: sub.toJSON(), area: state.selectedCity?.name || '' }),
+    });
+
+    pushSubscribed = true;
+    updatePushBtn(true);
+    showToast('✅ נרשמת להתרעות Push!');
+  } catch (e) {
+    showToast('❌ שגיאה: ' + e.message);
+  }
+}
+
+async function unsubscribePush() {
+  try {
+    const sub = await swRegistration.pushManager.getSubscription();
+    if (sub) {
+      await fetch(`${WORKER}/unsubscribe`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ endpoint: sub.endpoint }),
+      });
+      await sub.unsubscribe();
+    }
+    pushSubscribed = false;
+    updatePushBtn(false);
+    showToast('🔕 בוטלו התרעות Push');
+  } catch (e) { showToast('שגיאה: ' + e.message); }
+}
+
+function updatePushBtn(active) {
+  const btn = document.getElementById('push-btn');
+  const icon = document.getElementById('push-icon');
+  const label = document.getElementById('push-label');
+  if (!btn) return;
+  if (active) {
+    btn.style.borderColor = 'var(--green)';
+    btn.style.color = 'var(--green)';
+    icon.textContent = '🔔';
+    label.textContent = 'פעיל';
+  } else {
+    btn.style.borderColor = 'var(--border2)';
+    btn.style.color = 'var(--text3)';
+    icon.textContent = '🔕';
+    label.textContent = 'הפעל';
+  }
+}
+
+function urlB64ToUint8Array(base64String) {
+  const padding = '='.repeat((4 - base64String.length % 4) % 4);
+  const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
+  const raw = window.atob(base64);
+  return Uint8Array.from([...raw].map(c => c.charCodeAt(0)));
 }
 
 function showToast(msg, dur = 2500) {
