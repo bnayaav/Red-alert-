@@ -1532,7 +1532,7 @@ let pushSubscribed = false;
 async function initPush() {
   if (!('serviceWorker' in navigator) || !('PushManager' in window)) return;
   try {
-    swRegistration = await navigator.serviceWorker.register('/sw.js');
+    swRegistration = await navigator.serviceWorker.register('./sw.js');
     const sub = await swRegistration.pushManager.getSubscription();
     if (sub) {
       pushSubscribed = true;
