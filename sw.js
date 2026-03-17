@@ -4,7 +4,7 @@
 // ═══════════════════════════════════════════════
 
 const CACHE = 'red-alert-v1';
-const ASSETS = ['/', '/index.html', '/settlements.json', '/manifest.json'];
+const ASSETS = ['./', './index.html', './settlements.json', './manifest.json'];
 
 // ── Install ──
 self.addEventListener('install', e => {
@@ -76,7 +76,7 @@ self.addEventListener('notificationclick', e => {
         }
       }
       // Otherwise open new window
-      return clients.openWindow('/');
+      return clients.openWindow('./index.html');
     })
   );
 });
