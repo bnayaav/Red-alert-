@@ -783,47 +783,46 @@ function initTabs() {
 // ════════════════════════════════════════════════
 async function loadSettlements() {
   try {
-    // Try to load full list from OREF via worker
-    const res = await fetch(`${WORKER}/cities`, { cache: 'no-store' });
+    // נסה קודם /settlements מהWorker — data.gov.il + OREF מלא
+    const res = await fetch(`${WORKER}/settlements`, { cache: 'no-store' });
     if (res.ok) {
       const data = await res.json();
-      if (data.cities && data.cities.length > 100) {
-        // OREF returns: [{label:"שם", value:"שם", id:..., areaid:..., areaname:..., label_en:...}]
-        // We merge with our coords from settlements.json
-        const staticRes = await fetch('settlements.json');
-        const staticList = staticRes.ok ? await staticRes.json() : [];
+      if (data.settlements && data.settlements.length > 100) {
+        // סנן רק יישובים עם קואורדינטות תקינות
+        const withCoords = data.settlements.filter(s => s.lat && s.lng);
+        const withoutCoords = data.settlements.filter(s => !s.lat || !s.lng);
+
+        // נסה להשלים קואורדינטות חסרות מהקובץ הסטטי
+        let staticList = [];
+        try {
+          const sr = await fetch('settlements.json');
+          if (sr.ok) staticList = await sr.json();
+        } catch {}
+
         const coordMap = {};
         staticList.forEach(s => { coordMap[s.name] = s; });
 
-        state.settlements = data.cities.map(c => {
-          const name = c.label || c.value || c.name || '';
-          const known = coordMap[name];
-          return {
-            name,
-            lat: known?.lat || null,
-            lng: known?.lng || null,
-            time: known?.time || 90,
-            areaname: c.areaname || ''
-          };
-        }).filter(s => s.name);
-
-        // For cities without coords, try fuzzy match
-        state.settlements.forEach(s => {
-          if (!s.lat) {
-            const fuzzy = staticList.find(k =>
-              k.name.includes(s.name.split(' ')[0]) || s.name.includes(k.name.split(' ')[0])
+        withoutCoords.forEach(s => {
+          const known = coordMap[s.name];
+          if (known?.lat) { s.lat = known.lat; s.lng = known.lng; }
+          else {
+            // חיפוש חלקי
+            const partial = staticList.find(k =>
+              k.name.includes(s.name.slice(0,3)) || s.name.includes(k.name.slice(0,3))
             );
-            if (fuzzy) { s.lat = fuzzy.lat; s.lng = fuzzy.lng; }
+            if (partial?.lat) { s.lat = partial.lat; s.lng = partial.lng; }
           }
         });
 
-        console.log(`Loaded ${state.settlements.length} settlements from OREF`);
+        state.settlements = [...withCoords, ...withoutCoords.filter(s=>s.lat)];
+        console.log(`טעינה: ${state.settlements.length} יישובים (gov+OREF)`);
         populateCityList();
         return;
       }
     }
-  } catch {}
-  // Fallback to static file
+  } catch(e) { console.warn('settlements API:', e.message); }
+
+  // Fallback לקובץ סטטי
   try {
     const res = await fetch('settlements.json');
     if (res.ok) state.settlements = await res.json();
