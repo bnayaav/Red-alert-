@@ -789,10 +789,7 @@ async function loadSettlements() {
       const data = await res.json();
       if (data.settlements && data.settlements.length > 100) {
         // סנן רק יישובים עם קואורדינטות תקינות
-        const withCoords = data.settlements.filter(s => s.lat && s.lng);
-        const withoutCoords = data.settlements.filter(s => !s.lat || !s.lng);
-
-        // נסה להשלים קואורדינטות חסרות מהקובץ הסטטי
+        // טען קובץ סטטי לקואורדינטות
         let staticList = [];
         try {
           const sr = await fetch('settlements.json');
@@ -802,20 +799,21 @@ async function loadSettlements() {
         const coordMap = {};
         staticList.forEach(s => { coordMap[s.name] = s; });
 
-        withoutCoords.forEach(s => {
-          const known = coordMap[s.name];
-          if (known?.lat) { s.lat = known.lat; s.lng = known.lng; }
-          else {
-            // חיפוש חלקי
-            const partial = staticList.find(k =>
-              k.name.includes(s.name.slice(0,3)) || s.name.includes(k.name.slice(0,3))
-            );
-            if (partial?.lat) { s.lat = partial.lat; s.lng = partial.lng; }
-          }
+        // השלם קואורדינטות לכל יישוב
+        data.settlements.forEach(s => {
+          if (s.lat && s.lng) return; // כבר יש
+          const exact = coordMap[s.name];
+          if (exact?.lat) { s.lat = exact.lat; s.lng = exact.lng; s.time = exact.time || s.time; return; }
+          // חיפוש חלקי — כותרת ראשונה
+          const prefix = s.name.slice(0, 4);
+          const partial = staticList.find(k => k.name.startsWith(prefix) || s.name.startsWith(k.name.slice(0,4)));
+          if (partial?.lat) { s.lat = partial.lat; s.lng = partial.lng; }
         });
 
-        state.settlements = [...withCoords, ...withoutCoords.filter(s=>s.lat)];
-        console.log(`טעינה: ${state.settlements.length} יישובים (gov+OREF)`);
+        // כל היישובים — עם וגם בלי קואורדינטות (לחיפוש)
+        state.settlements = data.settlements;
+        const withCoords = data.settlements.filter(s=>s.lat).length;
+        console.log(`טעינה: ${data.settlements.length} יישובים, ${withCoords} עם קואורדינטות`);
         populateCityList();
         return;
       }
