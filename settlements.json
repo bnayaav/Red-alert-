@@ -12,10 +12,64 @@
     "time": 60
   },
   {
+    "name": "אבו עבדון",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "אבו קרינאת",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "אבטליון",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "אביאל",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "אביבים",
     "lat": 33.1,
     "lng": 35.5167,
     "time": 15
+  },
+  {
+    "name": "אביגדור",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "אביחיל",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "אביטל",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "אביעזר",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "אבירים",
+    "lat": null,
+    "lng": null,
+    "time": 60
   },
   {
     "name": "אבן יהודה",
@@ -24,10 +78,88 @@
     "time": 90
   },
   {
+    "name": "אבן מנחם",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "אבן ספיר",
     "lat": 31.7333,
     "lng": 35.1167,
     "time": 90
+  },
+  {
+    "name": "אבן שמואל",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "אבני איתן",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "אבני חפץ",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "אגמון",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "אגף",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "אגר",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "אדורה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "אדירים",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "אדמית",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "אודים",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "אוחד",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "אולמות",
+    "lat": null,
+    "lng": null,
+    "time": 60
   },
   {
     "name": "אום אל-פחם",
@@ -36,10 +168,34 @@
     "time": 60
   },
   {
+    "name": "אום אל-קוטוף",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "אום בטין",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "אופקים",
     "lat": 31.3131,
     "lng": 34.621,
     "time": 25
+  },
+  {
+    "name": "אור הגנוז",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "אור הנר",
+    "lat": null,
+    "lng": null,
+    "time": 60
   },
   {
     "name": "אור יהודה",
@@ -60,6 +216,12 @@
     "time": 90
   },
   {
+    "name": "אורות",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "אורטל",
     "lat": 33.1667,
     "lng": 35.7833,
@@ -72,10 +234,52 @@
     "time": 25
   },
   {
+    "name": "אורנים",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "אורנית",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "אושה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "אזור",
     "lat": 32.0167,
     "lng": 34.8167,
     "time": 90
+  },
+  {
+    "name": "אחווה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "אחוזם",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "אחוזת ברק",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "אחיהוד",
+    "lat": null,
+    "lng": null,
+    "time": 60
   },
   {
     "name": "אחיטוב",
@@ -84,10 +288,64 @@
     "time": 90
   },
   {
+    "name": "אחיסמך",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "אחיעזר",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "אטרש",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "איבים",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "אייל",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "איילון",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "איילת השחר",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "אילון",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "אילות",
     "lat": 29.5333,
     "lng": 34.95,
     "time": 180
+  },
+  {
+    "name": "אילניה",
+    "lat": null,
+    "lng": null,
+    "time": 60
   },
   {
     "name": "אילת",
@@ -96,10 +354,34 @@
     "time": 180
   },
   {
+    "name": "אירוס",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "אכסאל",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "אל-בטוף",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "אל-חמידיה",
     "lat": 32.9,
     "lng": 35.65,
     "time": 30
+  },
+  {
+    "name": "אל-מכר",
+    "lat": null,
+    "lng": null,
+    "time": 60
   },
   {
     "name": "אל-רום",
@@ -108,10 +390,76 @@
     "time": 15
   },
   {
+    "name": "אלומה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "אלומות",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "אלומים",
     "lat": 31.4833,
     "lng": 34.6333,
     "time": 25
+  },
+  {
+    "name": "אלון",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "אלון הגליל",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "אלון מורה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "אלון שבות",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "אלוני אבא",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "אלוני הבשן",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "אלוני יצחק",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "אלונים",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "אלזבאד",
+    "lat": null,
+    "lng": null,
+    "time": 60
   },
   {
     "name": "אלי עד",
@@ -120,10 +468,52 @@
     "time": 15
   },
   {
+    "name": "אליאב",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "אליכין",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "אליפז",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "אליפלט",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "אליקים",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "אלישיב",
     "lat": 32.3667,
     "lng": 34.9167,
     "time": 90
+  },
+  {
+    "name": "אלישמע",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "אלכסנדר",
+    "lat": null,
+    "lng": null,
+    "time": 60
   },
   {
     "name": "אלמגור",
@@ -144,9 +534,27 @@
     "time": 90
   },
   {
+    "name": "אלעזר",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "אלפי מנשה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "אם אל-פאחם",
     "lat": 32.5174,
     "lng": 35.1522,
+    "time": 60
+  },
+  {
+    "name": "אמונים",
+    "lat": null,
+    "lng": null,
     "time": 60
   },
   {
@@ -156,16 +564,82 @@
     "time": 15
   },
   {
+    "name": "אמירים",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "אמנון",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "אמציה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "אניעם",
     "lat": 32.95,
     "lng": 35.7667,
     "time": 30
   },
   {
+    "name": "אסד",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "אספר",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "אסתאל",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "אעבלין",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "אפיק",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "אפיקים",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "אפק",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "אפרת",
     "lat": 31.6594,
     "lng": 35.1572,
     "time": 90
+  },
+  {
+    "name": "ארבל",
+    "lat": null,
+    "lng": null,
+    "time": 60
   },
   {
     "name": "ארגמן",
@@ -180,6 +654,18 @@
     "time": 15
   },
   {
+    "name": "ארסוף",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "אשבול",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "אשדוד",
     "lat": 31.804,
     "lng": 34.655,
@@ -192,10 +678,22 @@
     "time": 30
   },
   {
+    "name": "אשחר",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "אשכול",
     "lat": 31.35,
     "lng": 34.5167,
     "time": 15
+  },
+  {
+    "name": "אשל הנשיא",
+    "lat": null,
+    "lng": null,
+    "time": 60
   },
   {
     "name": "אשלים",
@@ -216,15 +714,57 @@
     "time": 60
   },
   {
+    "name": "אשתאול",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "באקה אל-גרביה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "באר אורה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "באר גנים",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "באר טוביה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "באר יעקב",
     "lat": 31.9333,
     "lng": 34.8333,
     "time": 90
   },
   {
+    "name": "באר מילכה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "באר שבע",
     "lat": 31.2521,
     "lng": 34.7913,
+    "time": 60
+  },
+  {
+    "name": "בארות יצחק",
+    "lat": null,
+    "lng": null,
     "time": 60
   },
   {
@@ -234,9 +774,27 @@
     "time": 15
   },
   {
+    "name": "בוסתן הגליל",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "בועיינה-נוג'ידאת",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "בועינה-נוג'ידאת",
     "lat": 32.8,
     "lng": 35.3667,
+    "time": 60
+  },
+  {
+    "name": "בוקעאתא",
+    "lat": null,
+    "lng": null,
     "time": 60
   },
   {
@@ -252,9 +810,51 @@
     "time": 90
   },
   {
+    "name": "בחן",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "בטחה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "ביצרון",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "ביר אל מכסור",
     "lat": 32.8833,
     "lng": 35.15,
+    "time": 60
+  },
+  {
+    "name": "ביר אל-מכסור",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "ביריה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "בית אורן",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "בית אל",
+    "lat": null,
+    "lng": null,
     "time": 60
   },
   {
@@ -264,16 +864,82 @@
     "time": 30
   },
   {
+    "name": "בית אריה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "בית ברל",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "בית ג'אן",
     "lat": 32.95,
     "lng": 35.3833,
     "time": 30
   },
   {
+    "name": "בית גוברין",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "בית גן",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "בית דגן",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "בית הגדי",
     "lat": 31.45,
     "lng": 34.6,
     "time": 15
+  },
+  {
+    "name": "בית הלוי",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "בית הנסיה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "בית העמק",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "בית הערבה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "בית השיטה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "בית זיד",
+    "lat": null,
+    "lng": null,
+    "time": 60
   },
   {
     "name": "בית זית",
@@ -288,10 +954,58 @@
     "time": 30
   },
   {
+    "name": "בית חגלה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "בית חירות",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "בית חלקיה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "בית חנן",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "בית חנניה",
     "lat": 32.5333,
     "lng": 34.9,
     "time": 90
+  },
+  {
+    "name": "בית חשמונאי",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "בית יהושע",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "בית יוסף",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "בית ינאי",
+    "lat": null,
+    "lng": null,
+    "time": 60
   },
   {
     "name": "בית יצחק-שער חפר",
@@ -300,16 +1014,76 @@
     "time": 90
   },
   {
+    "name": "בית כנף",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "בית לחם הגלילית",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "בית מאיר",
     "lat": 31.7833,
     "lng": 35.1,
     "time": 90
   },
   {
+    "name": "בית נחמיה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "בית ניר",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "בית עוזיאל",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "בית עזרא",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "בית עריף",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "בית קמה",
     "lat": 31.4333,
     "lng": 34.7,
     "time": 25
+  },
+  {
+    "name": "בית קשת",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "בית רבן",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "בית רימון",
+    "lat": null,
+    "lng": null,
+    "time": 60
   },
   {
     "name": "בית שאן",
@@ -324,15 +1098,57 @@
     "time": 90
   },
   {
+    "name": "בית שערים",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "בית שקמה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "ביתן אהרן",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "ביתר עילית",
     "lat": 31.6931,
     "lng": 35.1122,
     "time": 90
   },
   {
+    "name": "בכאוס",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "בלפוריה",
     "lat": 32.6333,
     "lng": 35.2833,
+    "time": 60
+  },
+  {
+    "name": "בן זכאי",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "בן עמי",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "בן שמן",
+    "lat": null,
+    "lng": null,
     "time": 60
   },
   {
@@ -348,10 +1164,46 @@
     "time": 60
   },
   {
+    "name": "בני דרור",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "בני יהודה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "בני נצרים",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "בני עי",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "בניה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "בנימינה-גבעת עדה",
     "lat": 32.5167,
     "lng": 34.95,
     "time": 90
+  },
+  {
+    "name": "בסמ\"ה",
+    "lat": null,
+    "lng": null,
+    "time": 60
   },
   {
     "name": "בסמת טבעון",
@@ -360,10 +1212,40 @@
     "time": 60
   },
   {
+    "name": "בענה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "בצרה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "בצת",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "בקוע",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "בקעות",
     "lat": 32.35,
     "lng": 35.5,
     "time": 30
+  },
+  {
+    "name": "בר גיורא",
+    "lat": null,
+    "lng": null,
+    "time": 60
   },
   {
     "name": "ברור חיל",
@@ -384,10 +1266,28 @@
     "time": 60
   },
   {
+    "name": "ברעם",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "ברקאי",
     "lat": 32.4333,
     "lng": 34.9833,
     "time": 90
+  },
+  {
+    "name": "ברקן",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "ברקת",
+    "lat": null,
+    "lng": null,
+    "time": 60
   },
   {
     "name": "בת גלים",
@@ -396,10 +1296,40 @@
     "time": 60
   },
   {
+    "name": "בת הדר",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "בת חן",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "בת חפר",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "בת ים",
     "lat": 32.0167,
     "lng": 34.75,
     "time": 90
+  },
+  {
+    "name": "בת עין",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "בת שלמה",
+    "lat": null,
+    "lng": null,
+    "time": 60
   },
   {
     "name": "ג'דיידה-מכר",
@@ -432,10 +1362,88 @@
     "time": 60
   },
   {
+    "name": "גאולי תימן",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "גאולים",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "גבולות",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "גבים",
     "lat": 31.4333,
     "lng": 34.5833,
     "time": 15
+  },
+  {
+    "name": "גבע",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "גבע בנימין",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "גבע כרמל",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "גבעון החדשה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "גבעות בר",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "גבעות עדן",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "גבעת אבני",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "גבעת אלה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "גבעת ברנר",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "גבעת השלושה",
+    "lat": null,
+    "lng": null,
+    "time": 60
   },
   {
     "name": "גבעת זאב",
@@ -448,6 +1456,48 @@
     "lat": 32.4,
     "lng": 34.9667,
     "time": 90
+  },
+  {
+    "name": "גבעת יואב",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "גבעת יערים",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "גבעת כ\"ח",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "גבעת נילי",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "גבעת עוז",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "גבעת שמואל",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "גבעת שמש",
+    "lat": null,
+    "lng": null,
+    "time": 60
   },
   {
     "name": "גבעתי",
@@ -474,10 +1524,28 @@
     "time": 15
   },
   {
+    "name": "גדיש",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "גדעונה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "גדרה",
     "lat": 31.8118,
     "lng": 34.7743,
     "time": 90
+  },
+  {
+    "name": "גולן",
+    "lat": null,
+    "lng": null,
+    "time": 60
   },
   {
     "name": "גונן",
@@ -486,10 +1554,28 @@
     "time": 15
   },
   {
+    "name": "גורן",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "גוש עציון",
     "lat": 31.65,
     "lng": 35.1167,
     "time": 90
+  },
+  {
+    "name": "גזית",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "גזר",
+    "lat": null,
+    "lng": null,
+    "time": 60
   },
   {
     "name": "גיזה",
@@ -510,16 +1596,46 @@
     "time": 30
   },
   {
+    "name": "גינתון",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "גיתה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "גיתית",
     "lat": 32.1,
     "lng": 35.5167,
     "time": 30
   },
   {
+    "name": "גלאון",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "גלגל",
     "lat": 31.9667,
     "lng": 35.45,
     "time": 30
+  },
+  {
+    "name": "גלעד",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "גן הדרום",
+    "lat": null,
+    "lng": null,
+    "time": 60
   },
   {
     "name": "גן השומרון",
@@ -540,10 +1656,46 @@
     "time": 90
   },
   {
+    "name": "גן שלמה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "גן שמואל",
     "lat": 32.4167,
     "lng": 34.95,
     "time": 90
+  },
+  {
+    "name": "גנות",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "גנות הדר",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "גני טל",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "גני יוחנן",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "גני מודיעין",
+    "lat": null,
+    "lng": null,
+    "time": 60
   },
   {
     "name": "גני תקווה",
@@ -555,6 +1707,12 @@
     "name": "גניגר",
     "lat": 32.65,
     "lng": 35.25,
+    "time": 60
+  },
+  {
+    "name": "גפן",
+    "lat": null,
+    "lng": null,
     "time": 60
   },
   {
@@ -576,9 +1734,45 @@
     "time": 30
   },
   {
+    "name": "גשר הזיו",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "גת רימון",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "דאלית אל-כרמל",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "דבוריה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "דבורייה",
     "lat": 32.6833,
     "lng": 35.3833,
+    "time": 60
+  },
+  {
+    "name": "דביר",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "דברת",
+    "lat": null,
+    "lng": null,
     "time": 60
   },
   {
@@ -594,10 +1788,28 @@
     "time": 30
   },
   {
+    "name": "דולב",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "דור",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "דורות",
     "lat": 31.5167,
     "lng": 34.55,
     "time": 15
+  },
+  {
+    "name": "דחי",
+    "lat": null,
+    "lng": null,
+    "time": 60
   },
   {
     "name": "דימונה",
@@ -612,9 +1824,33 @@
     "time": 60
   },
   {
+    "name": "דישון",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "דליה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "דלית אל-כרמל",
     "lat": 32.7,
     "lng": 35.0333,
+    "time": 60
+  },
+  {
+    "name": "דלתון",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "דמיידה",
+    "lat": null,
+    "lng": null,
     "time": 60
   },
   {
@@ -624,10 +1860,100 @@
     "time": 15
   },
   {
+    "name": "דפנה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "דקל",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "דרום השרון",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "האון",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "הבונים",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "הגושרים",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "הדר עם",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "הוד השרון",
     "lat": 32.1491,
     "lng": 34.8881,
     "time": 90
+  },
+  {
+    "name": "הושעיה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "הזורעים",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "הטחנה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "היוגב",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "הכפר הירוק",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "הלפד",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "המרכיב",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "הסוללים",
+    "lat": null,
+    "lng": null,
+    "time": 60
   },
   {
     "name": "הר אדר",
@@ -636,10 +1962,40 @@
     "time": 90
   },
   {
+    "name": "הר גילה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "הר עמשא",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "הראל",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "הרדוף",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "הרצליה",
     "lat": 32.165,
     "lng": 34.844,
     "time": 90
+  },
+  {
+    "name": "זבדיאל",
+    "lat": null,
+    "lng": null,
+    "time": 60
   },
   {
     "name": "זיקים",
@@ -648,10 +2004,58 @@
     "time": 15
   },
   {
+    "name": "זית",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "זכרון יעקב",
     "lat": 32.5697,
     "lng": 34.9497,
     "time": 90
+  },
+  {
+    "name": "זכריה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "זמר",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "זנוח",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "זרחיה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "חבצלת השרון",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "חגור",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "חגי",
+    "lat": null,
+    "lng": null,
+    "time": 60
   },
   {
     "name": "חגלה",
@@ -660,10 +2064,52 @@
     "time": 90
   },
   {
+    "name": "חד-נס",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "חדיד",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "חדרה",
     "lat": 32.4331,
     "lng": 34.9188,
     "time": 90
+  },
+  {
+    "name": "חוות יאיר",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "חוות ניר",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "חוות עדן",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "חוות שדה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "חולדה",
+    "lat": null,
+    "lng": null,
+    "time": 60
   },
   {
     "name": "חולון",
@@ -672,10 +2118,34 @@
     "time": 90
   },
   {
+    "name": "חולית",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "חוסן",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "חוף אשקלון",
     "lat": 31.6833,
     "lng": 34.55,
     "time": 30
+  },
+  {
+    "name": "חופית",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "חוקוק",
+    "lat": null,
+    "lng": null,
+    "time": 60
   },
   {
     "name": "חורה",
@@ -696,9 +2166,39 @@
     "time": 90
   },
   {
+    "name": "חזון",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "חיבת ציון",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "חיפה",
     "lat": 32.794,
     "lng": 34.9896,
+    "time": 60
+  },
+  {
+    "name": "חירות",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "חלוץ",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "חלץ",
+    "lat": null,
+    "lng": null,
     "time": 60
   },
   {
@@ -708,10 +2208,28 @@
     "time": 30
   },
   {
+    "name": "חמד",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "חמדיה",
     "lat": 32.5333,
     "lng": 35.5167,
     "time": 30
+  },
+  {
+    "name": "חמדת",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "חמרה",
+    "lat": null,
+    "lng": null,
+    "time": 60
   },
   {
     "name": "חמת גדר",
@@ -720,16 +2238,34 @@
     "time": 15
   },
   {
+    "name": "חניאל",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "חניתה",
     "lat": 33.0833,
     "lng": 35.2,
     "time": 15
   },
   {
+    "name": "חנתון",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "חספין",
     "lat": 32.9333,
     "lng": 35.6667,
     "time": 30
+  },
+  {
+    "name": "חצב",
+    "lat": null,
+    "lng": null,
+    "time": 60
   },
   {
     "name": "חצבה",
@@ -747,6 +2283,24 @@
     "name": "חצרים",
     "lat": 31.2667,
     "lng": 34.8,
+    "time": 60
+  },
+  {
+    "name": "חרב לאת",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "חרוצים",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "חרות",
+    "lat": null,
+    "lng": null,
     "time": 60
   },
   {
@@ -798,9 +2352,51 @@
     "time": 30
   },
   {
+    "name": "טל מנשה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "טל שחר",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "טלמון",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "טמרה",
     "lat": 32.85,
     "lng": 35.1833,
+    "time": 60
+  },
+  {
+    "name": "טנא",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "טפחות",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "יבול",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "יבנאל",
+    "lat": null,
+    "lng": null,
     "time": 60
   },
   {
@@ -810,10 +2406,46 @@
     "time": 90
   },
   {
+    "name": "יגור",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "יד בנימין",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "יד הנה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "יד חנה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "יד מרדכי",
     "lat": 31.6167,
     "lng": 34.55,
     "time": 15
+  },
+  {
+    "name": "יד נתן",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "יד רמבם",
+    "lat": null,
+    "lng": null,
+    "time": 60
   },
   {
     "name": "יהוד-מונוסון",
@@ -828,10 +2460,46 @@
     "time": 180
   },
   {
+    "name": "יובל",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "יודפת",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "יוטבתה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "יונתן",
     "lat": 33.1333,
     "lng": 35.7667,
     "time": 15
+  },
+  {
+    "name": "יורקעם",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "יזרעאל",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "יחיעם",
+    "lat": null,
+    "lng": null,
+    "time": 60
   },
   {
     "name": "יטבתה",
@@ -852,15 +2520,51 @@
     "time": 15
   },
   {
+    "name": "ינוב",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "ינוח-ג'ת",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "יסוד המעלה",
     "lat": 33.0333,
     "lng": 35.5833,
     "time": 15
   },
   {
+    "name": "יסודות",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "יסיף",
     "lat": 32.95,
     "lng": 35.1667,
+    "time": 60
+  },
+  {
+    "name": "יעד",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "יעל",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "יערה",
+    "lat": null,
+    "lng": null,
     "time": 60
   },
   {
@@ -870,9 +2574,33 @@
     "time": 60
   },
   {
+    "name": "יפית",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "יפתח",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "יקום",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "יקנעם עילית",
     "lat": 32.6667,
     "lng": 35.1,
+    "time": 60
+  },
+  {
+    "name": "ירדנה",
+    "lat": null,
+    "lng": null,
     "time": 60
   },
   {
@@ -888,9 +2616,21 @@
     "time": 90
   },
   {
+    "name": "ירחיב",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "ירכא",
     "lat": 32.95,
     "lng": 35.1833,
+    "time": 60
+  },
+  {
+    "name": "ישרש",
+    "lat": null,
+    "lng": null,
     "time": 60
   },
   {
@@ -906,10 +2646,46 @@
     "time": 60
   },
   {
+    "name": "כברי",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "כדורי",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "כוכב יאיר",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "כוכב יעקב",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "כוכב מיכאל",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "כורזים",
     "lat": 32.9167,
     "lng": 35.5667,
     "time": 30
+  },
+  {
+    "name": "כחל",
+    "lat": null,
+    "lng": null,
+    "time": 60
   },
   {
     "name": "כינרת (מושבה)",
@@ -930,9 +2706,27 @@
     "time": 15
   },
   {
+    "name": "כישור",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "כליל",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "כמהין",
     "lat": 31.2167,
     "lng": 34.8833,
+    "time": 60
+  },
+  {
+    "name": "כמון",
+    "lat": null,
+    "lng": null,
     "time": 60
   },
   {
@@ -948,9 +2742,21 @@
     "time": 15
   },
   {
+    "name": "כנרת",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "כסייפה",
     "lat": 31.2333,
     "lng": 35.05,
+    "time": 60
+  },
+  {
+    "name": "כסיפה",
+    "lat": null,
+    "lng": null,
     "time": 60
   },
   {
@@ -958,6 +2764,18 @@
     "lat": 31.7833,
     "lng": 35.0667,
     "time": 90
+  },
+  {
+    "name": "כסרא",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "כעביה-טבאש-חג'אג'רה",
+    "lat": null,
+    "lng": null,
+    "time": 60
   },
   {
     "name": "כפר אל שיח",
@@ -984,15 +2802,57 @@
     "time": 90
   },
   {
+    "name": "כפר ברוך",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "כפר גדעון",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "כפר גלים",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "כפר גלעדי",
     "lat": 33.2333,
     "lng": 35.5667,
     "time": 15
   },
   {
+    "name": "כפר דניאל",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "כפר האורנים",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "כפר החורש",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "כפר המכבי",
     "lat": 32.7667,
     "lng": 35.0833,
+    "time": 60
+  },
+  {
+    "name": "כפר הנגיד",
+    "lat": null,
+    "lng": null,
     "time": 60
   },
   {
@@ -1002,15 +2862,75 @@
     "time": 30
   },
   {
+    "name": "כפר הס",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "כפר הרי\"ף",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "כפר ויתקין",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "כפר זיתים",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "כפר חב\"ד",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "כפר חושן",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "כפר חיטים",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "כפר חיים",
     "lat": 32.3,
     "lng": 34.9167,
     "time": 90
   },
   {
+    "name": "כפר חנניה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "כפר חרוב",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "כפר יאסיף",
     "lat": 32.9667,
     "lng": 35.1667,
+    "time": 60
+  },
+  {
+    "name": "כפר יהושע",
+    "lat": null,
+    "lng": null,
     "time": 60
   },
   {
@@ -1026,9 +2946,33 @@
     "time": 90
   },
   {
+    "name": "כפר יחזקאל",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "כפר כמא",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "כפר כנא",
     "lat": 32.75,
     "lng": 35.35,
+    "time": 60
+  },
+  {
+    "name": "כפר מונש",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "כפר מיכאל",
+    "lat": null,
+    "lng": null,
     "time": 60
   },
   {
@@ -1044,10 +2988,34 @@
     "time": 60
   },
   {
+    "name": "כפר מנחם",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "כפר מסריק",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "כפר נאעם",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "כפר נטר",
     "lat": 32.2667,
     "lng": 34.9167,
     "time": 90
+  },
+  {
+    "name": "כפר סאלד",
+    "lat": null,
+    "lng": null,
+    "time": 60
   },
   {
     "name": "כפר סבא",
@@ -1056,10 +3024,46 @@
     "time": 90
   },
   {
+    "name": "כפר סילבר",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "כפר סירקין",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "כפר עבודה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "כפר עוזיאל",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "כפר עזה",
     "lat": 31.4833,
     "lng": 34.5167,
     "time": 15
+  },
+  {
+    "name": "כפר ענן",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "כפר פינס",
+    "lat": null,
+    "lng": null,
+    "time": 60
   },
   {
     "name": "כפר קאסם",
@@ -1068,10 +3072,52 @@
     "time": 90
   },
   {
+    "name": "כפר קיש",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "כפר קרע",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "כפר ראש הנקרה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "כפר רוזנוולד",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "כפר רופין",
     "lat": 32.4833,
     "lng": 35.5833,
     "time": 30
+  },
+  {
+    "name": "כפר רות",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "כפר שמאי",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "כפר שמריהו",
+    "lat": null,
+    "lng": null,
+    "time": 60
   },
   {
     "name": "כפר תבור",
@@ -1080,10 +3126,58 @@
     "time": 60
   },
   {
+    "name": "כפר תפוח",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "כרכום",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "כרם בן זמרה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "כרם בן שמן",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "כרם יבנה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "כרם מהרל",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "כרם שלום",
     "lat": 31.2,
     "lng": 34.35,
     "time": 15
+  },
+  {
+    "name": "כרמי יוסף",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "כרמי קטיף",
+    "lat": null,
+    "lng": null,
+    "time": 60
   },
   {
     "name": "כרמיאל",
@@ -1098,10 +3192,40 @@
     "time": 60
   },
   {
+    "name": "כרמל",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "לב השרון",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "לביא",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "להב",
     "lat": 31.3667,
     "lng": 34.7167,
     "time": 25
+  },
+  {
+    "name": "להבות הבשן",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "להבות חביבה",
+    "lat": null,
+    "lng": null,
+    "time": 60
   },
   {
     "name": "להבים",
@@ -1116,10 +3240,34 @@
     "time": 90
   },
   {
+    "name": "לוזית",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "לוחמי הגטאות",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "לוטן",
     "lat": 29.9833,
     "lng": 35.0667,
     "time": 180
+  },
+  {
+    "name": "לטרון",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "ליבנים",
+    "lat": null,
+    "lng": null,
+    "time": 60
   },
   {
     "name": "לילך",
@@ -1128,9 +3276,57 @@
     "time": 15
   },
   {
+    "name": "לימן",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "לכיש",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "לפיד",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "לפידות",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "לקיה",
     "lat": 31.3667,
     "lng": 34.8,
+    "time": 60
+  },
+  {
+    "name": "מאיר שפיה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "מבוא ביתר",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "מבוא דותן",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "מבוא חורון",
+    "lat": null,
+    "lng": null,
     "time": 60
   },
   {
@@ -1138,6 +3334,30 @@
     "lat": 32.9667,
     "lng": 35.7333,
     "time": 15
+  },
+  {
+    "name": "מבוא מודיעים",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "מבועים",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "מבטחים",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "מבקיעים",
+    "lat": null,
+    "lng": null,
+    "time": 60
   },
   {
     "name": "מבשרת ציון",
@@ -1164,6 +3384,24 @@
     "time": 15
   },
   {
+    "name": "מגאל",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "מגד",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "מגדים",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "מגדל",
     "lat": 32.8333,
     "lng": 35.5167,
@@ -1176,10 +3414,52 @@
     "time": 60
   },
   {
+    "name": "מגדל תפן",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "מגדלים",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "מגידו",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "מגל",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "מגן",
     "lat": 31.3167,
     "lng": 34.4833,
     "time": 15
+  },
+  {
+    "name": "מגן שאול",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "מגשימים",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "מודיעין",
+    "lat": null,
+    "lng": null,
+    "time": 60
   },
   {
     "name": "מודיעין עילית",
@@ -1194,10 +3474,40 @@
     "time": 90
   },
   {
+    "name": "מולדת",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "מוצא",
     "lat": 31.8,
     "lng": 35.15,
     "time": 90
+  },
+  {
+    "name": "מוצא עילית",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "מוקייבלה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "מורן",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "מורשת",
+    "lat": null,
+    "lng": null,
+    "time": 60
   },
   {
     "name": "מושב נורדיה",
@@ -1206,10 +3516,22 @@
     "time": 90
   },
   {
+    "name": "מזור",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "מזכרת בתיה",
     "lat": 31.85,
     "lng": 34.8333,
     "time": 90
+  },
+  {
+    "name": "מזרע",
+    "lat": null,
+    "lng": null,
+    "time": 60
   },
   {
     "name": "מזרעה",
@@ -1230,10 +3552,52 @@
     "time": 30
   },
   {
+    "name": "מחנה הילה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "מחנה יהודית",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "מחנה יוכבד",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "מחנה יתיר",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "מחנה מנשה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "מחנה תל נוף",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "מחניים",
     "lat": 33.0167,
     "lng": 35.55,
     "time": 15
+  },
+  {
+    "name": "מחסיה",
+    "lat": null,
+    "lng": null,
+    "time": 60
   },
   {
     "name": "מטולה",
@@ -1242,15 +3606,93 @@
     "time": 15
   },
   {
+    "name": "מיטב",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "מיכמן",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "מיכמנת",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "מילאנו",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "מיצר",
     "lat": 32.9167,
     "lng": 35.6833,
     "time": 30
   },
   {
+    "name": "מירב",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "מירון",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "מיתר",
     "lat": 31.3833,
     "lng": 34.9,
+    "time": 60
+  },
+  {
+    "name": "מכמורת",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "מכמש",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "מלאה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "מלכיה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "מנוחה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "מנות",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "מנחמיה",
+    "lat": null,
+    "lng": null,
     "time": 60
   },
   {
@@ -1266,9 +3708,39 @@
     "time": 60
   },
   {
+    "name": "מסד",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "מסדה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "מסחה",
     "lat": 32.5667,
     "lng": 35.1333,
+    "time": 60
+  },
+  {
+    "name": "מסילות",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "מסילת ציון",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "מסלול",
+    "lat": null,
+    "lng": null,
     "time": 60
   },
   {
@@ -1302,6 +3774,18 @@
     "time": 30
   },
   {
+    "name": "מעון",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "מעיין ברוך",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "מעיין צבי",
     "lat": 32.5667,
     "lng": 34.9167,
@@ -1314,10 +3798,40 @@
     "time": 90
   },
   {
+    "name": "מעלה אפרים",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "מעלה גלבוע",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "מעלה גמלא",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "מעלה החמישה",
     "lat": 31.8167,
     "lng": 35.1167,
     "time": 90
+  },
+  {
+    "name": "מעלה עירון",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "מעלה עמוס",
+    "lat": null,
+    "lng": null,
+    "time": 60
   },
   {
     "name": "מעלות-תרשיחא",
@@ -1326,10 +3840,28 @@
     "time": 30
   },
   {
+    "name": "מענית",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "מפלסים",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "מצדה",
     "lat": 31.3167,
     "lng": 35.35,
     "time": 30
+  },
+  {
+    "name": "מצובה",
+    "lat": null,
+    "lng": null,
+    "time": 60
   },
   {
     "name": "מצוקי דרגות",
@@ -1338,15 +3870,63 @@
     "time": 30
   },
   {
+    "name": "מצליח",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "מצפה",
     "lat": 32.9,
     "lng": 35.4833,
     "time": 30
   },
   {
+    "name": "מצפה אבי\"ב",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "מצפה אילן",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "מצפה יריחו",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "מצפה נטופה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "מצפה רמון",
     "lat": 30.61,
     "lng": 34.8017,
+    "time": 60
+  },
+  {
+    "name": "מצפה שלם",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "מקווה ישראל",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "מרגליות",
+    "lat": null,
+    "lng": null,
     "time": 60
   },
   {
@@ -1362,10 +3942,118 @@
     "time": 60
   },
   {
+    "name": "מרכז שפירא",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "משאבי שדה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "משגב דב",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "משהד",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "משואה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "משואות יצחק",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "משכיות",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "משמר איילון",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "משמר דוד",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "משמר הירדן",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "משמר הנגב",
     "lat": 31.3167,
     "lng": 34.6833,
     "time": 25
+  },
+  {
+    "name": "משמר העמק",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "משמר השרון",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "משמרות",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "משמרת",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "מתן",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "מתת",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "מתתיהו",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "נאות גולן",
+    "lat": null,
+    "lng": null,
+    "time": 60
   },
   {
     "name": "נאות הכיכר",
@@ -1374,9 +4062,33 @@
     "time": 60
   },
   {
+    "name": "נאות מרדכי",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "נאות סמדר",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "נבטים",
     "lat": 31.0833,
     "lng": 34.85,
+    "time": 60
+  },
+  {
+    "name": "נגבה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "נהורה",
+    "lat": null,
+    "lng": null,
     "time": 60
   },
   {
@@ -1398,15 +4110,129 @@
     "time": 30
   },
   {
+    "name": "נוגה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "נווה אבות",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "נווה אטיב",
     "lat": 32.8833,
     "lng": 35.8,
     "time": 15
   },
   {
+    "name": "נווה אילן",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "נווה דניאל",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "נווה זוהר",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "נווה חריף",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "נווה ים",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "נווה ירק",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "נווה מדבר",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "נווה מיכאל",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "נווה מנחם",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "נווה צוף",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "נווה שלום",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "נועם",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "נוף הגליל",
     "lat": 32.7042,
     "lng": 35.3281,
+    "time": 60
+  },
+  {
+    "name": "נופים",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "נופית",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "נחושה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "נחל",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "נחל גדרה",
+    "lat": null,
+    "lng": null,
     "time": 60
   },
   {
@@ -1422,9 +4248,27 @@
     "time": 60
   },
   {
+    "name": "נחליאל",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "נחם",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "נחף",
     "lat": 32.95,
     "lng": 35.35,
+    "time": 60
+  },
+  {
+    "name": "נחשולים",
+    "lat": null,
+    "lng": null,
     "time": 60
   },
   {
@@ -1434,9 +4278,63 @@
     "time": 15
   },
   {
+    "name": "ניל\"י",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "נילי",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "נין",
     "lat": 32.6333,
     "lng": 35.3,
+    "time": 60
+  },
+  {
+    "name": "ניצן",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "ניצן ב",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "ניצנה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "ניצני עוז",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "ניצני שלום",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "ניר אליהו",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "ניר בנים",
+    "lat": null,
+    "lng": null,
     "time": 60
   },
   {
@@ -1444,6 +4342,18 @@
     "lat": 31.7667,
     "lng": 34.6333,
     "time": 45
+  },
+  {
+    "name": "ניר דוד",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "ניר יפה",
+    "lat": null,
+    "lng": null,
+    "time": 60
   },
   {
     "name": "ניר יצחק",
@@ -1464,10 +4374,28 @@
     "time": 60
   },
   {
+    "name": "ניר עקיבא",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "ניר צבי",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "נירים",
     "lat": 31.3,
     "lng": 34.45,
     "time": 15
+  },
+  {
+    "name": "נירית",
+    "lat": null,
+    "lng": null,
+    "time": 60
   },
   {
     "name": "נמרוד",
@@ -1476,10 +4404,22 @@
     "time": 15
   },
   {
+    "name": "נס הרים",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "נס ציונה",
     "lat": 31.9299,
     "lng": 34.7979,
     "time": 90
+  },
+  {
+    "name": "נעורים",
+    "lat": null,
+    "lng": null,
+    "time": 60
   },
   {
     "name": "נעמה",
@@ -1488,9 +4428,27 @@
     "time": 30
   },
   {
+    "name": "נצר חזני",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "נצר סרני",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "נצרת",
     "lat": 32.6996,
     "lng": 35.3035,
+    "time": 60
+  },
+  {
+    "name": "נקודת יהד",
+    "lat": null,
+    "lng": null,
     "time": 60
   },
   {
@@ -1506,6 +4464,24 @@
     "time": 30
   },
   {
+    "name": "נתיב העשרה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "נתיב לה\"י",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "נתיב-שלה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "נתיבות",
     "lat": 31.4202,
     "lng": 34.5898,
@@ -1518,10 +4494,22 @@
     "time": 90
   },
   {
+    "name": "סאג'ור",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "סביון",
     "lat": 32.05,
     "lng": 34.8833,
     "time": 90
+  },
+  {
+    "name": "סגולה",
+    "lat": null,
+    "lng": null,
+    "time": 60
   },
   {
     "name": "סולם",
@@ -1542,6 +4530,18 @@
     "time": 60
   },
   {
+    "name": "סנסנה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "סעד",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "ספיר",
     "lat": 31.4167,
     "lng": 34.5667,
@@ -1554,15 +4554,69 @@
     "time": 120
   },
   {
+    "name": "ספירה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "סתריה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "עבדה",
     "lat": 30.8167,
     "lng": 34.9333,
     "time": 60
   },
   {
+    "name": "עברון",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "עגור",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "עדי",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "עדנה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "עובדה",
     "lat": 30.8167,
     "lng": 34.9333,
+    "time": 60
+  },
+  {
+    "name": "עוזה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "עוזייר",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "עולש",
+    "lat": null,
+    "lng": null,
     "time": 60
   },
   {
@@ -1575,6 +4629,60 @@
     "name": "עוספיא",
     "lat": 32.7167,
     "lng": 35.05,
+    "time": 60
+  },
+  {
+    "name": "עופרה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "עוצם",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "עוקבי (בני וסיל)",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "עזוז",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "עזריאל",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "עזריה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "עזריקם",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "עטרת",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "עיינות",
+    "lat": null,
+    "lng": null,
     "time": 60
   },
   {
@@ -1674,9 +4782,51 @@
     "time": 60
   },
   {
+    "name": "עיר אובות",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "עכו",
     "lat": 32.9281,
     "lng": 35.0828,
+    "time": 60
+  },
+  {
+    "name": "עלומות",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "עלי",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "עלי זהב",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "עליות",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "עלמה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "עלמון",
+    "lat": null,
+    "lng": null,
     "time": 60
   },
   {
@@ -1698,9 +4848,63 @@
     "time": 30
   },
   {
+    "name": "עמיעוז",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "עמיקם",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "עמיר",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "עמנואל",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "עמקה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "ענב",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "עספיא",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "עפולה",
     "lat": 32.6065,
     "lng": 35.2899,
+    "time": 60
+  },
+  {
+    "name": "עצמון שגב",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "עקרבא",
+    "lat": null,
+    "lng": null,
     "time": 60
   },
   {
@@ -1716,9 +4920,27 @@
     "time": 30
   },
   {
+    "name": "ערב אל-עראמשה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "ערד",
     "lat": 31.2587,
     "lng": 35.2139,
+    "time": 60
+  },
+  {
+    "name": "ערוגות",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "עשרת",
+    "lat": null,
+    "lng": null,
     "time": 60
   },
   {
@@ -1734,9 +4956,51 @@
     "time": 120
   },
   {
+    "name": "פדואל",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "פדויים",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "פדיה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "פוריה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "פוריידיס",
     "lat": 32.6167,
     "lng": 34.95,
+    "time": 60
+  },
+  {
+    "name": "פורת",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "פטיש",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "פלך",
+    "lat": null,
+    "lng": null,
     "time": 60
   },
   {
@@ -1746,15 +5010,57 @@
     "time": 60
   },
   {
+    "name": "פנינה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "פסגות",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "פסגת זאב",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "פעמי תשז",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "פצאל",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "פקיעין",
     "lat": 32.9833,
     "lng": 35.3167,
     "time": 30
   },
   {
+    "name": "פקיעין חדשה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "פרדיס",
     "lat": 32.6333,
     "lng": 34.9667,
+    "time": 60
+  },
+  {
+    "name": "פרדס חנה",
+    "lat": null,
+    "lng": null,
     "time": 60
   },
   {
@@ -1764,10 +5070,70 @@
     "time": 90
   },
   {
+    "name": "פרוד",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "פרזון",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "פרי גן",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "פתח תקווה",
     "lat": 32.0841,
     "lng": 34.8878,
     "time": 90
+  },
+  {
+    "name": "פתחיה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "צאלים",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "צביה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "צובה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "צוחר",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "צופיה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "צופית",
+    "lat": null,
+    "lng": null,
+    "time": 60
   },
   {
     "name": "צופר",
@@ -1776,10 +5142,64 @@
     "time": 120
   },
   {
+    "name": "צוקי ים",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "צוקים",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "צור הדסה",
     "lat": 31.7167,
     "lng": 35.1167,
     "time": 90
+  },
+  {
+    "name": "צור יצחק",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "צור משה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "צור נתן",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "צוריאל",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "צורית",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "ציפורי",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "צלפון",
+    "lat": null,
+    "lng": null,
+    "time": 60
   },
   {
     "name": "צפת",
@@ -1788,10 +5208,64 @@
     "time": 30
   },
   {
+    "name": "צרופה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "קבועה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "קדומים",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "קדימה-צורן",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "קדמה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "קדרון",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "קדרים",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "קוממיות",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "קטורה",
     "lat": 29.9167,
     "lng": 35.05,
     "time": 180
+  },
+  {
+    "name": "קיבוץ גלויות",
+    "lat": null,
+    "lng": null,
+    "time": 60
   },
   {
     "name": "קיבוץ יגור",
@@ -1812,6 +5286,12 @@
     "time": 90
   },
   {
+    "name": "קלחים",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "קלנסווה",
     "lat": 32.2833,
     "lng": 34.9833,
@@ -1828,6 +5308,12 @@
     "lat": 32.1167,
     "lng": 34.9833,
     "time": 90
+  },
+  {
+    "name": "קציר",
+    "lat": null,
+    "lng": null,
+    "time": 60
   },
   {
     "name": "קצרין",
@@ -1896,9 +5382,105 @@
     "time": 15
   },
   {
+    "name": "קרית אנה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "קרית ארבע",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "קרית אתא",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "קרית ביאליק",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "קרית גת",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "קרית טבעון",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "קרית ים",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "קרית מוצקין",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "קרית מלאכי",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "קרית נטפים",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "קרית ענבים",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "קרית עקרון",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "קרית שמונה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "קרני שומרון",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "קשת",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "ראמה",
     "lat": 32.9333,
     "lng": 35.3667,
+    "time": 60
+  },
+  {
+    "name": "ראס אל-עין",
+    "lat": null,
+    "lng": null,
     "time": 60
   },
   {
@@ -1920,9 +5502,39 @@
     "time": 90
   },
   {
+    "name": "רבבה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "רביד",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "רגבה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "רהט",
     "lat": 31.394,
     "lng": 34.7545,
+    "time": 60
+  },
+  {
+    "name": "רווחה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "רוויה",
+    "lat": null,
+    "lng": null,
     "time": 60
   },
   {
@@ -1932,10 +5544,22 @@
     "time": 25
   },
   {
+    "name": "רומאנה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "רועי",
     "lat": 32.4167,
     "lng": 35.5167,
     "time": 30
+  },
+  {
+    "name": "רחוב",
+    "lat": null,
+    "lng": null,
+    "time": 60
   },
   {
     "name": "רחובות",
@@ -1944,15 +5568,57 @@
     "time": 90
   },
   {
+    "name": "ריחן",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "ריחניה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "ריינה",
     "lat": 32.7167,
     "lng": 35.3167,
     "time": 60
   },
   {
+    "name": "רינתיה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "רכסים",
     "lat": 32.7667,
     "lng": 35.1167,
+    "time": 60
+  },
+  {
+    "name": "רמות",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "רמות השבים",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "רמות מאיר",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "רמות נפתלי",
+    "lat": null,
+    "lng": null,
     "time": 60
   },
   {
@@ -1968,10 +5634,34 @@
     "time": 90
   },
   {
+    "name": "רמת דוד",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "רמת השרון",
     "lat": 32.1467,
     "lng": 34.836,
     "time": 90
+  },
+  {
+    "name": "רמת יוחנן",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "רמת יישי",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "רמת כי\"ס",
+    "lat": null,
+    "lng": null,
+    "time": 60
   },
   {
     "name": "רמת מגשימים",
@@ -1980,10 +5670,40 @@
     "time": 15
   },
   {
+    "name": "רמת צבי",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "רמת רזיאל",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "רמת רחל",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "רנן",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "רעים",
     "lat": 31.4167,
     "lng": 34.4833,
     "time": 15
+  },
+  {
+    "name": "רענה",
+    "lat": null,
+    "lng": null,
+    "time": 60
   },
   {
     "name": "רעננה",
@@ -1998,9 +5718,21 @@
     "time": 15
   },
   {
+    "name": "שבות רחל",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "שגב שלום",
     "lat": 31.1667,
     "lng": 34.95,
+    "time": 60
+  },
+  {
+    "name": "שגב-שלום",
+    "lat": null,
+    "lng": null,
     "time": 60
   },
   {
@@ -2010,16 +5742,118 @@
     "time": 90
   },
   {
+    "name": "שדה אברהם",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "שדה אליהו",
     "lat": 32.4833,
     "lng": 35.5333,
     "time": 30
   },
   {
+    "name": "שדה אליעזר",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "שדה אלעזר",
     "lat": 33.0333,
     "lng": 35.7333,
     "time": 15
+  },
+  {
+    "name": "שדה בוקר",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "שדה דוד",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "שדה ורבורג",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "שדה יואב",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "שדה יצחק",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "שדה משה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "שדה נחום",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "שדה נחמיה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "שדה עוזיהו",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "שדות ים",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "שדות מיכה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "שדי אברהם",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "שדי חמד",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "שדים",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "שדמות דבורה",
+    "lat": null,
+    "lng": null,
+    "time": 60
   },
   {
     "name": "שדמות מחולה",
@@ -2046,16 +5880,106 @@
     "time": 90
   },
   {
+    "name": "שומרה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "שומריה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "שוקדה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "שורש",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "שורשים",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "שזור",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "שחרות",
     "lat": 29.75,
     "lng": 35.0167,
     "time": 180
   },
   {
+    "name": "שיבולים",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "שיזף",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "שיזפון",
     "lat": 29.9833,
     "lng": 35.0833,
     "time": 180
+  },
+  {
+    "name": "שיטי",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "שיטים",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "שילה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "שיר",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "שכניה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "שלווה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "שלוחות",
+    "lat": null,
+    "lng": null,
+    "time": 60
   },
   {
     "name": "שלומי",
@@ -2068,6 +5992,12 @@
     "lat": 33.2167,
     "lng": 35.5833,
     "time": 15
+  },
+  {
+    "name": "שמרת",
+    "lat": null,
+    "lng": null,
+    "time": 60
   },
   {
     "name": "שניר",
@@ -2088,15 +6018,99 @@
     "time": 15
   },
   {
+    "name": "שעלבים",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "שער אפרים",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "שער הגולן",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "שער הנגב",
     "lat": 31.5,
     "lng": 34.55,
     "time": 15
   },
   {
+    "name": "שפיים",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "שפר",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "שפרעם",
     "lat": 32.8,
     "lng": 35.1667,
+    "time": 60
+  },
+  {
+    "name": "שקד",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "שרונה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "שריד",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "שרשרת",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "תדהר",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "תומר",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "תושיה",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "תימורים",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "תירוש",
+    "lat": null,
+    "lng": null,
     "time": 60
   },
   {
@@ -2106,15 +6120,39 @@
     "time": 90
   },
   {
+    "name": "תל יוסף",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "תל יצחק",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "תל מונד",
     "lat": 32.2667,
     "lng": 34.9167,
     "time": 90
   },
   {
+    "name": "תל עדשים",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "תל ערד",
     "lat": 31.25,
     "lng": 35.1167,
+    "time": 60
+  },
+  {
+    "name": "תל קציר",
+    "lat": null,
+    "lng": null,
     "time": 60
   },
   {
@@ -2124,15 +6162,81 @@
     "time": 60
   },
   {
+    "name": "תלם",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "תלמי אליהו",
     "lat": 31.2833,
     "lng": 34.4833,
     "time": 15
   },
   {
+    "name": "תלמי אלעזר",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "תלמי יוסף",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "תלמי יחיאל",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "תלמים",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "תמרת",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "תנובות",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "תעוז",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "תפרח",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
     "name": "תקומה",
     "lat": 31.3667,
     "lng": 34.5333,
     "time": 15
+  },
+  {
+    "name": "תקוע",
+    "lat": null,
+    "lng": null,
+    "time": 60
+  },
+  {
+    "name": "תרום",
+    "lat": null,
+    "lng": null,
+    "time": 60
   }
 ]
